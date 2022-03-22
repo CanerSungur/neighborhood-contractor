@@ -105,6 +105,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a715e7cd36f7b4a8b463f363910e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  carryCapacity: 20
+  moneyValue: 100
+  spendValue: 100
+  spendTime: 1
 --- !u!114 &8054539559644026292
 MonoBehaviour:
   m_ObjectHideFlags: 0

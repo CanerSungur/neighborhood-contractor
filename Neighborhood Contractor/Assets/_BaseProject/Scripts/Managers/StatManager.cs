@@ -10,8 +10,14 @@ public class StatManager : MonoBehaviour
     private GameManager gameManager;
     public GameManager GameManager => gameManager == null ? gameManager = GetComponent<GameManager>() : gameManager;
 
+    [Header("-- SETUP --")]
+    [SerializeField] private int carryCapacity = 20;
+    [SerializeField] private int moneyValue = 100;
+    [SerializeField] private int spendValue = 100;
+    [SerializeField] private float spendTime = 0.1f;
+
     public static int CarryCapacity, CurrentCarry, MoneyValue, SpendValue;
-    public static float SpendRate;
+    public static float SpendTime;
     public static List<Money> CollectedMoney;
 
     public int TotalMoney { get; private set; }
@@ -22,9 +28,10 @@ public class StatManager : MonoBehaviour
     {
         // Default Stats
         CurrentCarry = 0;
-        CarryCapacity = 20;
-        MoneyValue = SpendValue = 100;
-        SpendRate = 1f;
+        CarryCapacity = carryCapacity;
+        MoneyValue = moneyValue;
+        SpendValue = spendValue;
+        SpendTime = spendTime;
 
         CollectedMoney = new List<Money>();
         CollectedMoney.Clear();

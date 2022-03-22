@@ -1,5 +1,5 @@
 using UnityEngine;
-using System;
+using DG.Tweening;
 
 /// <summary>
 /// Manages all the other managers. Holds game flow events.
@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(500, 50);
+
         IsSoundOn = IsVibrationOn = true;
 
         TryGetComponent(out statManager);

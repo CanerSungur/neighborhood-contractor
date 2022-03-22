@@ -10,8 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 4442142098587204282}
   - component: {fileID: 2228716789385288352}
-  - component: {fileID: 2228716789385288351}
   - component: {fileID: 6205749953855064334}
+  - component: {fileID: 1691706804}
+  - component: {fileID: 2228716789385288351}
+  - component: {fileID: 1331105309275900462}
   m_Layer: 0
   m_Name: Money
   m_TagString: Untagged
@@ -47,18 +49,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.4154328, y: 0.23140234, z: 0.7672553}
   m_Center: {x: -0.000000059604645, y: 0.08118984, z: -0.0027062893}
---- !u!114 &2228716789385288351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3958233169641693184}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d3fd98591a166043ae05a93e3faf2c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &6205749953855064334
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -75,6 +65,49 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!95 &1691706804
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3958233169641693184}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2b63cb95c75ad1744b13b81ff3049724, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2228716789385288351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3958233169641693184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d3fd98591a166043ae05a93e3faf2c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1331105309275900462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3958233169641693184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f2683a603a58824cb09491e21fab4c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4466039330042387472
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     internal PlayerMoneyStackHandler moneyStackHandler;
 
     [Header("-- MOVEMENT SETUP --")]
+    [SerializeField] private bool useAcceleration = false;
     [SerializeField] private float maxMovementSpeed = 3f;
     [SerializeField] private float minMovementSpeed = 1f;
     [SerializeField, Range(0.1f, 3f)] private float accelerationRate = 0.5f;
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour
     #endregion
 
     //public event Action<CollectableEffect> OnPickedUpSomething;
+    private bool _moving = false;
 
     private void Awake()
     {
@@ -80,7 +82,11 @@ public class Player : MonoBehaviour
 
         IsDead = false;
         IsLanded = true;
-        currentMovementSpeed = minMovementSpeed;
+
+        if (useAcceleration)
+            currentMovementSpeed = minMovementSpeed;
+        else
+            currentMovementSpeed = maxMovementSpeed;
     }
 
     private void OnEnable() => CharacterPositionHolder.PlayerInScene = this;
@@ -103,10 +109,27 @@ public class Player : MonoBehaviour
     {
         if (!IsMoving() && IsGrounded() && rb) rb.velocity = Vector3.zero;
 
-        UpdateCurrentMovementSpeed();
+        TriggerMovementEvents();
+
+        if (!useAcceleration) return;
+        HandleAcceleration();
+    }
+    
+    private void TriggerMovementEvents()
+    {
+        if (IsMoving() && !_moving)
+        {
+            _moving = true;
+            PlayerEvents.OnStartedMoving?.Invoke();
+        }
+        else if (!IsMoving() && _moving)
+        {
+            _moving = false;
+            PlayerEvents.OnStoppedMoving?.Invoke();
+        }
     }
 
-    private void UpdateCurrentMovementSpeed()
+    private void HandleAcceleration()
     {
         if (IsMoving())
             currentMovementSpeed = Mathf.MoveTowards(currentMovementSpeed, maxMovementSpeed, accelerationRate * Time.deltaTime);

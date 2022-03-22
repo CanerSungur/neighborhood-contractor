@@ -29,18 +29,45 @@ public class PlayerCollision : MonoBehaviour
         }
 
         // spend money section
-        if (other.transform.parent.TryGetComponent(out IBuilding building) && !building.Builded)
+        if (other.transform.parent.TryGetComponent(out IBuilding building) && !building.PlayerIsInBuildArea)
         {
             building.PlayerIsInBuildArea = true;
-            StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(building.MoneyPointTransform);
-            //building.ConsumeMoney(StatManager.SpendValue, StatManager.SpendRate);
-            _player.SpendMoney(StatManager.SpendValue);
+
+            if (building.CanBeBuilt)
+                BuildManager.Instance.StartBuilding(building);
+            else
+                BuildManager.Instance.StopBuilding(building);
+
+            //building.PlayerIsInBuildArea = true;
+            //StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(building.MoneyPointTransform);
+            ////building.ConsumeMoney(StatManager.SpendValue, StatManager.SpendRate);
+            //_player.SpendMoney(StatManager.SpendValue);
         }
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        //if (other.transform.parent.TryGetComponent(out IBuilding building) && !building.Builded)
+        //{
+        //    building.PlayerIsInBuildArea = true;
+            
+        //    float timePassed = Time.time + StatManager.SpendTime;
+        //    if (Time.time > timePassed)
+        //    {
+        //        timePassed = Time.time + StatManager.SpendTime;
+        //        StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(building.MoneyPointTransform);
+        //        //building.ConsumeMoney(StatManager.SpendValue, StatManager.SpendRate);
+        //        _player.SpendMoney(StatManager.SpendValue);
+        //    }
+        //}
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.transform.parent.TryGetComponent(out IBuilding building) && building.PlayerIsInBuildArea)
+        {
             building.PlayerIsInBuildArea = false;
+            BuildManager.Instance.StopBuilding(building);
+        }
     }
 }

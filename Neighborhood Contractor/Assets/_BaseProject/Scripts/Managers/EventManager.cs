@@ -14,5 +14,5 @@ public static class CollectableEvents
 
 public static class PlayerEvents
 {
-    public static Action OnKill, OnJump, OnLand, OnCollectedMoney, OnSpendMoney;
+    public static Action OnStartedMoving, OnStoppedMoving, OnKill, OnJump, OnLand, OnCollectedMoney, OnSpendMoney;
 }
