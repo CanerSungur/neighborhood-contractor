@@ -12,10 +12,14 @@ public class DataManager : MonoBehaviour
     public int TotalCoin { get; private set; }
     public int RewardCoin { get; private set; }
 
+    public int TotalMoney { get; private set; }
+
     private void Awake()
     {
         TotalCoin = PlayerPrefs.GetInt("TotalCoin", 0);
         RewardCoin = 0;
+
+        TotalMoney = PlayerPrefs.GetInt("TotalMoney", 0);
     }
 
     private void Start()

@@ -41,16 +41,18 @@ public class PlayerAnimMovement : MonoBehaviour
     private void Awake()
     {
         player = GetComponent<Player>();
+        
+    }
+
+    private void Start()
+    {
         MultipleMovementScriptConflictCheck();
 
         if (Camera.main == null)
             throw new Exception("No Main Camera Found!");
         else
             _camTransform = Camera.main.transform;
-    }
 
-    private void Start()
-    {
         player.animator.applyRootMotion = false;
     }
 

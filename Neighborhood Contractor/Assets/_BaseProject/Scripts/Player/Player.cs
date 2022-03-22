@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
     internal PlayerChrMovement playerChrMovement;
     internal PlayerAnimMovement playerAnimMovement;
     internal SwerveMovement swerveMovement;
+    internal PlayerMoneyStackHandler moneyStackHandler;
 
     [Header("-- MOVEMENT SETUP --")]
     [SerializeField] private float maxMovementSpeed = 3f;
@@ -55,7 +56,7 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    public event Action OnKill, OnJump, OnLand;
+    public event Action OnKill, OnJump, OnLand, OnCollectedMoney, OnSpendMoney;
     public event Action<CollectableEffect> OnPickedUpSomething;
 
     private void Awake()
@@ -66,6 +67,7 @@ public class Player : MonoBehaviour
 
         joystickInput = GetComponent<JoystickInput>();
         playerCollision = GetComponent<PlayerCollision>();
+        moneyStackHandler = GetComponent<PlayerMoneyStackHandler>();
 
         // Input Components
         TryGetComponent(out swerveInput);
@@ -89,8 +91,6 @@ public class Player : MonoBehaviour
         OnKill += () => IsDead = true;
         OnJump += () => IsLanded = false;
         OnLand += () => IsLanded = true;
-
-        playerCollision.OnHitSomethingBack += () => currentMovementSpeed = minMovementSpeed;
     }
 
     private void OnDisable()
@@ -98,8 +98,6 @@ public class Player : MonoBehaviour
         OnKill -= () => IsDead = true;
         OnJump -= () => IsLanded = false;
         OnLand -= () => IsLanded = true;
-
-        playerCollision.OnHitSomethingBack -= () => currentMovementSpeed = minMovementSpeed;
     }
 
     private void Update()
@@ -136,5 +134,7 @@ public class Player : MonoBehaviour
     public void KillTrigger() => OnKill?.Invoke();
     public void JumpTrigger() => OnJump?.Invoke();
     public void LandTrigger() => OnLand?.Invoke();
+    public void CollectMoneyTrigger() => OnCollectedMoney?.Invoke();
+    public void SpendMoneyTrigger() => OnSpendMoney?.Invoke();
     public void PickUpTrigger(CollectableEffect effect) => OnPickedUpSomething?.Invoke(effect);
 }

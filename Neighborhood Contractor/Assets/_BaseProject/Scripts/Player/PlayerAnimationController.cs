@@ -23,6 +23,7 @@ public class PlayerAnimationController : MonoBehaviour
 
     private void Start()
     {
+        player.animator.SetBool(onGroundID, true);
         player.OnJump += Jump;
     }
 
@@ -41,7 +42,7 @@ public class PlayerAnimationController : MonoBehaviour
         ConvertMoveInput(move);
         UpdateAnimator();
 
-        GroundCheck();
+        //GroundCheck();
     }
 
     private void UpdateAnimator()

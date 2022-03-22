@@ -1,9 +1,6 @@
 using System;
 
-public static class EventManager
-{
-    
-}
+public static class EventManager { }
 
 public static class GameEvents
 {

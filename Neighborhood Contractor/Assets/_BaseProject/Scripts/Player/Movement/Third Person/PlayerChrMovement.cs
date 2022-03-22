@@ -42,6 +42,9 @@ public class PlayerChrMovement : MonoBehaviour
     {
         controller.Move(player.joystickInput.InputValue * Time.deltaTime * player.CurrentMovementSpeed);
 
+        if (player.IsMoving())
+            gameObject.transform.forward = player.joystickInput.InputValue;
+
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }

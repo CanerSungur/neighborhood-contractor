@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6093200241994691973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8136640425565930479}
+  m_Layer: 0
+  m_Name: Money Stack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8136640425565930479
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6093200241994691973}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: -0.65}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8592876449704432112}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8592876449704463744
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +404,8 @@ GameObject:
   - component: {fileID: 1272816956585915519}
   - component: {fileID: 5398165419453685667}
   - component: {fileID: 4255324550523300039}
-  - component: {fileID: 7905284249027484420}
+  - component: {fileID: 780288918}
+  - component: {fileID: 4091078725109313164}
   m_Layer: 0
   m_Name: Stickman_CharacterController
   m_TagString: Untagged
@@ -395,6 +426,7 @@ Transform:
   m_Children:
   - {fileID: 8592876449704432120}
   - {fileID: 8592876449704432114}
+  - {fileID: 8136640425565930479}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -408,10 +440,10 @@ Animator:
   m_GameObject: {fileID: 8592876449704463762}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: fa7f36c71b9e8fa4798df3a931c2fd92, type: 3}
-  m_Controller: {fileID: 9100000, guid: 310c4dbd0acc3244a93ff082a6ad5beb, type: 2}
+  m_Controller: {fileID: 9100000, guid: 6f69431df10a82644bba5aa5a4ad5322, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -467,6 +499,8 @@ MonoBehaviour:
   turnSmoothTime: 0.15
   jumpForce: 7
   jumpCooldown: 1
+  swerveSpeed: 0.5
+  maxSwerveAmount: 1
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 72
@@ -508,7 +542,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c199f3d84c645d64b942baaafa6dacfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7905284249027484420
+--- !u!114 &780288918
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -517,7 +551,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 8592876449704463762}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf3ce6e52ed44fd45a030029be929937, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cf80db41327c8849b3e170f40b89724, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stackTransform: {fileID: 8136640425565930479}
+  moneyOffset: 0.15
+  carryCapacity: 5
+--- !u!114 &4091078725109313164
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8592876449704463762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2ff980a43d64ef489e0177d67860b98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8592876449704463764
