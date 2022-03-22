@@ -22,13 +22,19 @@ public class Money : MonoBehaviour
         transform.DOLocalRotate(new Vector3(0f, 90f, 0f), 1f);
      
         _collected = true;
+        StatManager.CollectedMoney.Add(this);
+        Debug.Log(StatManager.CollectedMoney.Count);
     }
 
-    public void Spend(Vector3 position, Transform parent)
+    public void Spend(Transform parent)
     {
         transform.parent = parent;
 
-        transform.position = position;
+        transform.DOLocalJump(Vector3.zero, .5f, 1, 1f);
+        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), 1f);
+
         _spent = true;
+        StatManager.CollectedMoney.Remove(this);
+        Debug.Log(StatManager.CollectedMoney.Count);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,7 +10,9 @@ public class StatManager : MonoBehaviour
     private GameManager gameManager;
     public GameManager GameManager => gameManager == null ? gameManager = GetComponent<GameManager>() : gameManager;
 
-    public static int CarryCapacity, CurrentCarry, MoneyValue;
+    public static int CarryCapacity, CurrentCarry, MoneyValue, SpendValue;
+    public static float SpendRate;
+    public static List<Money> CollectedMoney;
 
     public int TotalMoney { get; private set; }
     public int RewardMoney { get; private set; }
@@ -20,7 +23,11 @@ public class StatManager : MonoBehaviour
         // Default Stats
         CurrentCarry = 0;
         CarryCapacity = 20;
-        MoneyValue = 100;
+        MoneyValue = SpendValue = 100;
+        SpendRate = 1f;
+
+        CollectedMoney = new List<Money>();
+        CollectedMoney.Clear();
 
         TotalMoney = PlayerPrefs.GetInt("TotalMoney", 0);
         RewardMoney = 0;
@@ -34,12 +41,14 @@ public class StatManager : MonoBehaviour
     private void Start()
     {
         PlayerEvents.OnCollectedMoney += HandleCollectMoney;
+        PlayerEvents.OnSpendMoney += HandleSpendMoney;
         GameEvents.OnCalculateReward += CalculateReward;
     }
 
     private void OnDisable()
     {
         PlayerEvents.OnCollectedMoney -= HandleCollectMoney;
+        PlayerEvents.OnSpendMoney -= HandleSpendMoney;
         GameEvents.OnCalculateReward -= CalculateReward;
     }
 
@@ -47,14 +56,14 @@ public class StatManager : MonoBehaviour
     {
         CurrentCarry++;
         IncreaseTotalMoney(MoneyValue);
-        CollectableEvents.OnIncreaseMoney(MoneyValue);
+        CollectableEvents.OnIncreaseMoney?.Invoke(MoneyValue);
     }
 
     private void HandleSpendMoney()
     {
         CurrentCarry--;
         DecreaseTotalMoney(MoneyValue);
-        CollectableEvents.OnDecreaseMoney(MoneyValue);
+        CollectableEvents.OnDecreaseMoney?.Invoke(MoneyValue);
     }
 
     private void DecreaseTotalMoney(int amount) => TotalMoney -= amount;

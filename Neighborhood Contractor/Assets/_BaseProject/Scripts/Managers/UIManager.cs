@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
         GameEvents.OnGameEnd += GameEnded;
 
         CollectableEvents.OnIncreaseMoney += hud.UpdateMoneyUITrigger;
+        CollectableEvents.OnDecreaseMoney += hud.UpdateMoneyUITrigger;
     }
 
     private void OnDisable()
@@ -38,6 +39,7 @@ public class UIManager : MonoBehaviour
         GameEvents.OnGameEnd -= GameEnded;
 
         CollectableEvents.OnIncreaseMoney -= hud.UpdateMoneyUITrigger;
+        CollectableEvents.OnDecreaseMoney -= hud.UpdateMoneyUITrigger;
     }
 
     private void GameStarted()
