@@ -11,7 +11,7 @@ public class LevelEndRewardUI : MonoBehaviour
     public HUDUI HUDUI { get { return hudUI == null ? hudUI = GetComponentInParent<HUDUI>() : hudUI; } }
 
     [Header("-- SETUP --")]
-    private TextMeshProUGUI rewardCoinText;
+    private TextMeshProUGUI rewardMoneyText;
     private readonly int startID = Animator.StringToHash("Start");
     private readonly int amountID = Animator.StringToHash("Amount");
 
@@ -29,8 +29,8 @@ public class LevelEndRewardUI : MonoBehaviour
 
     private void TriggerReward()
     {
-        rewardCoinText = transform.GetChild(transform.childCount - 1).GetComponent<TextMeshProUGUI>();
-        rewardCoinText.text = "+" + HUDUI.UIManager.GameManager.dataManager.RewardCoin;
+        rewardMoneyText = transform.GetChild(transform.childCount - 1).GetComponent<TextMeshProUGUI>();
+        rewardMoneyText.text = "+" + HUDUI.UIManager.GameManager.statManager.RewardMoney;
 
         HUDUI.Animator.enabled = true;
         HUDUI.Animator.SetTrigger(startID);

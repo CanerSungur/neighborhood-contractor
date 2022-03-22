@@ -14,7 +14,7 @@ public class CollectableManager : MonoBehaviour
     [SerializeField, Tooltip("Amount of trap that will be instantiated.")] private int trapAmountInScene;
     [SerializeField, Tooltip("Object that will be spawned as reward when an object is destroyed.")] private GameObject coinRewardPrefab;
     [SerializeField, Tooltip("Offset relative to the destroyed object's position.")] private float spawnPointOffset = 2.75f;
-    public Transform CoinHUDTransform => GameManager.uiManager.CoinHUDTransform;
+    public Transform CoinHUDTransform => GameManager.uiManager.MoneyHUDTransform;
 
     public static event Action<Vector3, int> OnSpawnCoinRewards;
 

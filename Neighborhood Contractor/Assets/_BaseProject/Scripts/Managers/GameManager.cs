@@ -8,7 +8,7 @@ using System;
 public class GameManager : MonoBehaviour
 {
     [Header("-- MANAGER REFERENCES --")]
-    internal DataManager dataManager;
+    internal StatManager statManager;
     internal UIManager uiManager;
     internal LevelManager levelManager;
     internal GameplayManager gameplayManager;
@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     {
         IsSoundOn = IsVibrationOn = true;
 
-        TryGetComponent(out dataManager);
+        TryGetComponent(out statManager);
         TryGetComponent(out uiManager);
         TryGetComponent(out levelManager);
         TryGetComponent(out gameplayManager);

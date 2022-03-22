@@ -8,7 +8,7 @@ public class Trap : CollectableBase
     private Collider coll;
 
     [Header("-- PROPERTIES --")]
-    [SerializeField, Tooltip("Value of this trap. Use this to effect whatever you want.")] private int value = 1;
+    //[SerializeField, Tooltip("Value of this trap. Use this to effect whatever you want.")] private int value = 1;
     [SerializeField, Tooltip("Should start moving when enabled?")] private bool startMovingOnEnable;
 
     [Header("-- MOVEMENT SETUP --")]

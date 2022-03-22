@@ -45,16 +45,16 @@ public class GameplayManager : MonoBehaviour
 
     private void Start()
     {
-        player.OnPickedUpSomething += UpdatePickUpCondition;
+        //PlayerEvents.OnPickedUpSomething += UpdatePickUpCondition;
 
-        player.OnKill += LevelFail;
+        PlayerEvents.OnKill += LevelFail;
     }
 
     private void OnDisable()
     {
-        player.OnPickedUpSomething -= UpdatePickUpCondition;
+        //PlayerEvents.OnPickedUpSomething -= UpdatePickUpCondition;
 
-        player.OnKill -= LevelFail;
+        PlayerEvents.OnKill -= LevelFail;
     }
 
     private void LevelFail()

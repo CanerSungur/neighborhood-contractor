@@ -14,14 +14,14 @@ public class PlayerAudio : MonoBehaviour
 
     private void Start()
     {
-        player.OnJump += Jump;
-        player.OnLand += Land;
+        PlayerEvents.OnJump += Jump;
+        PlayerEvents.OnLand += Land;
     }
 
     private void OnDisable()
     {
-        player.OnJump -= Jump;
-        player.OnLand -= Land;
+        PlayerEvents.OnJump -= Jump;
+        PlayerEvents.OnLand -= Land;
     }
 
     private void Jump() => AudioHandler.PlayAudio(AudioHandler.AudioType.Player_Jump, transform.position);

@@ -67,7 +67,7 @@ public class CoinMovement : MonoBehaviour
             //PlayerStats.OnIncreaseCoin?.Invoke(1);
             
             //HUDUI.UpdateCoinTrigger(value);
-            CollectableEvents.OnIncreaseCoin?.Invoke(Coin.Value);
+            //CollectableEvents.OnIncreaseMoney?.Invoke(Coin.Value);
             transform.DOScale(0, 0.5f).SetEase(Ease.OutElastic).OnComplete(() => {
 
 

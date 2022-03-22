@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8054539559921111783}
-  - component: {fileID: 8054539559921111790}
   - component: {fileID: 8054539559921111787}
   - component: {fileID: 8054539559921111786}
   - component: {fileID: 8054539559921111781}
   - component: {fileID: 8054539559921111785}
   - component: {fileID: 8054539559921111780}
+  - component: {fileID: 8054539559644026292}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -36,26 +36,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8054539559921111790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8054539559921111782}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69b4613a01089cd4fa4595962750f08a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _WinType: 1
-  coinNeededToWin: 5
-  trapNeededTofail: 2
-  phaseCountToWin: 4
-  coinNeededForPhase_1: 1
-  coinNeededForPhase_2: 3
-  coinNeededForPhase_3: 4
-  gameEndAfterDelay: 1
 --- !u!114 &8054539559921111787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -82,11 +62,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   touchToStart: {fileID: 0}
   hud: {fileID: 0}
-  levelSuccess: {fileID: 0}
-  levelFail: {fileID: 0}
   settings: {fileID: 0}
-  winScreenDelay: 1
-  failScreenDelay: 1
 --- !u!114 &8054539559921111781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,3 +105,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a715e7cd36f7b4a8b463f363910e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8054539559644026292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054539559921111782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b32141c10a3c52848bfef0e6907e135c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameStartCM: {fileID: 0}
+  gameplayCM: {fileID: 0}

@@ -28,7 +28,7 @@ public class JoystickInput : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && player.CanJump && !jumpPressed)
         {
-            player.JumpTrigger();
+            PlayerEvents.OnJump?.Invoke();
             jumpPressed = true;
         }
 

@@ -28,7 +28,7 @@ public class Coin : CollectableBase
         if (CollectStyle == CollectStyle.OnSite)
         {
             // Apply instantly.
-            CollectableEvents.OnIncreaseCoin?.Invoke(Value);
+            CollectableEvents.OnIncreaseMoney?.Invoke(Value);
         }
         else if (CollectStyle == CollectStyle.MoveToUI)
         {

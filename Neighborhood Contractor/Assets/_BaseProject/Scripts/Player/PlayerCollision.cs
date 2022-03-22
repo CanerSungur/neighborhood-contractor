@@ -1,5 +1,4 @@
 using UnityEngine;
-using System;
 
 [RequireComponent(typeof(Player))]
 public class PlayerCollision : MonoBehaviour
@@ -11,33 +10,24 @@ public class PlayerCollision : MonoBehaviour
         _player = GetComponent<Player>();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (!_player.IsLanded)
-            _player.LandTrigger();
-
-
-        if (collision.gameObject.TryGetComponent(out CollectableBase collectable))
-        {
-            collectable.Collect();
-            _player.PickUpTrigger(collectable.CollectableEffect);
-        }
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out CollectableBase collectable))
-        {
-            collectable.Collect();
-            _player.PickUpTrigger(collectable.CollectableEffect);
-        }
+        #region Coin
+
+        //if (other.TryGetComponent(out CollectableBase collectable))
+        //{
+        //    collectable.Collect();
+        //    _player.PickUpTrigger(collectable.CollectableEffect);
+        //}
+
+        #endregion
 
         if (other.TryGetComponent(out Money money) && money.CanBeCollected)
         {
             money.Collect(_player.moneyStackHandler.TargetStackPosition, _player.moneyStackHandler.StackTransform);
-            _player.CollectMoneyTrigger();
-
-            Debug.Log("Hit Money");
+            _player.CollectMoney(StatManager.MoneyValue);
         }
+
+        // spend money section
     }
 }

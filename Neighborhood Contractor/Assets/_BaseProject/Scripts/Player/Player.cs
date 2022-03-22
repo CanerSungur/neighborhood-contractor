@@ -56,8 +56,7 @@ public class Player : MonoBehaviour
 
     #endregion
 
-    public event Action OnKill, OnJump, OnLand, OnCollectedMoney, OnSpendMoney;
-    public event Action<CollectableEffect> OnPickedUpSomething;
+    //public event Action<CollectableEffect> OnPickedUpSomething;
 
     private void Awake()
     {
@@ -88,16 +87,16 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        OnKill += () => IsDead = true;
-        OnJump += () => IsLanded = false;
-        OnLand += () => IsLanded = true;
+        PlayerEvents.OnKill += () => IsDead = true;
+        PlayerEvents.OnJump += () => IsLanded = false;
+        PlayerEvents.OnLand += () => IsLanded = true;
     }
 
     private void OnDisable()
     {
-        OnKill -= () => IsDead = true;
-        OnJump -= () => IsLanded = false;
-        OnLand -= () => IsLanded = true;
+        PlayerEvents.OnKill -= () => IsDead = true;
+        PlayerEvents.OnJump -= () => IsLanded = false;
+        PlayerEvents.OnLand -= () => IsLanded = true;
     }
 
     private void Update()
@@ -131,10 +130,15 @@ public class Player : MonoBehaviour
             Physics.Raycast(coll.bounds.center, Vector3.down, coll.bounds.extents.y + groundedHeightLimit, groundLayerMask);
     }
 
-    public void KillTrigger() => OnKill?.Invoke();
-    public void JumpTrigger() => OnJump?.Invoke();
-    public void LandTrigger() => OnLand?.Invoke();
-    public void CollectMoneyTrigger() => OnCollectedMoney?.Invoke();
-    public void SpendMoneyTrigger() => OnSpendMoney?.Invoke();
-    public void PickUpTrigger(CollectableEffect effect) => OnPickedUpSomething?.Invoke(effect);
+    public void CollectMoney(int amount)
+    {
+        PlayerEvents.OnCollectedMoney?.Invoke();
+        CollectableEvents.OnIncreaseMoney?.Invoke(amount);
+    }
+
+    public void SpendMoney(int amount)
+    {
+        PlayerEvents.OnSpendMoney?.Invoke();
+        CollectableEvents.OnDecreaseMoney?.Invoke(amount);
+    }
 }

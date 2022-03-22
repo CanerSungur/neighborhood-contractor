@@ -11,7 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private HUDUI hud;
     [SerializeField] private SettingsBasicUI settings;
 
-    public Transform CoinHUDTransform => hud.CoinHUDTransform;
+    public Transform MoneyHUDTransform => hud.MoneyHUDTransform;
 
     private void Init()
     {
@@ -29,7 +29,7 @@ public class UIManager : MonoBehaviour
         GameEvents.OnGameStart += GameStarted;
         GameEvents.OnGameEnd += GameEnded;
 
-        CollectableEvents.OnIncreaseCoin += hud.UpdateCoinUITrigger;
+        CollectableEvents.OnIncreaseMoney += hud.UpdateMoneyUITrigger;
     }
 
     private void OnDisable()
@@ -37,7 +37,7 @@ public class UIManager : MonoBehaviour
         GameEvents.OnGameStart -= GameStarted;
         GameEvents.OnGameEnd -= GameEnded;
 
-        CollectableEvents.OnIncreaseCoin -= hud.UpdateCoinUITrigger;
+        CollectableEvents.OnIncreaseMoney -= hud.UpdateMoneyUITrigger;
     }
 
     private void GameStarted()
@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
         touchToStart.gameObject.SetActive(false);
         settings.gameObject.SetActive(true);
         hud.gameObject.SetActive(true);
-        hud.UpdateCoinUITrigger(GameManager.dataManager.TotalCoin);
+        hud.UpdateMoneyUITrigger(GameManager.statManager.TotalMoney);
         hud.UpdateLevelUTrigger(GameManager.levelManager.Level);
     }
 

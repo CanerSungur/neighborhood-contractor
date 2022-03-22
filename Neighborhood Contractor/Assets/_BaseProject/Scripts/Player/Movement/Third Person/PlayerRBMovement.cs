@@ -16,12 +16,12 @@ public class PlayerRBMovement : MonoBehaviour
 
     private void Start()
     {
-        player.OnJump += () => Delayer.DoActionAfterDelay(this, jumpForceDelay, DoJump);
+        PlayerEvents.OnJump += () => Delayer.DoActionAfterDelay(this, jumpForceDelay, DoJump);
     }
 
     private void OnDisable()
     {
-        player.OnJump -= () => Delayer.DoActionAfterDelay(this, jumpForceDelay, DoJump);
+        PlayerEvents.OnJump -= () => Delayer.DoActionAfterDelay(this, jumpForceDelay, DoJump);
     }
 
     private void FixedUpdate()

@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using DG.Tweening;
+using ZestGames.Utility;
 
 public class HUDUI : MonoBehaviour
 {
@@ -12,53 +13,72 @@ public class HUDUI : MonoBehaviour
     public Animator Animator { get { return animator == null ? animator = GetComponent<Animator>() : animator; } }
 
     [Header("-- TEXT REFERENCES --")]
-    [SerializeField] private TextMeshProUGUI coinText;
-    [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI currentMoneyText;
+    [SerializeField] private TextMeshProUGUI capacityMoneyText;
+    //[SerializeField] private TextMeshProUGUI levelText;
+    private TextMeshProUGUI[] hudTexts;
 
     [Header("-- COIN SETUP --")]
-    [SerializeField] private Transform coinHUDTransform;
-    public Transform CoinHUDTransform => coinHUDTransform;
+    [SerializeField] private Transform moneyHUDTransform;
+    public Transform MoneyHUDTransform => moneyHUDTransform;
 
-    public event Action<int> OnUpdateCoinUI;
+    public event Action<int> OnUpdateMoneyUI;
     public event Action<int> OnUpdateLevelUI;
 
     private void OnEnable()
     {
         Animator.enabled = false;
+        hudTexts = GetComponentsInChildren<TextMeshProUGUI>();
+        //capacityMoneyText.text = StatManager.MoneyCapacity.ToString();
+        capacityMoneyText.text = Shortener.IntToStringShortener(StatManager.MoneyCapacity);
 
-        OnUpdateCoinUI += UpdateCoinText;
-        OnUpdateLevelUI += UpdateLevelText;
+        OnUpdateMoneyUI += UpdateMoneyText;
+        //OnUpdateLevelUI += UpdateLevelText;
     }
 
     private void OnDisable()
     {
-        OnUpdateCoinUI -= UpdateCoinText;
-        OnUpdateLevelUI -= UpdateLevelText;
+        OnUpdateMoneyUI -= UpdateMoneyText;
+        //OnUpdateLevelUI -= UpdateLevelText;
     }
 
-    public void UpdateCoinUITrigger(int ignoreThis) => OnUpdateCoinUI?.Invoke(ignoreThis);
+    public void UpdateMoneyUITrigger(int ignoreThis) => OnUpdateMoneyUI?.Invoke(ignoreThis);
     public void UpdateLevelUTrigger(int level) => OnUpdateLevelUI?.Invoke(level);
-    private void UpdateLevelText(int level)
+    //private void UpdateLevelText(int level)
+    //{
+    //    levelText.text = $"Level {level}";
+    //}
+
+    private void UpdateMoneyText(int ignoreThis)
     {
-        //Debug.Log("Updated Coin Text");
-        levelText.text = $"Level {level}";
+        //currentMoneyText.text = UIManager.GameManager.statManager.TotalMoney.ToString();
+        currentMoneyText.text = Shortener.IntToStringShortener(UIManager.GameManager.statManager.TotalMoney);
+
+        ShakeMoneyHUD();
+        ChangeMoneyTextColor();
     }
-    private void UpdateCoinText(int ignoreThis)
-    {
-        //Debug.Log("Updated Level Text");
-        //coinText.text = coin.ToString();
-        coinText.text = UIManager.GameManager.dataManager.TotalCoin.ToString();
 
-        ShakeCoinHUD();
+    private void ShakeMoneyHUD()
+    {
+        MoneyHUDTransform.DORewind();
+
+        MoneyHUDTransform.DOShakePosition(.25f, .25f);
+        MoneyHUDTransform.DOShakeRotation(.5f, .25f);
+        MoneyHUDTransform.DOShakeScale(.25f, .25f);
     }
 
-    private void ShakeCoinHUD()
+    private void ChangeMoneyTextColor()
     {
-        CoinHUDTransform.DORewind();
-
-        CoinHUDTransform.DOShakePosition(.5f, .5f);
-        CoinHUDTransform.DOShakeRotation(.5f, .5f);
-        CoinHUDTransform.DOShakeScale(.5f, .5f);
+        if (UIManager.GameManager.statManager.TotalMoney == StatManager.MoneyCapacity)
+        {
+            foreach (TextMeshProUGUI text in hudTexts)
+                text.color = Color.red;
+        }
+        else
+        {
+            foreach (TextMeshProUGUI text in hudTexts)
+                text.color = Color.white;
+        }
     }
 
     // Animation event listener.
@@ -67,6 +87,6 @@ public class HUDUI : MonoBehaviour
         if (message.Equals("RewardAnimEnded")) // Level success screen should trigger here.
             GameEvents.OnLevelSuccess?.Invoke();
         else if (message.Equals("UpdateCoinAfterReward"))
-            UpdateCoinUITrigger(UIManager.GameManager.dataManager.TotalCoin);
+            UpdateMoneyUITrigger(UIManager.GameManager.statManager.TotalMoney);
     }
 }

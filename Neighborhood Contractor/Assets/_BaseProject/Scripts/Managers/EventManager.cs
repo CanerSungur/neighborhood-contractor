@@ -9,5 +9,10 @@ public static class GameEvents
 
 public static class CollectableEvents
 {
-    public static Action<int> OnIncreaseCoin;
+    public static Action<int> OnIncreaseMoney, OnDecreaseMoney;
+}
+
+public static class PlayerEvents
+{
+    public static Action OnKill, OnJump, OnLand, OnCollectedMoney, OnSpendMoney;
 }

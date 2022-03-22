@@ -24,12 +24,12 @@ public class PlayerAnimationController : MonoBehaviour
     private void Start()
     {
         player.animator.SetBool(onGroundID, true);
-        player.OnJump += Jump;
+        PlayerEvents.OnJump += Jump;
     }
 
     private void OnDisable()
     {
-        player.OnJump-= Jump;
+        PlayerEvents.OnJump-= Jump;
     }
 
     private void FixedUpdate()

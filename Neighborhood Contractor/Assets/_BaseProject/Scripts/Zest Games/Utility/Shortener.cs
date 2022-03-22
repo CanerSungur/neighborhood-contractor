@@ -11,14 +11,14 @@ namespace ZestGames.Utility
         /// <returns></returns>
         public static string IntToStringShortener(int value)
         {
-            if (value < 10000)
+            if (value < 1000)
                 return value.ToString();
-            else if (value >= 10000 && value < 1000000)
-                return (value / 1000).ToString() + "K";
+            else if (value >= 1000 && value < 1000000)
+                return (value / 1000) + "." + ((value % 1000) / 100) + "K";
             else if (value >= 1000000 && value < 1000000000)
-                return (value / 1000000).ToString() + "M";
+                return (value / 1000000) + "." + ((value % 1000000) / 100000) + "M";
             else if (value >= 1000000000)
-                return (value / 1000000000).ToString() + "B";
+                return (value / 1000000000) + "." + ((value % 1000000000) / 100000000) + "B";
             else
                 return "";
         }
@@ -31,9 +31,9 @@ namespace ZestGames.Utility
         /// <returns></returns>
         public static string FloatToStringShortener(float value)
         {
-            if (value < 10000)
+            if (value < 1000)
                 return value.ToString();
-            else if (value >= 10000 && value < 1000000)
+            else if (value >= 1000 && value < 1000000)
                 return (value / 1000).ToString() + "K";
             else if (value >= 1000000 && value < 1000000000)
                 return (value / 1000000).ToString() + "M";
