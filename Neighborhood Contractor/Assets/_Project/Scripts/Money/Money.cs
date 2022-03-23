@@ -20,11 +20,14 @@ public class Money : MonoBehaviour
 
     public bool CanBeCollected => !_collected && StatManager.CurrentCarry < StatManager.CarryCapacity;
     public bool CanBeSpent => !_spent && _collected;
+    public int StackRowNumber { get; private set; }
 
     private void Awake()
     {
         _animationController = GetComponent<MoneyAnimationController>();
-        StopWalkingAnimation();
+        DisableAnimator();
+
+        StackRowNumber = 0; // Meaning it's not in the stack.
     }
 
     private void OnDisable()
@@ -37,14 +40,20 @@ public class Money : MonoBehaviour
         transform.parent = parent;
 
         transform.DOLocalJump(position, _collectMoneyHeight, 1, _animationTime);
-        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime);
+        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime).OnComplete(() =>
+        {
+            EnableAnimator();
+            CollectableEvents.OnCalculateMoveWeight?.Invoke();
+            _animationController.SetFirstState();
+        });
 
         // money can start walking animation after DoTween anim finishes.
-        Delayer.DoActionAfterDelay(this, _animationTime, StartWalkingAnimation);
+        //Delayer.DoActionAfterDelay(this, _animationTime, StartWalkingAnimation);
+        StackRowNumber = StatManager.CurrentCarry + 1;
+        //Delayer.DoActionAfterDelay(this, _animationTime + .01f, () => CollectableEvents.OnCalculateMoveWeight?.Invoke());
 
         _collected = true;
         StatManager.CollectedMoney.Add(this);
-        //Debug.Log(StatManager.CollectedMoney.Count);
     }
 
     public void Spend(Transform parent)
@@ -55,14 +64,16 @@ public class Money : MonoBehaviour
         transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime);
 
         // money will stop walking animation immediately.
-        StopWalkingAnimation();
+        StackRowNumber = 0;
+        CollectableEvents.OnCalculateMoveWeight?.Invoke();
+        DisableAnimator();
 
         _spent = true;
         StatManager.CollectedMoney.Remove(this);
         //Debug.Log(StatManager.CollectedMoney.Count);
     }
 
-    private void StopWalkingAnimation() => _animationController.enabled = Animator.enabled = false;
+    private void DisableAnimator() => _animationController.enabled = Animator.enabled = false;
 
-    private void StartWalkingAnimation() => _animationController.enabled = Animator.enabled = true;
+    private void EnableAnimator() => _animationController.enabled = Animator.enabled = true;
 }

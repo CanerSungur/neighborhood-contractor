@@ -9,6 +9,7 @@ public static class GameEvents
 
 public static class CollectableEvents
 {
+    public static Action OnCalculateMoveWeight;
     public static Action<int> OnIncreaseMoney, OnDecreaseMoney;
 }
 

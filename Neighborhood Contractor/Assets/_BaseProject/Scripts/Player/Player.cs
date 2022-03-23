@@ -58,7 +58,8 @@ public class Player : MonoBehaviour
     #endregion
 
     //public event Action<CollectableEffect> OnPickedUpSomething;
-    private bool _moving = false;
+    private static bool _moving = false;
+    public static bool Moving => _moving;
 
     private void Awake()
     {
@@ -82,6 +83,7 @@ public class Player : MonoBehaviour
 
         IsDead = false;
         IsLanded = true;
+        _moving = false;
 
         if (useAcceleration)
             currentMovementSpeed = minMovementSpeed;

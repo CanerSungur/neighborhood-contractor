@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public interface IBuilding
@@ -10,4 +11,9 @@ public interface IBuilding
     public int ConsumedMoney { get; }
     void ConsumeMoney(int amount);
     void FinishBuilding();
+
+    void IncomeMoneyIsSent(Money money);
+    public int IncomeMoneyCount { get; }
+    public bool CanCollectIncome { get; }
+    public List<Money> IncomeMoney { get; }
 }

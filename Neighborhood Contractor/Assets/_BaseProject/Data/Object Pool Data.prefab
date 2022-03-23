@@ -43,4 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25999e86b7a9a354e8f5a74cfd58f8f2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pools: []
+  Pools:
+  - Tag: Money_Income
+    Prefab: {fileID: 7616312413023413412, guid: 75d702d2b6c94394eb1ca709b42abdcc, type: 3}
+    Size: 100

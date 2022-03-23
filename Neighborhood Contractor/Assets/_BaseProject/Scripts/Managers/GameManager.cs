@@ -5,13 +5,13 @@ using DG.Tweening;
 /// Manages all the other managers. Holds game flow events.
 /// If there will be a reward when level is finished, invoke OnCalculateReward instead of OnLevelSuccess.
 /// </summary>
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
     [Header("-- MANAGER REFERENCES --")]
     internal StatManager statManager;
     internal UIManager uiManager;
     internal LevelManager levelManager;
-    internal GameplayManager gameplayManager;
+    internal CollectableManager collectableManager;
 
     public static GameState GameState { get; private set; }
     public static GameEnd GameEnd { get; private set; }
@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        this.Reload();
         DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(500, 50);
 
         IsSoundOn = IsVibrationOn = true;
@@ -27,7 +28,7 @@ public class GameManager : MonoBehaviour
         TryGetComponent(out statManager);
         TryGetComponent(out uiManager);
         TryGetComponent(out levelManager);
-        TryGetComponent(out gameplayManager);
+        TryGetComponent(out collectableManager);
 
         ChangeState(GameState.WaitingToStart);
     }

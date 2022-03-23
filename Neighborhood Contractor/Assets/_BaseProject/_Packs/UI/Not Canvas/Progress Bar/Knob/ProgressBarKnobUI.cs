@@ -14,33 +14,33 @@ public class ProgressBarKnobUI : MonoBehaviour
     [SerializeField] private Animation line_01_Anim;
     [SerializeField] private Animation line_02_Anim;
 
-    private void OnEnable()
-    {
-        GameEvents.OnChangePhase += EnableRelevantKnob;
-    }
+    //private void OnEnable()
+    //{
+    //    GameEvents.OnChangePhase += EnableRelevantKnob;
+    //}
 
-    private void OnDisable()
-    {
-        GameEvents.OnChangePhase -= EnableRelevantKnob;
-    }
+    //private void OnDisable()
+    //{
+    //    GameEvents.OnChangePhase -= EnableRelevantKnob;
+    //}
 
-    private void EnableRelevantKnob()
-    {
-        //if (HUDUI.UIManager.GameManager.gameplayManager.PhaseIsFinished) return;
+    //private void EnableRelevantKnob()
+    //{
+    //    //if (HUDUI.UIManager.GameManager.gameplayManager.PhaseIsFinished) return;
 
-        switch (HUDUI.UIManager.GameManager.gameplayManager.CurrentPhaseCount)
-        {
-            case 2:
-                phase_01_Finished_Anim.Play();
-                break;
-            case 3:
-                phase_02_Finished_Anim.Play();
-                line_01_Anim.Play();
-                break;
-            case 4:
-                phase_03_Finished_Anim.Play();
-                line_02_Anim.Play();
-                break;
-        }
-    }
+    //    switch (HUDUI.UIManager.GameManager.gameplayManager.CurrentPhaseCount)
+    //    {
+    //        case 2:
+    //            phase_01_Finished_Anim.Play();
+    //            break;
+    //        case 3:
+    //            phase_02_Finished_Anim.Play();
+    //            line_01_Anim.Play();
+    //            break;
+    //        case 4:
+    //            phase_03_Finished_Anim.Play();
+    //            line_02_Anim.Play();
+    //            break;
+    //    }
+    //}
 }

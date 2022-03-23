@@ -90,7 +90,7 @@ public class AI : MonoBehaviour
     {
         IsDead = true;
         CharacterPositionHolder.RemoveAI(this);
-        CollectableManager.SpawnCoinRewardsTrigger(transform.position, 5);
+        //CollectableManager.SpawnCoinRewardsTrigger(transform.position, 5);
 
         Delayer.DoActionAfterDelay(this, 2f, () => gameObject.SetActive(false));
     }    

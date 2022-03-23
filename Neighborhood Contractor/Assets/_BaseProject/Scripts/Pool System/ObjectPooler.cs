@@ -49,7 +49,7 @@ public class ObjectPooler : MonoBehaviour
         }
     }
 
-    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation)
+    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation, Transform parent = null)
     {
         if (!PoolDictionary.ContainsKey(tag))
         {
@@ -63,6 +63,7 @@ public class ObjectPooler : MonoBehaviour
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
+        objectToSpawn.transform.parent = parent;
 
         // Add it back to our queue to use it later.
         PoolDictionary[tag].Enqueue(objectToSpawn);

@@ -33,33 +33,21 @@ public class PlayerCollision : MonoBehaviour
         {
             building.PlayerIsInBuildArea = true;
 
+            #region Build Section
+
             if (building.CanBeBuilt)
                 BuildManager.Instance.StartBuilding(building);
             else
                 BuildManager.Instance.StopBuilding(building);
 
-            //building.PlayerIsInBuildArea = true;
-            //StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(building.MoneyPointTransform);
-            ////building.ConsumeMoney(StatManager.SpendValue, StatManager.SpendRate);
-            //_player.SpendMoney(StatManager.SpendValue);
-        }
-    }
+            #endregion
 
-    private void OnTriggerStay(Collider other)
-    {
-        //if (other.transform.parent.TryGetComponent(out IBuilding building) && !building.Builded)
-        //{
-        //    building.PlayerIsInBuildArea = true;
-            
-        //    float timePassed = Time.time + StatManager.SpendTime;
-        //    if (Time.time > timePassed)
-        //    {
-        //        timePassed = Time.time + StatManager.SpendTime;
-        //        StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(building.MoneyPointTransform);
-        //        //building.ConsumeMoney(StatManager.SpendValue, StatManager.SpendRate);
-        //        _player.SpendMoney(StatManager.SpendValue);
-        //    }
-        //}
+            #region Collecting Income Section
+
+            GameManager.Instance.collectableManager.StartCollectingIncome(building);
+
+            #endregion
+        }
     }
 
     private void OnTriggerExit(Collider other)
@@ -68,6 +56,7 @@ public class PlayerCollision : MonoBehaviour
         {
             building.PlayerIsInBuildArea = false;
             BuildManager.Instance.StopBuilding(building);
+            GameManager.Instance.collectableManager.StopCollectingIncome(building);
         }
     }
 }
