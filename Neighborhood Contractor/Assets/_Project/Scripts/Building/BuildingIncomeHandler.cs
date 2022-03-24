@@ -69,6 +69,8 @@ public class BuildingIncomeHandler : MonoBehaviour
                 LayerFinishedCheckForSpawn();
 
                 Spawn();
+
+                Debug.Log("Spawned");
             }
 
             yield return _waitForIncomeTime;
@@ -90,26 +92,30 @@ public class BuildingIncomeHandler : MonoBehaviour
 
     private void PreviousSpawnPosition()
     {
+        _canSpawn = true;
+
         MoneyCount--;
         _currentFinishedRow--;
 
-        if (_currentFinishedRow == 0 && _currentFinishedColumn > 0)
+        if (_currentFinishedRow == 0)
         {
-            _currentFinishedColumn--;
-            _currentFinishedRow = rowLength;
+            if (_currentFinishedColumn > 0)
+            {
+                _currentFinishedColumn--;
+                _currentFinishedRow = rowLength;
+            }
+            else if (_currentFinishedColumn == 0)
+            {
+                if (_currentFinishedLayer > 0)
+                {
+                    _currentFinishedLayer--;
+                    _currentFinishedColumn = columnLength - 1;
+                    _currentFinishedRow = rowLength;
+                }
+                else if (_currentFinishedLayer == 0)
+                    _currentFinishedRow = 0;
+            }
         }
-
-        if (_currentFinishedColumn == 0 && _currentFinishedLayer > 0)
-        {
-            _currentFinishedLayer--;
-            _currentFinishedColumn = columnLength;
-        }
-
-        //if (_currentFinishedLayer == 0)
-        //{
-        //    _currentFinishedRow = 0;
-        //    _currentFinishedColumn = 0;
-        //}
     }
 
     #region Giving Income Checks
@@ -146,7 +152,7 @@ public class BuildingIncomeHandler : MonoBehaviour
 
     private void RowFinishedCheckForSpawn()
     {
-        if (_currentFinishedRow != 0 && _currentFinishedRow % rowLength == 0)
+        if (_currentFinishedRow == rowLength)
         {
             _currentFinishedColumn++;
             _currentFinishedRow = 0;
@@ -155,7 +161,7 @@ public class BuildingIncomeHandler : MonoBehaviour
 
     private void ColumnFinishedCheckForSpawn()
     {
-        if (_currentFinishedColumn != 0 && _currentFinishedColumn % columnLength == 0)
+        if (_currentFinishedColumn == columnLength)
         {
             _currentFinishedLayer++;
             _currentFinishedColumn = 0;

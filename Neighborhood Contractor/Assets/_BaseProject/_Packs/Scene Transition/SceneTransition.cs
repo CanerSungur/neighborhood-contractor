@@ -9,7 +9,7 @@ public class SceneTransition : MonoBehaviour
     private LevelManager levelManager;
 
     [SerializeField] private Animator animator;
-    private float transitionTime = 2f;
+    private float transitionTime = 0f;
 
     private void Awake()
     {

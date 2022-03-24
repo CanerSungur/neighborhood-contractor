@@ -16,6 +16,7 @@ public class FeedbackUI : MonoBehaviour
     private void Awake()
     {
         _feedbackText = transform.GetChild(0).GetChild(0).GetComponent<TextMeshProUGUI>();
+        _feedbackText.transform.parent.gameObject.SetActive(false);
     }
 
     private void Start()

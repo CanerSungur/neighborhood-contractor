@@ -2087,7 +2087,7 @@ MonoBehaviour:
   constructionMat: {fileID: 2100000, guid: a53ecb1e1df320f4fb1d6b0c36ebb38c, type: 2}
   finishedMat: {fileID: 2100000, guid: 76e417c9dca8c83419dea638c59c9dd0, type: 2}
   upgradedMat: {fileID: 2100000, guid: 951d16621ff9131468217b71213f71b5, type: 2}
-  cost: 1500
+  cost: 200
   upgradeCost: 2000
   moneyPointTransform: {fileID: 152448642}
 --- !u!114 &383093962
@@ -6305,6 +6305,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1831071731}
     m_Modifications:
+    - target: {fileID: 183242579, guid: 61eab7cd14a74014c866f949598224a1, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 867666122, guid: 61eab7cd14a74014c866f949598224a1, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6344758413315274136, guid: 61eab7cd14a74014c866f949598224a1, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -8096,6 +8104,10 @@ PrefabInstance:
       propertyPath: gameStartCM
       value: 
       objectReference: {fileID: 1589408146}
+    - target: {fileID: 8054539559921111780, guid: 9e04e5b350854294a84f4dcaaf574857, type: 3}
+      propertyPath: carryCapacity
+      value: 2000
+      objectReference: {fileID: 0}
     - target: {fileID: 8054539559921111782, guid: 9e04e5b350854294a84f4dcaaf574857, type: 3}
       propertyPath: m_Name
       value: Managers

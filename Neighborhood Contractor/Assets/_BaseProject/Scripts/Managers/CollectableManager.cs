@@ -28,11 +28,6 @@ public class CollectableManager : MonoBehaviour
         OnSpawnCoinRewards -= SpawnCoinRewards;
     }
 
-    //private void InitCollectables()
-    //{
-    //    ObjectPooler.Instance.SpawnFromPool("Coin", );
-    //}
-
     private void SpawnCoinRewards(Vector3 spawnPosition, int amount)
     {
         for (int i = 0; i < amount; i++)
@@ -62,7 +57,7 @@ public class CollectableManager : MonoBehaviour
                 }
             }
 
-            yield return new WaitForSeconds(0.25f);
+            yield return new WaitForSeconds(StatManager.TakeIncomeTime);
         }
     }
 }

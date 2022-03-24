@@ -15,9 +15,10 @@ public class StatManager : MonoBehaviour
     [SerializeField] private int moneyValue = 100;
     [SerializeField] private int spendValue = 100;
     [SerializeField] private float spendTime = 0.1f;
+    [SerializeField] private float takeIncomeTime = 0.25f;
 
     public static int CarryCapacity, CurrentCarry, MoneyValue, SpendValue;
-    public static float SpendTime;
+    public static float SpendTime, TakeIncomeTime;
     public static List<Money> CollectedMoney;
 
     public static int TotalMoney { get; private set; }
@@ -33,6 +34,7 @@ public class StatManager : MonoBehaviour
         MoneyValue = moneyValue;
         SpendValue = spendValue;
         SpendTime = spendTime;
+        TakeIncomeTime = takeIncomeTime;
 
         CollectedMoney = new List<Money>();
         CollectedMoney.Clear();
