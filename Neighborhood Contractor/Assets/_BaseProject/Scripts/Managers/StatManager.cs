@@ -20,9 +20,10 @@ public class StatManager : MonoBehaviour
     public static float SpendTime;
     public static List<Money> CollectedMoney;
 
-    public int TotalMoney { get; private set; }
+    public static int TotalMoney { get; private set; }
     public int RewardMoney { get; private set; }
     public static int MoneyCapacity => CarryCapacity * MoneyValue;
+    public int CurrentPopulation { get; private set; }
 
     private void Init()
     {

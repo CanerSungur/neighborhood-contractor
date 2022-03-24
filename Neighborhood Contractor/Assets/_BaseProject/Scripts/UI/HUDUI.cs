@@ -52,7 +52,7 @@ public class HUDUI : MonoBehaviour
     private void UpdateMoneyText(int ignoreThis)
     {
         //currentMoneyText.text = UIManager.GameManager.statManager.TotalMoney.ToString();
-        currentMoneyText.text = Shortener.IntToStringShortener(UIManager.GameManager.statManager.TotalMoney);
+        currentMoneyText.text = Shortener.IntToStringShortener(StatManager.TotalMoney);
 
         ShakeMoneyHUD();
         ChangeMoneyTextColor();
@@ -69,7 +69,7 @@ public class HUDUI : MonoBehaviour
 
     private void ChangeMoneyTextColor()
     {
-        if (UIManager.GameManager.statManager.TotalMoney == StatManager.MoneyCapacity)
+        if (StatManager.TotalMoney == StatManager.MoneyCapacity)
         {
             foreach (TextMeshProUGUI text in hudTexts)
                 text.color = Color.red;
@@ -87,6 +87,6 @@ public class HUDUI : MonoBehaviour
         if (message.Equals("RewardAnimEnded")) // Level success screen should trigger here.
             GameEvents.OnLevelSuccess?.Invoke();
         else if (message.Equals("UpdateCoinAfterReward"))
-            UpdateMoneyUITrigger(UIManager.GameManager.statManager.TotalMoney);
+            UpdateMoneyUITrigger(StatManager.TotalMoney);
     }
 }

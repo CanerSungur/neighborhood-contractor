@@ -23,11 +23,22 @@ public class BuildManager : Singleton<BuildManager>
             _player.SpendMoney(StatManager.SpendValue);
             building.ConsumeMoney(StatManager.SpendValue);
 
-
-            if (building.Builded)
+            if (building.Built)
                 building.FinishBuilding();
 
             yield return _waitForSpendTime;
         }
+    }
+
+    public void Upgrade(IBuilding building)
+    {
+        int moneyCount = building.UpgradeCost / StatManager.SpendValue;
+        for (int i = 0; i < moneyCount; i++)
+        {
+            StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(building.MoneyPointTransform);
+            _player.SpendMoney(StatManager.SpendValue);
+        }
+
+        building.UpgradeBuilding();
     }
 }

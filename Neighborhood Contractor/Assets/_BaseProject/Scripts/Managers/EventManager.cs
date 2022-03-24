@@ -1,4 +1,5 @@
 using System;
+using UnityEngine;
 
 public static class EventManager { }
 
@@ -16,4 +17,20 @@ public static class CollectableEvents
 public static class PlayerEvents
 {
     public static Action OnStartedMoving, OnStoppedMoving, OnKill, OnJump, OnLand, OnCollectedMoney, OnSpendMoney;
+}
+
+public static class NeighborhoodEvents
+{
+    public static Action OnCheckForPopulationSufficiency;
+    public static Action<int> OnIncreaseValue, OnIncreasePopulation;
+}
+
+public static class FeedbackEvents
+{
+    public static Action<string, FeedbackUI.Colors> OnGiveFeedback;
+}
+
+public static class BuildingUpgradeEvents
+{
+    public static Action<IBuilding> OnActivateBuildingUpgradeUI;
 }

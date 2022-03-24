@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BuildingIncomeHandler : MonoBehaviour
 {
+    private IContributorIncome incomeBuilding;
+    public IContributorIncome IncomeBuilding => incomeBuilding == null ? incomeBuilding = GetComponent<IContributorIncome>() : incomeBuilding;
+
     [Header("-- INCOME SETUP --")]
     [SerializeField, Tooltip("Delay in seconds for collecting income money.")] private float incomeTime = 3f;
     [SerializeField, Tooltip("Delay in seconds for first start of spawning income money. ")] private float startSpawnDelay = 1f;
@@ -43,7 +46,13 @@ public class BuildingIncomeHandler : MonoBehaviour
     private void Start()
     {
         Init();
-        StartCoroutine(SpawnIncomeMoney());
+
+        IncomeBuilding.OnStartSpawningIncome += () => StartCoroutine(SpawnIncomeMoney());
+    }
+
+    private void OnDisable()
+    {
+        IncomeBuilding.OnStartSpawningIncome -= () => StartCoroutine(SpawnIncomeMoney());
     }
 
     private IEnumerator SpawnIncomeMoney()

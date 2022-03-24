@@ -43,19 +43,19 @@ public class CollectableManager : MonoBehaviour
 
     public void SpawnCoinRewardsTrigger(Vector3 spawnPosition, int amount) => OnSpawnCoinRewards?.Invoke(spawnPosition, amount);
 
-    public void StartCollectingIncome(IBuilding building) => StartCoroutine(Collect(building));
-    public void StopCollectingIncome(IBuilding building) => StopCoroutine(Collect(building));
-    private IEnumerator Collect(IBuilding building)
+    public void StartCollectingIncome(IContributorIncome incomeBuilding, IBuilding building) => StartCoroutine(Collect(incomeBuilding, building));
+    public void StopCollectingIncome(IContributorIncome incomeBuilding, IBuilding building) => StopCoroutine(Collect(incomeBuilding, building));
+    private IEnumerator Collect(IContributorIncome incomeBuilding, IBuilding building)
     {
         while (building.PlayerIsInBuildArea)
         {
-            if (building.IncomeMoneyCount > 0 && building.CanCollectIncome && building.Builded)
+            if (incomeBuilding.IncomeMoneyCount > 0 && incomeBuilding.CanCollectIncome && building.Built)
             {
-                Money money = building.IncomeMoney[building.IncomeMoney.Count - 1];
+                Money money = incomeBuilding.IncomeMoney[incomeBuilding.IncomeMoney.Count - 1];
                 if (money.CanBeCollected)
                 {
                     money.Collect(Player.moneyStackHandler.TargetStackPosition, Player.moneyStackHandler.StackTransform);
-                    building.IncomeMoneyIsSent(money);
+                    incomeBuilding.IncomeMoneyIsSent(money);
 
                     //StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(building.MoneyPointTransform);
                     Player.CollectMoney(StatManager.MoneyValue);

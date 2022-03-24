@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8054539559921111785}
   - component: {fileID: 8054539559921111780}
   - component: {fileID: 8054539559644026292}
+  - component: {fileID: 926412475384298694}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -87,10 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72aef0c10ae8ac841be87a3286bc69e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinPrefab: {fileID: 5031208824877614778, guid: ffc0d63ec4260c640b0eb77c0ca931c6, type: 3}
-  trapPrefab: {fileID: 2049570378201314259, guid: b6706107e5b82ac42aab632c87ebe59b, type: 3}
-  coinAmountInScene: 0
-  trapAmountInScene: 0
   coinRewardPrefab: {fileID: 525355256040030371, guid: e467daadedc85ce498e3d5f28bd13b85, type: 3}
   spawnPointOffset: 2.75
 --- !u!114 &8054539559921111780
@@ -108,7 +105,7 @@ MonoBehaviour:
   carryCapacity: 20
   moneyValue: 100
   spendValue: 100
-  spendTime: 1
+  spendTime: 0.15
 --- !u!114 &8054539559644026292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,3 +120,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameStartCM: {fileID: 0}
   gameplayCM: {fileID: 0}
+--- !u!114 &926412475384298694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054539559921111782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a07c9256db9002c46b07a544d4215b64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

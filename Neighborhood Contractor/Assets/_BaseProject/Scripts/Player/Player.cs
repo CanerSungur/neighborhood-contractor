@@ -166,4 +166,9 @@ public class Player : MonoBehaviour
         PlayerEvents.OnSpendMoney?.Invoke();
         CollectableEvents.OnDecreaseMoney?.Invoke(amount);
     }
+
+    public void SpendMoneyForUpgrade(int amount)
+    {
+
+    }
 }

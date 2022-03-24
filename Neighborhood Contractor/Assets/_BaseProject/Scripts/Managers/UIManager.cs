@@ -47,7 +47,7 @@ public class UIManager : MonoBehaviour
         touchToStart.gameObject.SetActive(false);
         settings.gameObject.SetActive(true);
         hud.gameObject.SetActive(true);
-        hud.UpdateMoneyUITrigger(GameManager.statManager.TotalMoney);
+        hud.UpdateMoneyUITrigger(StatManager.TotalMoney);
         hud.UpdateLevelUTrigger(GameManager.levelManager.Level);
     }
 

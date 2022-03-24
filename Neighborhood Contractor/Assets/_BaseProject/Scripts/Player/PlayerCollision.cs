@@ -33,20 +33,30 @@ public class PlayerCollision : MonoBehaviour
         {
             building.PlayerIsInBuildArea = true;
 
-            #region Build Section
-
-            if (building.CanBeBuilt)
-                BuildManager.Instance.StartBuilding(building);
-            else
-                BuildManager.Instance.StopBuilding(building);
-
-            #endregion
-
-            #region Collecting Income Section
-
-            GameManager.Instance.collectableManager.StartCollectingIncome(building);
-
-            #endregion
+            if (other.gameObject.layer == LayerMask.NameToLayer("Build Area"))
+            {
+                if (building.CanBeBuilt)
+                    BuildManager.Instance.StartBuilding(building);
+                else
+                {
+                    BuildManager.Instance.StopBuilding(building);
+                    FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough MONEY", FeedbackUI.Colors.NotEnoughMoney);
+                }
+            }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Income Area") && other.transform.parent.TryGetComponent(out IContributorIncome incomeBuilding))
+            {
+                GameManager.Instance.collectableManager.StartCollectingIncome(incomeBuilding, building);
+            }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && building.CanBeUpgraded)
+            {
+                Debug.Log("Upgrading...");
+                BuildingUpgradeEvents.OnActivateBuildingUpgradeUI?.Invoke(building);
+                // Open building upgrade UI here.
+            }
+            else if (other.gameObject.layer == LayerMask.NameToLayer("Locked Build Area"))
+            {
+                FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough POPULATION", FeedbackUI.Colors.NotEnoughPopulation);
+            }
         }
     }
 
@@ -55,8 +65,11 @@ public class PlayerCollision : MonoBehaviour
         if (other.transform.parent.TryGetComponent(out IBuilding building) && building.PlayerIsInBuildArea)
         {
             building.PlayerIsInBuildArea = false;
+            
             BuildManager.Instance.StopBuilding(building);
-            GameManager.Instance.collectableManager.StopCollectingIncome(building);
+
+            if (other.transform.parent.TryGetComponent(out IContributorIncome incomeBuilding))
+                GameManager.Instance.collectableManager.StopCollectingIncome(incomeBuilding, building);
         }
     }
 }

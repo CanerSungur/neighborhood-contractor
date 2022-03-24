@@ -12,6 +12,7 @@ public class GameManager : Singleton<GameManager>
     internal UIManager uiManager;
     internal LevelManager levelManager;
     internal CollectableManager collectableManager;
+    internal NeighborhoodManager neighborhoodManager;
 
     public static GameState GameState { get; private set; }
     public static GameEnd GameEnd { get; private set; }
@@ -21,7 +22,7 @@ public class GameManager : Singleton<GameManager>
     private void Awake()
     {
         this.Reload();
-        DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(500, 50);
+        DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(1250, 50);
 
         IsSoundOn = IsVibrationOn = true;
 
@@ -29,6 +30,7 @@ public class GameManager : Singleton<GameManager>
         TryGetComponent(out uiManager);
         TryGetComponent(out levelManager);
         TryGetComponent(out collectableManager);
+        TryGetComponent(out neighborhoodManager);
 
         ChangeState(GameState.WaitingToStart);
     }

@@ -10,12 +10,14 @@ using ZestGames.Utility;
 public class CustomButton : Button
 {
     private Animation anim;
-    private float animationDuration = 0.5f;
+    private float animationDuration = 0.2f;
     public event Action<Action> OnClicked;
+    private Image _image;
 
     protected override void OnEnable()
     {
         anim = GetComponent<Animation>();
+        _image = GetComponent<Image>();
 
         OnClicked += Clicked;
     }
@@ -23,6 +25,17 @@ public class CustomButton : Button
     protected override void OnDisable()
     {
         OnClicked -= Clicked;
+    }
+
+    public void SetInteractable()
+    {
+        interactable = true;
+        _image.color = new Color(1, 1, 1, 1f);
+    }
+    public void SetNotInteractable()
+    {
+        interactable = false;
+        _image.color = new Color(1, 1, 1, .5f);
     }
 
     private void Clicked(Action action)
