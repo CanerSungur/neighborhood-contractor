@@ -1,6 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
-using ZestGames.Utility;
+using System;
 
 public class Money : MonoBehaviour
 {
@@ -18,9 +18,12 @@ public class Money : MonoBehaviour
     private Animator animator;
     public Animator Animator => animator == null ? animator = GetComponent<Animator>() : animator;
 
+    public bool Collected => _collected;
     public bool CanBeCollected => !_collected && StatManager.CurrentCarry < StatManager.CarryCapacity;
     public bool CanBeSpent => !_spent && _collected;
     public int StackRowNumber { get; private set; }
+
+    public event Action OnThisMoneyCollected;
 
     private void Awake()
     {
@@ -54,6 +57,7 @@ public class Money : MonoBehaviour
 
         _collected = true;
         StatManager.CollectedMoney.Add(this);
+        OnThisMoneyCollected?.Invoke();
     }
 
     public void Spend(Transform parent)

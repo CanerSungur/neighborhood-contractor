@@ -43,7 +43,7 @@ public abstract class ValueContributorBase : MonoBehaviour, IBuilding, IContribu
 
     public int ValueContribution => neighborhoodValueContribution;
     public int RequiredPopulation => requiredPopulation;
-    public bool PopulationIsEnough => GameManager.Instance.neighborhoodManager.Population >= RequiredPopulation;
+    public bool PopulationIsEnough => NeighborhoodManager.Population >= RequiredPopulation;
 
     #endregion
 

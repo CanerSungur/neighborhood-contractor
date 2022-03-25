@@ -21,8 +21,9 @@ public static class PlayerEvents
 
 public static class NeighborhoodEvents
 {
-    public static Action OnCheckForPopulationSufficiency;
+    public static Action OnCheckForPopulationSufficiency, OnNewPhaseActivated;
     public static Action<int> OnIncreaseValue, OnIncreasePopulation;
+    public static Action<PhaseUnlocker, int> OnEnableThisPhase;
 }
 
 public static class FeedbackEvents
@@ -33,4 +34,9 @@ public static class FeedbackEvents
 public static class BuildingUpgradeEvents
 {
     public static Action<IBuilding> OnActivateBuildingUpgradeUI;
+}
+
+public static class ValueBarEvents
+{
+    public static Action OnValueLevelIncrease, OnValueIncrease;
 }

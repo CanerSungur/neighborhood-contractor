@@ -22,7 +22,7 @@ public class GameManager : Singleton<GameManager>
     private void Awake()
     {
         this.Reload();
-        DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(1250, 50);
+        DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(3125, 50);
 
         IsSoundOn = IsVibrationOn = true;
 

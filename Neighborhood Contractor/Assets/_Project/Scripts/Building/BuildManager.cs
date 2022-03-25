@@ -41,4 +41,22 @@ public class BuildManager : Singleton<BuildManager>
 
         building.UpgradeBuilding();
     }
+
+    public void StartBuildingNewPhase(PhaseUnlocker phaseUnlocker) => StartCoroutine(OpenNewPhase(phaseUnlocker));
+    public void StopBuildingNewPhase(PhaseUnlocker phaseUnlocker) => StopCoroutine(OpenNewPhase(phaseUnlocker));
+
+    private IEnumerator OpenNewPhase(PhaseUnlocker phaseUnlocker)
+    {
+        while (phaseUnlocker.PlayerIsInBuildArea && phaseUnlocker.CanBeBuilt)
+        {
+            StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(phaseUnlocker.MoneyPointTransform);
+            _player.SpendMoney(StatManager.SpendValue);
+            phaseUnlocker.ConsumeMoney(StatManager.SpendValue);
+
+            if (phaseUnlocker.Built)
+                phaseUnlocker.EnableNextPhase();
+
+            yield return _waitForSpendTime;
+        }
+    }
 }

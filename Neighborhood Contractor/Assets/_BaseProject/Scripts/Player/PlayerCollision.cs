@@ -22,14 +22,29 @@ public class PlayerCollision : MonoBehaviour
 
         #endregion
 
-        if (other.TryGetComponent(out Money money) && money.CanBeCollected)
+        if (other.TryGetComponent(out PhaseUnlocker phaseUnlocker) && !phaseUnlocker.PlayerIsInBuildArea)
+        {
+            phaseUnlocker.PlayerIsInBuildArea = true;
+            if (phaseUnlocker.CanBeBuilt)
+                BuildManager.Instance.StartBuildingNewPhase(phaseUnlocker);
+            else
+            {
+                BuildManager.Instance.StopBuildingNewPhase(phaseUnlocker);
+                FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough MONEY", FeedbackUI.Colors.NotEnoughMoney);
+            }
+
+            if (!phaseUnlocker.EnoughPopulation)
+                FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough POPULATION", FeedbackUI.Colors.NotEnoughPopulation);
+        }
+
+        else if (other.TryGetComponent(out Money money) && money.CanBeCollected)
         {
             money.Collect(_player.moneyStackHandler.TargetStackPosition, _player.moneyStackHandler.StackTransform);
             _player.CollectMoney(StatManager.MoneyValue);
         }
 
         // spend money section
-        if (other.transform.parent.TryGetComponent(out IBuilding building) && !building.PlayerIsInBuildArea)
+        else if (other.transform.parent.TryGetComponent(out IBuilding building) && !building.PlayerIsInBuildArea)
         {
             building.PlayerIsInBuildArea = true;
 
@@ -62,7 +77,12 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.parent.TryGetComponent(out IBuilding building) && building.PlayerIsInBuildArea)
+        if (other.TryGetComponent(out PhaseUnlocker phaseUnlocker) && phaseUnlocker.PlayerIsInBuildArea)
+        {
+            phaseUnlocker.PlayerIsInBuildArea = false;
+            BuildManager.Instance.StopBuildingNewPhase(phaseUnlocker);
+        }
+        else if (other.transform.parent.TryGetComponent(out IBuilding building) && building.PlayerIsInBuildArea)
         {
             building.PlayerIsInBuildArea = false;
             

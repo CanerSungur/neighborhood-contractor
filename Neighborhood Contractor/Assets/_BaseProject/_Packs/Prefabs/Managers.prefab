@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 8054539559921111780}
   - component: {fileID: 8054539559644026292}
   - component: {fileID: 926412475384298694}
+  - component: {fileID: 8911782128219854996}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -102,10 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56a715e7cd36f7b4a8b463f363910e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  carryCapacity: 20
+  carryCapacity: 2000
   moneyValue: 100
   spendValue: 100
-  spendTime: 0.15
+  spendTime: 0.1
+  takeIncomeTime: 0.1
 --- !u!114 &8054539559644026292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,3 +134,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a07c9256db9002c46b07a544d4215b64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8911782128219854996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054539559921111782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d542574e0fa83843a3884d26926327d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  phases:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  phaseUnlockers:
+  - {fileID: 0}
+  - {fileID: 0}

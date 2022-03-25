@@ -12,21 +12,19 @@ public class BuildingUpgradeUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI requiredMoneyText;
     [SerializeField] private CustomButton exitButton;
     [SerializeField] private CustomButton upgradeButton;
-    //private GameObject ui;
+    [SerializeField] private CustomButton cancelButton;
 
     private IBuilding _activatedBuilding = null;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        //TriggerClosinAnim();
-        //ui = transform.GetChild(0).gameObject;
-        //ui.SetActive(false);
         
         BuildingUpgradeEvents.OnActivateBuildingUpgradeUI += ActivateUI;
 
         upgradeButton.onClick.AddListener(UpgradeButtonClicked);
         exitButton.onClick.AddListener(ExitButtonClicked);
+        cancelButton.onClick.AddListener(CancelAreaClicked);
     }
 
     private void OnDisable()
@@ -35,12 +33,14 @@ public class BuildingUpgradeUI : MonoBehaviour
 
         upgradeButton.onClick.RemoveListener(UpgradeButtonClicked);
         exitButton.onClick.RemoveListener(ExitButtonClicked);
+        cancelButton.onClick.RemoveListener(CancelAreaClicked);
     }
 
-    private void ExitButtonClicked() => exitButton.ClickTrigger(TriggerClosinAnim);
+    private void CancelAreaClicked() => cancelButton.ClickTrigger(TriggerClosingAnim);
+    private void ExitButtonClicked() => exitButton.ClickTrigger(TriggerClosingAnim);
     private void UpgradeButtonClicked() => upgradeButton.ClickTrigger(() => {
         BuildManager.Instance.Upgrade(_activatedBuilding);
-        TriggerClosinAnim();
+        TriggerClosingAnim();
     });
 
     private void ActivateUI(IBuilding building)
@@ -57,5 +57,5 @@ public class BuildingUpgradeUI : MonoBehaviour
     }
 
     private void TriggerOpeningAnim() => _animator.SetTrigger(openID);
-    private void TriggerClosinAnim() => _animator.SetTrigger(closeID);
+    private void TriggerClosingAnim() => _animator.SetTrigger(closeID);
 }
