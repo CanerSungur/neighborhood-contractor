@@ -9,10 +9,10 @@ public abstract class ValueContributorBase : MonoBehaviour, IBuilding, IContribu
     [SerializeField] private Transform lockedBuildArea;
     [SerializeField] private Transform buildArea;
 
-    [Header("-- APPEREANCE SETUP --")]
-    [SerializeField] private Material constructionMat;
-    [SerializeField] private Material finishedMat;
-    private Renderer _renderer;
+    [Header("-- CONSTRUCTION SETUP --")]
+    [SerializeField] private GameObject finishedBuilding;
+    [SerializeField] private GameObject constructionLevel_1;
+    [SerializeField] private GameObject constructionLevel_2;
 
     [Header("-- BUILD SETUP --")]
     [SerializeField] private int cost = 5000;
@@ -50,15 +50,13 @@ public abstract class ValueContributorBase : MonoBehaviour, IBuilding, IContribu
     private void Init()
     {
         _textHandler = GetComponent<BuildingTextHandler>();
-
-        _renderer = GetComponent<Renderer>();
-        _renderer.material = constructionMat;
-
         CheckForPopulationSufficiency();
 
         PlayerIsInBuildArea = false;
         _consumedMoney = 0;
         currentLevel = 0;
+
+        EnableRelevantState();
     }
 
     private void Start()
@@ -79,24 +77,70 @@ public abstract class ValueContributorBase : MonoBehaviour, IBuilding, IContribu
         {
             _consumedMoney += amount;
             _textHandler.SetMoneyText(cost - _consumedMoney);
+            
+            UpdateConstructionState();
         }
     }
 
     public void FinishBuilding()
     {
-        _renderer.material = finishedMat;
         _textHandler.DisableMoneyText();
         
         DisableArea(buildArea.gameObject);
 
         currentLevel++;
         NeighborhoodEvents.OnIncreaseValue?.Invoke(neighborhoodValueContribution);
+
+        FinishConstruction();
     }
 
     public void UpgradeBuilding() { }
 
+    #region Check Build States
+
+    private void EnableRelevantState()
+    {
+        if (Built)
+        {
+            finishedBuilding.SetActive(true);
+            constructionLevel_1.SetActive(false);
+            constructionLevel_2.SetActive(false);
+        }
+        else
+        {
+            finishedBuilding.SetActive(false);
+            constructionLevel_1.SetActive(true);
+            constructionLevel_2.SetActive(false);
+        }
+    }
+
+    private void UpdateConstructionState()
+    {
+        if (_consumedMoney >= cost * 0.5f)
+        {
+            constructionLevel_1.SetActive(false);
+            constructionLevel_2.SetActive(true);
+        }
+        else
+        {
+            constructionLevel_1.SetActive(true);
+            constructionLevel_2.SetActive(false);
+        }
+    }
+
+    private void FinishConstruction()
+    {
+        finishedBuilding.SetActive(true);
+        constructionLevel_1.SetActive(false);
+        constructionLevel_2.SetActive(false);
+    }
+
+    #endregion
+
     private void ApplyBuildableState(bool buildable)
     {
+        if (Built) return;
+
         if (buildable)
         {
             DisableArea(lockedBuildArea.gameObject);

@@ -64,7 +64,6 @@ public class PlayerCollision : MonoBehaviour
             }
             else if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && building.CanBeUpgraded)
             {
-                Debug.Log("Upgrading...");
                 BuildingUpgradeEvents.OnActivateBuildingUpgradeUI?.Invoke(building);
                 // Open building upgrade UI here.
             }

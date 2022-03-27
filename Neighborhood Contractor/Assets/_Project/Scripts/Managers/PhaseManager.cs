@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -32,8 +31,13 @@ public class PhaseManager : MonoBehaviour
     private void HandlePhaseEnabling(PhaseUnlocker unlocker, int phaseNumberToUnlock)
     {
         unlocker.gameObject.SetActive(false);
-        phases[phaseNumberToUnlock - 1].SetActive(true);
-        phaseUnlockers[phaseNumberToUnlock - 1].SetActive(true);
+        
+        if (phaseNumberToUnlock <= phases.Count)
+            phases[phaseNumberToUnlock - 1].SetActive(true);
+
+        if (phaseNumberToUnlock <= phaseUnlockers.Count)
+            phaseUnlockers[phaseNumberToUnlock - 1].SetActive(true);
+        
         CurrentPhase++;
 
         NeighborhoodEvents.OnNewPhaseActivated?.Invoke();

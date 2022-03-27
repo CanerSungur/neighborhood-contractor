@@ -1,5 +1,5 @@
 using UnityEngine;
-using ZestGames.Utility;
+using System.Linq;
 
 [RequireComponent(typeof(Money))]
 public class MoneyAnimationController : MonoBehaviour
@@ -13,10 +13,6 @@ public class MoneyAnimationController : MonoBehaviour
 
     private void OnEnable()
     {
-        //if (Player.Moving)
-        //    StartMoving();
-        //SetFirstState();
-
         _money = GetComponent<Money>();
         PlayerEvents.OnStartedMoving += StartMoving;
         PlayerEvents.OnStoppedMoving += StopMoving;
@@ -26,6 +22,8 @@ public class MoneyAnimationController : MonoBehaviour
 
     private void OnDisable()
     {
+        _money.Animator.Rebind();
+
         PlayerEvents.OnStartedMoving -= StartMoving;
         PlayerEvents.OnStoppedMoving -= StopMoving;
 
@@ -41,10 +39,17 @@ public class MoneyAnimationController : MonoBehaviour
     private void StopMoving() => _money.Animator.SetBool(movingID, false);
     private void HandleMoveWeight()
     {
-        //_money.Animator.Rebind();
-        //SetFirstState();
-
         _weight = weightCurve.Evaluate((1f / StatManager.CurrentCarry) * _money.StackRowNumber);
         _money.Animator.SetLayerWeight(moveLayerID, _weight);
+    }
+
+    public bool GetStateInfo()
+    {
+        return _money.Animator.GetBool(movingID);
+    }
+
+    public float GetCurrentNormalizedTime()
+    {
+        return _money.Animator.GetCurrentAnimatorStateInfo(1).normalizedTime;
     }
 }

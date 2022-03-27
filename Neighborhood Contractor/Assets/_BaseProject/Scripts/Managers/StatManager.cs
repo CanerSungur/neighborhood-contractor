@@ -16,9 +16,10 @@ public class StatManager : MonoBehaviour
     [SerializeField] private int spendValue = 100;
     [SerializeField] private float spendTime = 0.1f;
     [SerializeField] private float takeIncomeTime = 0.25f;
+    [SerializeField] private float spawnIncomeMultiplier = 1f;
 
     public static int CarryCapacity, CurrentCarry, MoneyValue, SpendValue;
-    public static float SpendTime, TakeIncomeTime;
+    public static float SpendTime, TakeIncomeTime, SpawnIncomeMultiplier;
     public static List<Money> CollectedMoney;
 
     public static int TotalMoney { get; private set; }
@@ -35,6 +36,7 @@ public class StatManager : MonoBehaviour
         SpendValue = spendValue;
         SpendTime = spendTime;
         TakeIncomeTime = takeIncomeTime;
+        SpawnIncomeMultiplier = spawnIncomeMultiplier;
 
         CollectedMoney = new List<Money>();
         CollectedMoney.Clear();
@@ -85,5 +87,9 @@ public class StatManager : MonoBehaviour
         //PlayerPrefs.Save();
     }
 
+    private void UpdateSpawnIncomeTimeMutl()
+    {
+        SpawnIncomeMultiplier *= NeighborhoodManager.ValueSystem.ValueLevel;
+    }
     private void CalculateReward() => RewardMoney = 55;
 }

@@ -15,10 +15,11 @@ public class HUDUI : MonoBehaviour
     [Header("-- TEXT REFERENCES --")]
     [SerializeField] private TextMeshProUGUI currentMoneyText;
     [SerializeField] private TextMeshProUGUI capacityMoneyText;
-    //[SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private TextMeshProUGUI populationText;
+    private Transform populationTransform;
     private TextMeshProUGUI[] hudTexts;
 
-    [Header("-- COIN SETUP --")]
+    [Header("-- MONEY SETUP --")]
     [SerializeField] private Transform moneyHUDTransform;
     public Transform MoneyHUDTransform => moneyHUDTransform;
 
@@ -28,43 +29,45 @@ public class HUDUI : MonoBehaviour
     private void OnEnable()
     {
         Animator.enabled = false;
+        populationTransform = populationText.transform.parent;
+
         hudTexts = GetComponentsInChildren<TextMeshProUGUI>();
-        //capacityMoneyText.text = StatManager.MoneyCapacity.ToString();
         capacityMoneyText.text = Shortener.IntToStringShortener(StatManager.MoneyCapacity);
+        UpdatePopulationText();
 
         OnUpdateMoneyUI += UpdateMoneyText;
-        //OnUpdateLevelUI += UpdateLevelText;
+        NeighborhoodEvents.OnCheckForPopulationSufficiency += UpdatePopulationText;
     }
 
     private void OnDisable()
     {
         OnUpdateMoneyUI -= UpdateMoneyText;
-        //OnUpdateLevelUI -= UpdateLevelText;
+        NeighborhoodEvents.OnCheckForPopulationSufficiency -= UpdatePopulationText;
     }
 
     public void UpdateMoneyUITrigger(int ignoreThis) => OnUpdateMoneyUI?.Invoke(ignoreThis);
     public void UpdateLevelUTrigger(int level) => OnUpdateLevelUI?.Invoke(level);
-    //private void UpdateLevelText(int level)
-    //{
-    //    levelText.text = $"Level {level}";
-    //}
 
+    private void UpdatePopulationText()
+    {
+        populationText.text = NeighborhoodManager.Population.ToString();
+        ShakeTransform(populationTransform);
+    }
     private void UpdateMoneyText(int ignoreThis)
     {
-        //currentMoneyText.text = UIManager.GameManager.statManager.TotalMoney.ToString();
         currentMoneyText.text = Shortener.IntToStringShortener(StatManager.TotalMoney);
 
-        ShakeMoneyHUD();
+        ShakeTransform(MoneyHUDTransform);
         ChangeMoneyTextColor();
     }
 
-    private void ShakeMoneyHUD()
+    private void ShakeTransform(Transform transform)
     {
-        MoneyHUDTransform.DORewind();
+        transform.DORewind();
 
-        MoneyHUDTransform.DOShakePosition(.25f, .25f);
-        MoneyHUDTransform.DOShakeRotation(.5f, .25f);
-        MoneyHUDTransform.DOShakeScale(.25f, .25f);
+        transform.DOShakePosition(.25f, .25f);
+        transform.DOShakeRotation(.5f, .25f);
+        transform.DOShakeScale(.25f, .25f);
     }
 
     private void ChangeMoneyTextColor()

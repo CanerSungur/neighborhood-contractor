@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine;
-using System;
 using TMPro;
 
 public class ValueBar : MonoBehaviour
@@ -10,43 +9,36 @@ public class ValueBar : MonoBehaviour
     [SerializeField] private TextMeshProUGUI valueLevelText;
     [SerializeField, Tooltip("Custom gradient if you're not using images for filling. Leave it white when using images!")] private Gradient gradient;
     [SerializeField, Tooltip("Seconds that will take to update the progress bar.")] private float updateSpeedSeconds = 0.5f;
-    private Slider slider;
-    private Image fill;
-
-    // Events
-    public event Action OnValueLevelIncrease, OnValueIncrease;
+    private Slider _slider;
+    private Image _fill;
 
     private void Init()
     {
-        if (!slider)
-            slider = GetComponent<Slider>();
-        if (!fill)
-            fill = transform.GetChild(1).GetComponent<Image>();
+        if (!_slider)
+            _slider = GetComponent<Slider>();
+        if (!_fill)
+            _fill = transform.GetChild(1).GetComponent<Image>();
 
-        fill.color = gradient.Evaluate(1f);
-        slider.maxValue = NeighborhoodManager.RequiredValueForNextLevel;
-        slider.value = NeighborhoodManager.CurrentValue;
+        _fill.color = gradient.Evaluate(1f);
+        _slider.maxValue = NeighborhoodManager.ValueSystem.RequiredValueForNextLevel;
+        _slider.value = NeighborhoodManager.ValueSystem.CurrentValue;
 
-        SetValueLevelNumber(NeighborhoodManager.ValueLevel);
+        SetValueLevelNumber(NeighborhoodManager.ValueSystem.ValueLevel);
         UpdateValue();
     }
 
-    private void OnEnable()
+    private void Start()
     {
         Init();
 
         ValueBarEvents.OnValueIncrease += UpdateValue;
         ValueBarEvents.OnValueLevelIncrease += ValueChanged;
-        //OnValueIncrease += UpdateValue;
-        //OnValueLevelIncrease += ValueChanged;
     }
 
     private void OnDisable()
     {
         ValueBarEvents.OnValueIncrease -= UpdateValue;
         ValueBarEvents.OnValueLevelIncrease -= ValueChanged;
-        //OnValueIncrease -= UpdateValue;
-        //OnValueLevelIncrease -= ValueChanged;
     }
 
     private void SetValueLevelNumber(int valueLevelNumber) => valueLevelText.text = valueLevelNumber.ToString();
@@ -54,31 +46,33 @@ public class ValueBar : MonoBehaviour
     private void UpdateValue()
     {
         StartCoroutine(SmoothUpdateValueBar());
-        fill.color = gradient.Evaluate(slider.normalizedValue);
+        _fill.color = gradient.Evaluate(_slider.normalizedValue);
     }
 
     private void ValueChanged()
     {
-        Init();
+        //Init();
+        _slider.maxValue = NeighborhoodManager.ValueSystem.RequiredValueForNextLevel;
+        SetValueLevelNumber(NeighborhoodManager.ValueSystem.ValueLevel);
         UpdateValue();
     }
 
     private IEnumerator SmoothUpdateValueBar()
     {
-        float preChange = slider.value;
+        float preChange = _slider.value;
         float elapsed = 0f;
         while (elapsed < updateSpeedSeconds)
         {
             elapsed += Time.deltaTime;
-            Mathf.Lerp(preChange, NeighborhoodManager.CurrentValue, 0);
+            Mathf.Lerp(preChange, NeighborhoodManager.ValueSystem.CurrentValue, 0);
 
-            slider.value = Mathf.Lerp(preChange, NeighborhoodManager.CurrentValue, elapsed / updateSpeedSeconds);
+            _slider.value = Mathf.Lerp(preChange, NeighborhoodManager.ValueSystem.CurrentValue, elapsed / updateSpeedSeconds);
+
+            //if (_slider.value == _slider.maxValue)
+            //    ValueBarEvents.OnValueLevelIncrease?.Invoke();
             yield return null;
         }
 
-        slider.value = NeighborhoodManager.CurrentValue;
+        _slider.value = NeighborhoodManager.ValueSystem.CurrentValue;
     }
-
-    public void ValueLevelIncreaseTrigger() => OnValueLevelIncrease?.Invoke();
-    public void ValueIncreaseTrigger() => OnValueIncrease?.Invoke();
 }

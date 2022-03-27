@@ -108,6 +108,7 @@ MonoBehaviour:
   spendValue: 100
   spendTime: 0.1
   takeIncomeTime: 0.1
+  spawnIncomeMultiplier: 1
 --- !u!114 &8054539559644026292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +151,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   phaseUnlockers:
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

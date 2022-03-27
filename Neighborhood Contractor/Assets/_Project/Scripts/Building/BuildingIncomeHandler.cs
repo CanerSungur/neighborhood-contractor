@@ -15,6 +15,7 @@ public class BuildingIncomeHandler : MonoBehaviour
 
     [Header("-- SPAWN POSITION SETUP --")]
     [SerializeField, Tooltip("First spawn position of income money.")] private Vector3 startPoint = new Vector3(0f, 0f, 5f);
+    [SerializeField] private Transform spawnStartTransform;
     private float layerOffset = 0.15f;
 
     [Header("-- SPAWN LIMITS SETUP --")]
@@ -36,7 +37,7 @@ public class BuildingIncomeHandler : MonoBehaviour
     private void Init()
     {
         incomeMoney.Clear();
-        _waitForIncomeTime = new WaitForSeconds(incomeTime);
+        CalculateIncomeTime();
         _waitForSpawnStartDelay = new WaitForSeconds(startSpawnDelay);
         _canSpawn = true;
 
@@ -48,11 +49,22 @@ public class BuildingIncomeHandler : MonoBehaviour
         Init();
 
         IncomeBuilding.OnStartSpawningIncome += () => StartCoroutine(SpawnIncomeMoney());
+        ValueBarEvents.OnValueLevelIncrease += CalculateIncomeTime;
     }
 
     private void OnDisable()
     {
         IncomeBuilding.OnStartSpawningIncome -= () => StartCoroutine(SpawnIncomeMoney());
+        ValueBarEvents.OnValueLevelIncrease -= CalculateIncomeTime;
+    }
+
+    private void CalculateIncomeTime()
+    {
+        incomeTime -= NeighborhoodManager.ValueSystem.ValueLevel * .1f;
+        if (incomeTime < 1)
+            incomeTime = 1;
+
+        _waitForIncomeTime = new WaitForSeconds(incomeTime);
     }
 
     private IEnumerator SpawnIncomeMoney()
@@ -69,8 +81,6 @@ public class BuildingIncomeHandler : MonoBehaviour
                 LayerFinishedCheckForSpawn();
 
                 Spawn();
-
-                Debug.Log("Spawned");
             }
 
             yield return _waitForIncomeTime;
@@ -79,7 +89,7 @@ public class BuildingIncomeHandler : MonoBehaviour
 
     private void Spawn()
     {
-        var spawnPoint = startPoint + new Vector3(_currentFinishedRow * -0.72f, _currentFinishedLayer * layerOffset, _currentFinishedColumn * -0.38f);
+        var spawnPoint = spawnStartTransform.position + new Vector3(_currentFinishedRow * -0.72f, _currentFinishedLayer * layerOffset, _currentFinishedColumn * -0.38f);
         Money money = ObjectPooler.Instance.SpawnFromPool("Money_Income", spawnPoint, Quaternion.Euler(0f, 90f, 0f)).GetComponent<Money>();
         AddIncomeMoney(money);
     }

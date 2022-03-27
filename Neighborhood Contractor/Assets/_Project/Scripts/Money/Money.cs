@@ -1,11 +1,14 @@
 using UnityEngine;
 using DG.Tweening;
 using System;
+using ZestGames.Utility;
 
 public class Money : MonoBehaviour
 {
     private bool _collected = false;
     private bool _spent = false;
+    private Money _previousMoney = null;
+    private MoneyAnimationController _previousMoneyAnimCont = null;
 
     [Header("-- ANIMATION SETUP --")]
     private float _animationTime = 0.5f;
@@ -27,7 +30,8 @@ public class Money : MonoBehaviour
 
     private void Awake()
     {
-        _animationController = GetComponent<MoneyAnimationController>();
+        if (!_animationController)
+            _animationController = GetComponent<MoneyAnimationController>();
         DisableAnimator();
 
         StackRowNumber = 0; // Meaning it's not in the stack.
@@ -48,12 +52,18 @@ public class Money : MonoBehaviour
             EnableAnimator();
             CollectableEvents.OnCalculateMoveWeight?.Invoke();
             _animationController.SetFirstState();
+
+            if (StatManager.CollectedMoney.Count > 1)
+            {
+                _previousMoney = StatManager.CollectedMoney[StatManager.CollectedMoney.IndexOf(this) - 1];
+                _previousMoneyAnimCont = _previousMoney.GetComponent<MoneyAnimationController>();
+                
+                if (_previousMoneyAnimCont.GetStateInfo())
+                    Animator.Play("Money_Moving", 1, _previousMoneyAnimCont.GetCurrentNormalizedTime());
+            }
         });
 
-        // money can start walking animation after DoTween anim finishes.
-        //Delayer.DoActionAfterDelay(this, _animationTime, StartWalkingAnimation);
         StackRowNumber = StatManager.CurrentCarry + 1;
-        //Delayer.DoActionAfterDelay(this, _animationTime + .01f, () => CollectableEvents.OnCalculateMoveWeight?.Invoke());
 
         _collected = true;
         StatManager.CollectedMoney.Add(this);
@@ -65,16 +75,27 @@ public class Money : MonoBehaviour
         transform.parent = parent;
 
         transform.DOLocalJump(Vector3.zero, _spendMoneyHeight, 1, _animationTime);
-        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime);
+        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime).OnComplete(() =>
+        {
+            ResetMoney();
+            gameObject.SetActive(false);
+        });
 
-        // money will stop walking animation immediately.
         StackRowNumber = 0;
         CollectableEvents.OnCalculateMoveWeight?.Invoke();
         DisableAnimator();
 
         _spent = true;
         StatManager.CollectedMoney.Remove(this);
-        //Debug.Log(StatManager.CollectedMoney.Count);
+    }
+
+    private void ResetMoney()
+    {
+        _collected = false;
+        _spent = false;
+
+        DisableAnimator();
+        StackRowNumber = 0;
     }
 
     private void DisableAnimator() => _animationController.enabled = Animator.enabled = false;

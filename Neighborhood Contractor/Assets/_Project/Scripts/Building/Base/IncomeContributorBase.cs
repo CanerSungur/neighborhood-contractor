@@ -13,11 +13,13 @@ public abstract class IncomeContributorBase : MonoBehaviour, IBuilding, IContrib
     [SerializeField] private Transform incomeArea;
     [SerializeField] private Transform upgradeArea;
 
-    [Header("-- APPEREANCE SETUP --")]
-    [SerializeField] private Material constructionMat;
-    [SerializeField] private Material finishedMat;
-    [SerializeField] private Material upgradedMat;
-    private Renderer _renderer;
+    [Header("-- CONSTRUCTION SETUP --")]
+    [SerializeField] private GameObject finishedHouse;
+    [SerializeField] private GameObject constructionLevel_1;
+    [SerializeField] private GameObject constructionLevel_2;
+    
+    [Header("-- UPDATE SETUP --")]
+    [SerializeField] private GameObject[] upgradedHouses;
 
     [Header("-- BUILD SETUP --")]
     [SerializeField] private int cost = 10000;
@@ -26,11 +28,11 @@ public abstract class IncomeContributorBase : MonoBehaviour, IBuilding, IContrib
     private int _consumedMoney;
     
     [Header("-- PROPERTIES --")]
+    [SerializeField] private int neighborhoodValueContribution = 25;
+    [SerializeField] private int neighborhoodPopulationContribution = 3;
+    [SerializeField] private int maxLevel = 3;
     private int currentLevel;
-    private int maxLevel = 2;
-    private int neighborhoodValueContribution = 25;
-    private int neighborhoodPopulationContribution = 3;
-
+    
     public event Action OnStartSpawningIncome;
 
     #region Building Properties
@@ -60,9 +62,6 @@ public abstract class IncomeContributorBase : MonoBehaviour, IBuilding, IContrib
         _textHandler = GetComponent<BuildingTextHandler>();
         _textHandler.SetMoneyText(cost);
 
-        _renderer = GetComponent<Renderer>();
-        _renderer.material = constructionMat;
-
         EnableArea(buildArea.gameObject);
         DisableArea(incomeArea.gameObject);
         DisableArea(upgradeArea.gameObject);
@@ -70,6 +69,8 @@ public abstract class IncomeContributorBase : MonoBehaviour, IBuilding, IContrib
         PlayerIsInBuildArea = false;
         _consumedMoney = 0;
         currentLevel = 0;
+
+        EnableRelevantHouse(currentLevel);
     }
 
     private void OnEnable()
@@ -77,15 +78,79 @@ public abstract class IncomeContributorBase : MonoBehaviour, IBuilding, IContrib
         Init();
     }
 
+    private void EnableRelevantHouse(int currentLevel)
+    {
+        for (int i = 0; i < upgradedHouses.Length; i++)
+            upgradedHouses[i].SetActive(false);
+
+        if (currentLevel == 0)
+        {
+            finishedHouse.SetActive(false);
+            constructionLevel_1.SetActive(true);
+            constructionLevel_2.SetActive(false);
+        }
+        else if (currentLevel == 1)
+        {
+            finishedHouse.SetActive(true);
+            constructionLevel_1.SetActive(false);
+            constructionLevel_2.SetActive(false);
+        }
+        else if (currentLevel > 2)
+        {
+            finishedHouse.SetActive(false);
+            constructionLevel_1.SetActive(false);
+            constructionLevel_2.SetActive(false);
+            upgradedHouses[currentLevel - 2].SetActive(true);
+        }
+    }
+
+    #region Check Build States
+
+    private void UpdateConstructionState()
+    {
+        if (_consumedMoney >= cost * 0.5f)
+        {
+            constructionLevel_1.SetActive(false);
+            constructionLevel_2.SetActive(true);
+        }
+        else
+        {
+            constructionLevel_1.SetActive(true);
+            constructionLevel_2.SetActive(false);
+        }
+    }
+
+    private void FinishConstruction()
+    {
+        finishedHouse.SetActive(true);
+        constructionLevel_1.SetActive(false);
+        constructionLevel_2.SetActive(false);
+    }
+
+    private void UpdateUpgradeState()
+    {
+        finishedHouse.SetActive(false);
+        if (currentLevel - 3 >= 0)
+            upgradedHouses[currentLevel - 3].SetActive(false);
+        
+        upgradedHouses[currentLevel - 2].SetActive(true);
+    }
+
+    #endregion
+
     public void ConsumeMoney(int amount)
     {
-        _consumedMoney += amount;
-        _textHandler.SetMoneyText(cost - _consumedMoney);
+        if (CanBeBuilt)
+        {
+            _consumedMoney += amount;
+            _textHandler.SetMoneyText(cost - _consumedMoney);
+
+            UpdateConstructionState();
+        }
     }
 
     public void FinishBuilding()
     {
-        _renderer.material = finishedMat;
         _textHandler.DisableMoneyText();
 
         DisableArea(buildArea.gameObject);
@@ -97,17 +162,21 @@ public abstract class IncomeContributorBase : MonoBehaviour, IBuilding, IContrib
         NeighborhoodEvents.OnIncreaseValue?.Invoke(neighborhoodValueContribution);
         NeighborhoodEvents.OnIncreasePopulation?.Invoke(neighborhoodPopulationContribution);
         NeighborhoodEvents.OnCheckForPopulationSufficiency?.Invoke();
+
+        FinishConstruction();
     }
 
     public void UpgradeBuilding()
     {
-        _renderer.material = upgradedMat;
-        DisableArea(upgradeArea.gameObject);
-
         currentLevel++;
         NeighborhoodEvents.OnIncreaseValue?.Invoke(neighborhoodValueContribution);
         NeighborhoodEvents.OnIncreasePopulation?.Invoke(neighborhoodPopulationContribution);
         NeighborhoodEvents.OnCheckForPopulationSufficiency?.Invoke();
+
+        UpdateUpgradeState();
+
+        if (currentLevel == maxLevel)
+            DisableArea(upgradeArea.gameObject);
     }
 
     private void EnableArea(GameObject area) => area.SetActive(true);
