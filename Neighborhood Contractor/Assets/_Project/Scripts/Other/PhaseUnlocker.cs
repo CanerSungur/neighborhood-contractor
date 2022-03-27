@@ -59,7 +59,7 @@ public class PhaseUnlocker : MonoBehaviour
         else
         {
             _textHandler.SetPopulationText(RequiredPopulation);
-            _textHandler.MakeMoneyTextEmpty();
+            //_textHandler.MakeMoneyTextEmpty();
         }
     }
 
@@ -72,5 +72,6 @@ public class PhaseUnlocker : MonoBehaviour
     public void EnableNextPhase()
     {
         NeighborhoodEvents.OnEnableThisPhase?.Invoke(this, phaseToUnlock);
+        ObjectPooler.Instance.SpawnFromPool("Confetti", transform.position, Quaternion.identity);
     }
 }

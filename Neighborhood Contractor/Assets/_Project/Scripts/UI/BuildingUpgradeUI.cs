@@ -39,7 +39,7 @@ public class BuildingUpgradeUI : MonoBehaviour
     private void CancelAreaClicked() => cancelButton.ClickTrigger(TriggerClosingAnim);
     private void ExitButtonClicked() => exitButton.ClickTrigger(TriggerClosingAnim);
     private void UpgradeButtonClicked() => upgradeButton.ClickTrigger(() => {
-        BuildManager.Instance.Upgrade(_activatedBuilding);
+        Delayer.DoActionAfterDelay(this, .5f, () => BuildManager.Instance.Upgrade(_activatedBuilding));
         TriggerClosingAnim();
     });
 
@@ -55,7 +55,6 @@ public class BuildingUpgradeUI : MonoBehaviour
         else
             upgradeButton.SetNotInteractable();
     }
-
     private void TriggerOpeningAnim() => _animator.SetTrigger(openID);
     private void TriggerClosingAnim() => _animator.SetTrigger(closeID);
 }

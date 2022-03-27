@@ -12,6 +12,22 @@ public class ValueBar : MonoBehaviour
     private Slider _slider;
     private Image _fill;
 
+    [Header("-- STATE SETUP --")]
+    [SerializeField] private TextMeshProUGUI stateText;
+    [SerializeField] private Color stateTextColor;
+    private string[] states = { 
+        "No Value",
+        "Not That Valuable",
+        "Meh",
+        "Keep Going",
+        "Neighborhood is Rising",
+        "Nice Value",
+        "Most Valueable Neighborhood",
+        "Big Growth",
+        "Big Town",
+        "Mega Town"
+    };
+
     private void Init()
     {
         if (!_slider)
@@ -25,6 +41,7 @@ public class ValueBar : MonoBehaviour
 
         SetValueLevelNumber(NeighborhoodManager.ValueSystem.ValueLevel);
         UpdateValue();
+        AssignCurrentState(NeighborhoodManager.ValueSystem.ValueLevel);
     }
 
     private void Start()
@@ -55,6 +72,8 @@ public class ValueBar : MonoBehaviour
         _slider.maxValue = NeighborhoodManager.ValueSystem.RequiredValueForNextLevel;
         SetValueLevelNumber(NeighborhoodManager.ValueSystem.ValueLevel);
         UpdateValue();
+
+        AssignCurrentState(NeighborhoodManager.ValueSystem.ValueLevel);
     }
 
     private IEnumerator SmoothUpdateValueBar()
@@ -74,5 +93,14 @@ public class ValueBar : MonoBehaviour
         }
 
         _slider.value = NeighborhoodManager.ValueSystem.CurrentValue;
+    }
+
+    private void AssignCurrentState(int currentLevel)
+    {
+        if (currentLevel < states.Length)
+        {
+            stateText.text = states[currentLevel - 1];
+            stateText.color = stateTextColor;
+        }
     }
 }
