@@ -13,6 +13,7 @@ public class BuildingUpgradeUI : MonoBehaviour
     [SerializeField] private CustomButton exitButton;
     [SerializeField] private CustomButton upgradeButton;
     [SerializeField] private CustomButton cancelButton;
+    [SerializeField] private TextMeshProUGUI upgradeLevelText;
 
     private IBuilding _activatedBuilding = null;
 
@@ -49,6 +50,7 @@ public class BuildingUpgradeUI : MonoBehaviour
 
         TriggerOpeningAnim();
         requiredMoneyText.text = Shortener.IntToStringShortener(_activatedBuilding.UpgradeCost);
+        upgradeLevelText.text = _activatedBuilding.NextLevelNumber.ToString();
 
         if (StatManager.TotalMoney >= _activatedBuilding.UpgradeCost)
             upgradeButton.SetInteractable();

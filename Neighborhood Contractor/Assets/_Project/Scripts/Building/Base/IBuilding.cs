@@ -6,6 +6,7 @@ public interface IBuilding
     public bool PlayerIsInBuildArea { get; set; }
     public int BuildCost { get; }
     public int UpgradeCost { get; }
+    public int NextLevelNumber { get; }
     public bool CanBeBuilt { get; }
     public bool CanBeUpgraded { get; }
     public bool Built { get; }

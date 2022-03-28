@@ -3,11 +3,26 @@ using TMPro;
 
 public class BuildingTextHandler : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI remainingMoney;
+    [Header("-- BUILDING SETUP --")]
+    [SerializeField] private TextMeshProUGUI consumedMoney;
+    [SerializeField] private TextMeshProUGUI requiredMoney;
     [SerializeField] private TextMeshProUGUI requiredPopulation;
 
-    public void SetMoneyText(int amount) => remainingMoney.text = amount.ToString();
-    public void DisableMoneyText() => remainingMoney.gameObject.SetActive(false);
-    public void SetPopulationText(int requiredPopulation) => this.requiredPopulation.text = $"NEED {requiredPopulation} POPULATION TO UNLOCK";
-    public void DisablePopulationText() => requiredPopulation.gameObject.SetActive(false);
+    [Header("-- INCOME SETUP --")]
+    [SerializeField] private TextMeshProUGUI incomePerSecondText;
+
+    #region Building Functions
+
+    public void SetRequiredMoneyText(int amount) => requiredMoney.text = amount.ToString("#,##0") + "$";
+    public void SetConsumedMoneyText(int amount) => consumedMoney.text = amount.ToString("#,##0") + "$";
+    public void DisableMoneyText() => consumedMoney.gameObject.SetActive(false);
+    public void SetPopulationText(int requiredPopulation) => this.requiredPopulation.text = requiredPopulation.ToString();
+
+    #endregion
+
+    #region Income Functions
+
+    public void SetIncomePerSecondText(float incomePerSecond) => incomePerSecondText.text = $"{incomePerSecond:#,##0}$";
+
+    #endregion
 }

@@ -98,9 +98,8 @@ public class ValueBar : MonoBehaviour
     private void AssignCurrentState(int currentLevel)
     {
         if (currentLevel < states.Length)
-        {
             stateText.text = states[currentLevel - 1];
-            stateText.color = stateTextColor;
-        }
+
+        stateText.color = stateTextColor;
     }
 }

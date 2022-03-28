@@ -53,12 +53,9 @@ public class Money : MonoBehaviour
             CollectableEvents.OnCalculateMoveWeight?.Invoke();
             _animationController.SetFirstState();
 
-            if (StatManager.CollectedMoney.Count > 1)
+            if (_previousMoney != null && _previousMoney.TryGetComponent(out _previousMoneyAnimCont))
             {
-                _previousMoney = StatManager.CollectedMoney[StatManager.CollectedMoney.IndexOf(this) - 1];
-                _previousMoneyAnimCont = _previousMoney.GetComponent<MoneyAnimationController>();
-                
-                if (_previousMoneyAnimCont.GetStateInfo())
+                if (_previousMoneyAnimCont.GetStateInfo()) // Meaning if it's walking.
                     Animator.Play("Money_Moving", 1, _previousMoneyAnimCont.GetCurrentNormalizedTime());
             }
         });
@@ -68,6 +65,8 @@ public class Money : MonoBehaviour
         _collected = true;
         StatManager.CollectedMoney.Add(this);
         OnThisMoneyCollected?.Invoke();
+
+        _previousMoney = GetPreviousMoney();
     }
 
     public void Spend(Transform parent)
@@ -96,6 +95,11 @@ public class Money : MonoBehaviour
 
         DisableAnimator();
         StackRowNumber = 0;
+    }
+
+    private Money GetPreviousMoney()
+    {
+        return StatManager.CollectedMoney.IndexOf(this) > 0 ? StatManager.CollectedMoney[StatManager.CollectedMoney.IndexOf(this) - 1] : null;
     }
 
     private void DisableAnimator() => _animationController.enabled = Animator.enabled = false;

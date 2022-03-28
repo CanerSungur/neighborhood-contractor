@@ -23,12 +23,14 @@ public class PhaseUnlocker : MonoBehaviour
     private void Init()
     {
         _textHandler = GetComponent<PhaseUnlockerTextHandler>();
-        _textHandler.SetMoneyText(cost);
+        
 
         PlayerIsInBuildArea = false;
         _consumedMoney = 0;
 
         CheckForPopulationSufficiency();
+        _textHandler.SetConsumedMoneyText(_consumedMoney);
+        _textHandler.SetRequiredMoneyText(cost);
     }
 
     private void OnEnable()
@@ -53,7 +55,8 @@ public class PhaseUnlocker : MonoBehaviour
     {
         if (buildable)
         {
-            _textHandler.SetMoneyText(cost);
+            _textHandler.SetConsumedMoneyText(_consumedMoney);
+            _textHandler.SetRequiredMoneyText(cost);
             _textHandler.MakePopulationTextEmpty();
         }
         else
@@ -66,7 +69,7 @@ public class PhaseUnlocker : MonoBehaviour
     public void ConsumeMoney(int amount)
     {
         _consumedMoney += amount;
-        _textHandler.SetMoneyText(cost - _consumedMoney);
+        _textHandler.SetConsumedMoneyText(_consumedMoney);
     }
 
     public void EnableNextPhase()

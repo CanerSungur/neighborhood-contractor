@@ -12,6 +12,7 @@ public class BuildingIncomeHandler : MonoBehaviour
     [SerializeField, Tooltip("Delay in seconds for first start of spawning income money. ")] private float startSpawnDelay = 1f;
     private List<Money> incomeMoney = new List<Money>();
     private WaitForSeconds _waitForIncomeTime, _waitForSpawnStartDelay;
+    private float _incomePerSecond;
 
     [Header("-- SPAWN POSITION SETUP --")]
     [SerializeField, Tooltip("First spawn position of income money.")] private Vector3 startPoint = new Vector3(0f, 0f, 5f);
@@ -31,6 +32,7 @@ public class BuildingIncomeHandler : MonoBehaviour
 
     public int MoneyCount { get; private set; }
     public List<Money> IncomeMoney => incomeMoney;
+    public float IncomePerSecond => _incomePerSecond;
 
     #endregion
 
@@ -65,6 +67,8 @@ public class BuildingIncomeHandler : MonoBehaviour
             incomeTime = 1;
 
         _waitForIncomeTime = new WaitForSeconds(incomeTime);
+
+        CalculateIncomePerSecond();
     }
 
     private IEnumerator SpawnIncomeMoney()
@@ -205,4 +209,6 @@ public class BuildingIncomeHandler : MonoBehaviour
             PreviousSpawnPosition();
         }
     }
+
+    public void CalculateIncomePerSecond() => _incomePerSecond = StatManager.MoneyValue / incomeTime;
 }

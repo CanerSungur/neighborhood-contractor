@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class School : ValueContributorBase
+public class School : IncomeContributorBuilding
 {
     
 }
