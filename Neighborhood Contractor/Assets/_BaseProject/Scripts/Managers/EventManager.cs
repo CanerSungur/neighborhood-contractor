@@ -33,7 +33,6 @@ public static class FeedbackEvents
 
 public static class BuildingUpgradeEvents
 {
-    public static Action<IBuilding> OnActivateBuildingUpgradeUI;
     public static Action<Upgradeable> OnActivateUpgradeUI, OnCloseUpgradeUI;
 }
 

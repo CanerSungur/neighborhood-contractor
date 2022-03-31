@@ -50,3 +50,15 @@ MonoBehaviour:
   - Tag: Money_Collect
     Prefab: {fileID: 3958233169641693184, guid: 642e1702d52eb1a4aaf3d49c4f62e064, type: 3}
     Size: 300
+  - Tag: Confetti
+    Prefab: {fileID: 1724890150685576, guid: 504bc11969e143249975cacca01d426a, type: 3}
+    Size: 1
+  - Tag: Neighbor_Man
+    Prefab: {fileID: 4348138997228289767, guid: 74028dd4a60419a48aaaef2d909a5ba0, type: 3}
+    Size: 10
+  - Tag: Neighbor_Woman
+    Prefab: {fileID: 5998722034291581978, guid: 1818adb067247cc48bbd8134fcc26678, type: 3}
+    Size: 10
+  - Tag: Neighbor_Child
+    Prefab: {fileID: 9212532263445933812, guid: 477cb945b0af9754084ff84ece1ef8f1, type: 3}
+    Size: 10

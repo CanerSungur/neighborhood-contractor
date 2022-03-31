@@ -15,14 +15,12 @@ public class BuildingUpgradeUI : MonoBehaviour
     [SerializeField] private CustomButton cancelButton;
     [SerializeField] private TextMeshProUGUI upgradeLevelText;
 
-    private IBuilding _activatedBuilding = null;
     private Upgradeable _activatedUpgradeable = null;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
         
-        BuildingUpgradeEvents.OnActivateBuildingUpgradeUI += ActivateUI;
         BuildingUpgradeEvents.OnActivateUpgradeUI += Activate;
         BuildingUpgradeEvents.OnCloseUpgradeUI += Close;
 
@@ -33,7 +31,6 @@ public class BuildingUpgradeUI : MonoBehaviour
 
     private void OnDisable()
     {
-        BuildingUpgradeEvents.OnActivateBuildingUpgradeUI -= ActivateUI;
         BuildingUpgradeEvents.OnActivateUpgradeUI -= Activate;
         BuildingUpgradeEvents.OnCloseUpgradeUI -= Close;
 
@@ -65,19 +62,6 @@ public class BuildingUpgradeUI : MonoBehaviour
 
     private void Close(Upgradeable upgradeable) => TriggerClosingAnim();
 
-    private void ActivateUI(IBuilding building)
-    {
-        _activatedBuilding = building;
-
-        TriggerOpeningAnim();
-        requiredMoneyText.text = Shortener.IntToStringShortener(_activatedBuilding.UpgradeCost);
-        upgradeLevelText.text = _activatedBuilding.NextLevelNumber.ToString();
-
-        if (StatManager.TotalMoney >= _activatedBuilding.UpgradeCost)
-            upgradeButton.SetInteractable();
-        else
-            upgradeButton.SetNotInteractable();
-    }
     private void TriggerOpeningAnim() => _animator.SetTrigger(openID);
     private void TriggerClosingAnim() => _animator.SetTrigger(closeID);
 }

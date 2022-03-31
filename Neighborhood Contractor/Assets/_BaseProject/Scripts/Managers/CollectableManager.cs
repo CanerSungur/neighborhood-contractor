@@ -60,27 +60,4 @@ public class CollectableManager : MonoBehaviour
     }
 
     public void SpawnCoinRewardsTrigger(Vector3 spawnPosition, int amount) => OnSpawnCoinRewards?.Invoke(spawnPosition, amount);
-
-    public void StartCollectingIncome(IContributorIncome incomeBuilding, IBuilding building) => StartCoroutine(Collect(incomeBuilding, building));
-    public void StopCollectingIncome(IContributorIncome incomeBuilding, IBuilding building) => StopCoroutine(Collect(incomeBuilding, building));
-    private IEnumerator Collect(IContributorIncome incomeBuilding, IBuilding building)
-    {
-        while (building.PlayerIsInBuildArea)
-        {
-            if (incomeBuilding.IncomeMoneyCount > 0 && incomeBuilding.CanCollectIncome && building.Built)
-            {
-                Money money = incomeBuilding.IncomeMoney[incomeBuilding.IncomeMoney.Count - 1];
-                if (money.CanBeCollected)
-                {
-                    money.Collect(Player.moneyStackHandler.TargetStackPosition, Player.moneyStackHandler.StackTransform);
-                    incomeBuilding.IncomeMoneyIsSent(money);
-
-                    //StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(building.MoneyPointTransform);
-                    Player.CollectMoney(StatManager.MoneyValue);
-                }
-            }
-
-            yield return new WaitForSeconds(StatManager.TakeIncomeTime);
-        }
-    }
 }
