@@ -11,6 +11,7 @@ public class NeighborhoodManager : MonoBehaviour
 
     private void Init()
     {
+        Population = 0;
         ValueSystem = new ValueSystem(_currentValue, _valueLevel);
     }
 

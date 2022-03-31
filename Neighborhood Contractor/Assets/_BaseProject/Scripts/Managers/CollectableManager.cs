@@ -36,6 +36,29 @@ public class CollectableManager : MonoBehaviour
         }
     }
 
+    public void StartCollectIncome(IncomeSpawner incomeSpawner) => StartCoroutine(CollectIncome(incomeSpawner)); 
+    public void StopCollectIncome(IncomeSpawner incomeSpawner) => StopCoroutine(CollectIncome(incomeSpawner)); 
+    private IEnumerator CollectIncome(IncomeSpawner incomeSpawner)
+    {
+        while (incomeSpawner.PlayerIsInArea)
+        {
+            if (incomeSpawner.MoneyCount > 0 && incomeSpawner.CanCollectIncome)
+            {
+                Money money = incomeSpawner.IncomeMoney[incomeSpawner.IncomeMoney.Count - 1];
+                if (money.CanBeCollected)
+                {
+                    money.Collect(Player.moneyStackHandler.TargetStackPosition, Player.moneyStackHandler.StackTransform);
+                    incomeSpawner.RemoveIncomeMoney(money);
+
+                    //StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].Spend(building.MoneyPointTransform);
+                    Player.CollectMoney(StatManager.MoneyValue);
+                }
+            }
+
+            yield return new WaitForSeconds(StatManager.TakeIncomeTime);
+        }
+    }
+
     public void SpawnCoinRewardsTrigger(Vector3 spawnPosition, int amount) => OnSpawnCoinRewards?.Invoke(spawnPosition, amount);
 
     public void StartCollectingIncome(IContributorIncome incomeBuilding, IBuilding building) => StartCoroutine(Collect(incomeBuilding, building));

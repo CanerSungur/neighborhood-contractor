@@ -22,6 +22,33 @@ public class PlayerCollision : MonoBehaviour
 
         #endregion
 
+        if (other.gameObject.layer == LayerMask.NameToLayer("Build Area") && other.transform.parent && other.transform.parent.TryGetComponent(out Building building) && !building.Buildable.PlayerIsInBuildArea)
+        {
+            building.Buildable.PlayerIsInBuildArea = true;
+            if (building.Buildable.CanBeBuilt)
+                BuildManager.Instance.StartBuildable(building.Buildable);
+            else
+            {
+                BuildManager.Instance.StopBuildable(building.Buildable);
+                FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough MONEY", FeedbackUI.Colors.NotEnoughMoney);
+            }
+        }
+        
+        if (other.gameObject.layer == LayerMask.NameToLayer("Locked Build Area"))
+            FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough POPULATION", FeedbackUI.Colors.NotEnoughPopulation);
+        
+        if (other.gameObject.layer == LayerMask.NameToLayer("Income Area") && other.transform.parent.TryGetComponent(out IncomeSpawner incomeSpawner) && !incomeSpawner.PlayerIsInArea)
+        {
+            incomeSpawner.PlayerIsInArea = true;
+            GameManager.Instance.collectableManager.StartCollectIncome(incomeSpawner);
+        }
+        
+        if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && other.transform.parent.TryGetComponent(out Upgradeable upgradeable))
+        {
+            //upgradeable.PlayerIsInArea = true;
+            BuildingUpgradeEvents.OnActivateUpgradeUI?.Invoke(upgradeable);
+        }
+
         if (other.TryGetComponent(out PhaseUnlocker phaseUnlocker) && !phaseUnlocker.PlayerIsInBuildArea)
         {
             phaseUnlocker.PlayerIsInBuildArea = true;
@@ -44,51 +71,69 @@ public class PlayerCollision : MonoBehaviour
         }
 
         // spend money section
-        else if (other.transform.parent.TryGetComponent(out IBuilding building) && !building.PlayerIsInBuildArea)
-        {
-            building.PlayerIsInBuildArea = true;
+        //else if (other.transform.parent.TryGetComponent(out IBuilding building) && !building.PlayerIsInBuildArea)
+        //{
+        //    building.PlayerIsInBuildArea = true;
 
-            if (other.gameObject.layer == LayerMask.NameToLayer("Build Area"))
-            {
-                if (building.CanBeBuilt)
-                    BuildManager.Instance.StartBuilding(building);
-                else
-                {
-                    BuildManager.Instance.StopBuilding(building);
-                    FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough MONEY", FeedbackUI.Colors.NotEnoughMoney);
-                }
-            }
-            else if (other.gameObject.layer == LayerMask.NameToLayer("Income Area") && other.transform.parent.TryGetComponent(out IContributorIncome incomeBuilding))
-            {
-                GameManager.Instance.collectableManager.StartCollectingIncome(incomeBuilding, building);
-            }
-            else if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && building.CanBeUpgraded)
-            {
-                BuildingUpgradeEvents.OnActivateBuildingUpgradeUI?.Invoke(building);
-                // Open building upgrade UI here.
-            }
-            else if (other.gameObject.layer == LayerMask.NameToLayer("Locked Build Area"))
-            {
-                FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough POPULATION", FeedbackUI.Colors.NotEnoughPopulation);
-            }
-        }
+        //    if (other.gameObject.layer == LayerMask.NameToLayer("Build Area"))
+        //    {
+        //        if (building.CanBeBuilt)
+        //            BuildManager.Instance.StartBuilding(building);
+        //        else
+        //        {
+        //            BuildManager.Instance.StopBuilding(building);
+        //            FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough MONEY", FeedbackUI.Colors.NotEnoughMoney);
+        //        }
+        //    }
+        //    else if (other.gameObject.layer == LayerMask.NameToLayer("Income Area") && other.transform.parent.TryGetComponent(out IContributorIncome incomeBuilding))
+        //    {
+        //        GameManager.Instance.collectableManager.StartCollectingIncome(incomeBuilding, building);
+        //    }
+        //    else if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && building.CanBeUpgraded)
+        //    {
+        //        BuildingUpgradeEvents.OnActivateBuildingUpgradeUI?.Invoke(building);
+        //        // Open building upgrade UI here.
+        //    }
+        //    else if (other.gameObject.layer == LayerMask.NameToLayer("Locked Build Area"))
+        //    {
+        //        FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough POPULATION", FeedbackUI.Colors.NotEnoughPopulation);
+        //    }
+        //}
     }
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Build Area") && other.transform.parent.TryGetComponent(out Building building) && building.Buildable.PlayerIsInBuildArea)
+        {
+            building.Buildable.PlayerIsInBuildArea = false;
+            BuildManager.Instance.StopBuildable(building.Buildable);
+        }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Income Area") && other.transform.parent.TryGetComponent(out IncomeSpawner incomeSpawner) && incomeSpawner.PlayerIsInArea)
+        {
+            incomeSpawner.PlayerIsInArea = false;
+            GameManager.Instance.collectableManager.StopCollectIncome(incomeSpawner);
+        }
+
+        //if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && other.transform.parent.TryGetComponent(out Upgradeable upgradeable) && upgradeable.PlayerIsInArea)
+        //{
+        //    upgradeable.PlayerIsInArea = false;
+        //    BuildingUpgradeEvents.OnCloseUpgradeUI?.Invoke(upgradeable);
+        //}
+
         if (other.TryGetComponent(out PhaseUnlocker phaseUnlocker) && phaseUnlocker.PlayerIsInBuildArea)
         {
             phaseUnlocker.PlayerIsInBuildArea = false;
             BuildManager.Instance.StopBuildingNewPhase(phaseUnlocker);
         }
-        else if (other.transform.parent.TryGetComponent(out IBuilding building) && building.PlayerIsInBuildArea)
-        {
-            building.PlayerIsInBuildArea = false;
-            
-            BuildManager.Instance.StopBuilding(building);
+        //else if (other.transform.parent.TryGetComponent(out IBuilding building) && building.PlayerIsInBuildArea)
+        //{
+        //    building.PlayerIsInBuildArea = false;
 
-            if (other.transform.parent.TryGetComponent(out IContributorIncome incomeBuilding))
-                GameManager.Instance.collectableManager.StopCollectingIncome(incomeBuilding, building);
-        }
+        //    BuildManager.Instance.StopBuilding(building);
+
+        //    if (other.transform.parent.TryGetComponent(out IContributorIncome incomeBuilding))
+        //        GameManager.Instance.collectableManager.StopCollectingIncome(incomeBuilding, building);
+        //}
     }
 }

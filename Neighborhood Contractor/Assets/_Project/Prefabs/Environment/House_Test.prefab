@@ -277,7 +277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &415561698
 Transform:
   m_ObjectHideFlags: 0
@@ -1986,9 +1986,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3544745337034124237}
-  - component: {fileID: 3544745337034124240}
-  - component: {fileID: 3544745337034124239}
-  - component: {fileID: 3544745337034124238}
+  - component: {fileID: 7579891757816123704}
+  - component: {fileID: 3719927773742277086}
+  - component: {fileID: 5512907910720676300}
+  - component: {fileID: 4235209642096371060}
   m_Layer: 0
   m_Name: House_Test
   m_TagString: Untagged
@@ -2005,7 +2006,7 @@ Transform:
   m_GameObject: {fileID: 3544745337034124236}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -11.06, y: -0.03, z: -1.76}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 2709356247891515947}
   - {fileID: 7498474077821968758}
@@ -2022,7 +2023,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3544745337034124240
+--- !u!114 &7579891757816123704
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2031,28 +2032,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 3544745337034124236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47a5bad1278e33a4182f70e4ea33b3d0, type: 3}
+  m_Script: {fileID: 11500000, guid: 7bca537f753b2be4684920c334b5d8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  incomeHandler: {fileID: 3544745337034124239}
-  lockedBuildArea: {fileID: 3308515411673242439}
-  buildArea: {fileID: 415561698}
-  incomeArea: {fileID: 120757546}
-  upgradeArea: {fileID: 623968048}
+--- !u!114 &3719927773742277086
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3544745337034124236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 910affa5b1d788649b3ddb4fb8d0e9cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildCost: 1000
+  buildArea: {fileID: 415561697}
+  moneyPointTransform: {fileID: 3544745335727351284}
+  requiredMoneyText: {fileID: 3470148719583158206}
+  consumedMoneyText: {fileID: 348398834}
   finishedHouse: {fileID: 5470999441428275929}
   constructionLevel_1: {fileID: 513951221021900087}
   constructionLevel_2: {fileID: 1735232063635723996}
-  upgradedHouses:
-  - {fileID: 7112710393012935847}
-  - {fileID: 2105488555577352705}
-  cost: 100
-  upgradeCostIncreaseRate: 1.25
-  moneyPointTransform: {fileID: 3544745335727351284}
-  requiredPopulation: 5
-  neighborhoodValueContribution: 25
-  neighborhoodPopulationContribution: 3
-  maxLevel: 3
---- !u!114 &3544745337034124239
+--- !u!114 &5512907910720676300
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2061,17 +2064,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3544745337034124236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 362b3c2ef631beb479c74dee85996efa, type: 3}
+  m_Script: {fileID: 11500000, guid: f58ce1b069a7aa04eb8c6beb950eeb46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  incomeTime: 3
-  startSpawnDelay: 1
-  startPoint: {x: 0, y: 0, z: 5}
-  spawnStartTransform: {fileID: 3544745336224438575}
-  rowLength: 8
-  columnLength: 5
-  layerLength: 3
---- !u!114 &3544745337034124238
+  requiredPopulation: 0
+  lockedArea: {fileID: 4110113814925046889}
+  requiredPopulationText: {fileID: 224010590767331254}
+--- !u!114 &4235209642096371060
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2080,13 +2079,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3544745337034124236}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e948ac1796d80e049b877d43bf407fba, type: 3}
+  m_Script: {fileID: 11500000, guid: 0007c2912a5759044bf2226b800d12ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  consumedMoney: {fileID: 348398834}
-  requiredMoney: {fileID: 3470148719583158206}
-  requiredPopulation: {fileID: 224010590767331254}
-  incomePerSecondText: {fileID: 1114582808}
+  valueContribution: 111
+  populationContribution: 5
 --- !u!1 &4110113814925046889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,7 +2100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3308515411673242439
 Transform:
   m_ObjectHideFlags: 0
@@ -2283,7 +2280,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4835601282593879408
 Transform:
   m_ObjectHideFlags: 0

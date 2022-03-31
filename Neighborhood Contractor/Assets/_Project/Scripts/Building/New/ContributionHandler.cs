@@ -1,9 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// handle only contribution of this building to neighborhood
 public class ContributionHandler : MonoBehaviour
 {
+    [Header("-- SETUP --")]
+    [SerializeField] private int valueContribution = 20;
+    [SerializeField] private int populationContribution = 2;
     
+    public void Init(Building building)
+    {
+        if (building.Rentable)
+            populationContribution = 0;
+    }
+
+    public void TriggerContribution()
+    {
+        NeighborhoodEvents.OnIncreasePopulation?.Invoke(populationContribution);
+        NeighborhoodEvents.OnIncreaseValue?.Invoke(valueContribution);
+    }
+    public void TriggerPopulationContribution() => NeighborhoodEvents.OnIncreasePopulation?.Invoke(populationContribution);
+    public void TriggerValueContribution() => NeighborhoodEvents.OnIncreaseValue?.Invoke(valueContribution);
 }
