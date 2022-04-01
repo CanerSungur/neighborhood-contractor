@@ -330,9 +330,9 @@ MonoBehaviour:
   incomeTimeForNotRentable: 3
   startSpawnDelay: 1
   spawnStartTransform: {fileID: 0}
-  rowLength: 4
-  columnLength: 3
-  layerLength: 5
+  rowLength: 7
+  columnLength: 5
+  layerLength: 3
   incomeArea: {fileID: 457289279788532051}
   incomePerSecondText: {fileID: 8573103235416267674}
 --- !u!1 &1005040809369547142
@@ -1383,7 +1383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4871010843035362996}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.107, y: -0.053, z: -2.204}
+  m_LocalPosition: {x: 0.991, y: -0.142, z: -2.251}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 486229057559388779}

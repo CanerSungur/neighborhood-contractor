@@ -21,7 +21,7 @@ public class Car : MonoBehaviour
 
     private Vector3 _targetPosition, _turnPosition;
     private bool _startMoving, _targetReached, _turnReached;
-    private float _idlingTime = 3f;
+    private float _idlingTime = 2f;
 
     private MeshRenderer[] _meshes;
 
@@ -151,6 +151,8 @@ public class Car : MonoBehaviour
 
     private void DisableMesh()
     {
+        transform.position = startTransform.position;
+
         for (int i = 0; i < _meshes.Length; i++)
             _meshes[i].enabled = false;
     }

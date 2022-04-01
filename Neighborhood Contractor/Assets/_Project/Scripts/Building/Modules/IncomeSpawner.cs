@@ -21,6 +21,8 @@ public class IncomeSpawner : MonoBehaviour
     [Header("-- SPAWN POSITION SETUP --")]
     [SerializeField, Tooltip("First spawn transform of income money.")] private Transform spawnStartTransform;
     private float layerOffset = 0.15f;
+    private float rowOffset = 0.72f;
+    private float columnOffset = 0.38f;
 
     [Header("-- SPAWN LIMITS SETUP --")]
     [SerializeField, Tooltip("Spawn position will move on to the next column if this number is reached.")] private int rowLength = 4;
@@ -111,7 +113,7 @@ public class IncomeSpawner : MonoBehaviour
 
     private void Spawn()
     {
-        var spawnPoint = spawnStartTransform.position + new Vector3(_currentFinishedRow * -0.72f, _currentFinishedLayer * layerOffset, _currentFinishedColumn * -0.38f);
+        var spawnPoint = spawnStartTransform.position + new Vector3(_currentFinishedRow * -rowOffset, _currentFinishedLayer * layerOffset, _currentFinishedColumn * -columnOffset);
         Money money = ObjectPooler.Instance.SpawnFromPool("Money_Income", spawnPoint, Quaternion.Euler(0f, 90f, 0f)).GetComponent<Money>();
         AddIncomeMoney(money);
     }

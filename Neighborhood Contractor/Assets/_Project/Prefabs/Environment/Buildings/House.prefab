@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &120757546
 Transform:
   m_ObjectHideFlags: 0
@@ -486,7 +486,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &623968048
 Transform:
   m_ObjectHideFlags: 0
@@ -2031,7 +2031,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3544745336224438574}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 0.91499996, y: 0.05, z: -1.584}
+  m_LocalPosition: {x: 0.91499996, y: 0.017, z: -1.584}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 3544745337034124237}
@@ -2085,6 +2085,7 @@ Transform:
   - {fileID: 4835601282593879408}
   - {fileID: 610616521}
   - {fileID: 2084865057}
+  - {fileID: 3085112905524529403}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2166,6 +2167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxBuildingPopulation: 4
+  populationIncreaseCount: 2
+  rentSign: {fileID: 2421623211737420353}
+  rentSignFullAnimation: {fileID: 2730590542291814359}
   rentUI: {fileID: 4714534638709849886}
   bubbleImg: {fileID: 7963608934605992726}
   populationText: {fileID: 3304551205367139613}
@@ -2186,9 +2190,9 @@ MonoBehaviour:
   incomeTimeForNotRentable: 3
   startSpawnDelay: 1
   spawnStartTransform: {fileID: 3544745336224438575}
-  rowLength: 4
-  columnLength: 3
-  layerLength: 5
+  rowLength: 7
+  columnLength: 5
+  layerLength: 3
   incomeArea: {fileID: 120757545}
   incomePerSecondText: {fileID: 1114582808}
 --- !u!114 &136009674
@@ -2205,7 +2209,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   carTargetTransform: {fileID: 2084865057}
   carTurnTransform: {fileID: 610616521}
-  car: {fileID: 0}
 --- !u!1 &4110113814925046889
 GameObject:
   m_ObjectHideFlags: 0
@@ -3261,3 +3264,87 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1001 &8584040071383234785
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 3544745337034124237}
+    m_Modifications:
+    - target: {fileID: 6249861096827988640, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_Name
+      value: Rent Sign
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_RootOrder
+      value: 14
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.51
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.465
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+--- !u!1 &2421623211737420353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6249861096827988640, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+  m_PrefabInstance: {fileID: 8584040071383234785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3085112905524529403 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+  m_PrefabInstance: {fileID: 8584040071383234785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!111 &2730590542291814359 stripped
+Animation:
+  m_CorrespondingSourceObject: {fileID: 5964352877674397494, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+  m_PrefabInstance: {fileID: 8584040071383234785}
+  m_PrefabAsset: {fileID: 0}

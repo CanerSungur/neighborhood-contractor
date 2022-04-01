@@ -252,7 +252,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 503804212776191231}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.127, y: 0.456, z: -2.837}
+  m_LocalPosition: {x: 0.987, y: 0.384, z: -2.902}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 4691391323743281068}
@@ -438,7 +438,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8350403207695178267
 Transform:
   m_ObjectHideFlags: 0
@@ -1129,9 +1129,9 @@ MonoBehaviour:
   incomeTimeForNotRentable: 3
   startSpawnDelay: 1
   spawnStartTransform: {fileID: 1571362942657484513}
-  rowLength: 4
-  columnLength: 3
-  layerLength: 5
+  rowLength: 7
+  columnLength: 5
+  layerLength: 3
   incomeArea: {fileID: 7622276586200833933}
   incomePerSecondText: {fileID: 922383593431559810}
 --- !u!114 &5343989380489246224
@@ -2509,7 +2509,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7543442358920976707
 Transform:
   m_ObjectHideFlags: 0

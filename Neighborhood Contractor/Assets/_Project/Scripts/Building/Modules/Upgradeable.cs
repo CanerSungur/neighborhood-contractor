@@ -73,5 +73,7 @@ public class Upgradeable : MonoBehaviour
 
         if (_currentLevel == _maxLevel)
             upgradeArea.SetActive(false);
+
+        FeedbackEvents.OnGiveFeedback?.Invoke("BUILDING UPGRADED!", FeedbackUI.Colors.ValueLevelIncrease);
     }
 }

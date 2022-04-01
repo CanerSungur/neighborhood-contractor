@@ -140,6 +140,8 @@ public class Buildable : MonoBehaviour
         OnBuildFinished?.Invoke();
         FinishConstruction();
 
+        FeedbackEvents.OnGiveFeedback?.Invoke("BUILDING FINISHED!", FeedbackUI.Colors.ValueLevelIncrease);
+
         //// we set income text on first enable of income area.
         //Building.TextHandler.SetIncomePerSecondText(incomeHandler.IncomePerSecond);
     }

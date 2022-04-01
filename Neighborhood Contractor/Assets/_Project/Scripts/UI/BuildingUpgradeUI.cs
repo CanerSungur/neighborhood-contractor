@@ -9,11 +9,16 @@ public class BuildingUpgradeUI : MonoBehaviour
     private readonly int closeID = Animator.StringToHash("Close");
 
     [Header("-- SETUP --")]
-    [SerializeField] private TextMeshProUGUI requiredMoneyText;
     [SerializeField] private CustomButton exitButton;
     [SerializeField] private CustomButton upgradeButton;
     [SerializeField] private CustomButton cancelButton;
-    [SerializeField] private TextMeshProUGUI upgradeLevelText;
+
+    [Header("-- TEXT SETUP --")]
+    [SerializeField] private TextMeshProUGUI levelFromText;
+    [SerializeField] private TextMeshProUGUI levelToText;
+    [SerializeField] private TextMeshProUGUI valueIncreaseText;
+    [SerializeField] private TextMeshProUGUI rentSpaceText;
+    [SerializeField] private TextMeshProUGUI requiredMoneyText;
 
     private Upgradeable _activatedUpgradeable = null;
 
@@ -51,8 +56,12 @@ public class BuildingUpgradeUI : MonoBehaviour
         _activatedUpgradeable = upgradeable;
 
         TriggerOpeningAnim();
+
         requiredMoneyText.text = Shortener.IntToStringShortener(_activatedUpgradeable.UpgradeCost);
-        upgradeLevelText.text = _activatedUpgradeable.NextLevelNumber.ToString();
+        levelFromText.text = "Lvl " + (_activatedUpgradeable.NextLevelNumber - 1);
+        levelToText.text = "Lvl " + _activatedUpgradeable.NextLevelNumber.ToString();
+        valueIncreaseText.text = "+" + _activatedUpgradeable.Building.ContributionHandler.ValueContribution;
+        rentSpaceText.text = "+" + _activatedUpgradeable.Building.Rentable.RentIncreaseCount;
 
         if (StatManager.TotalMoney >= _activatedUpgradeable.UpgradeCost)
             upgradeButton.SetInteractable();
@@ -61,7 +70,6 @@ public class BuildingUpgradeUI : MonoBehaviour
     }
 
     private void Close(Upgradeable upgradeable) => TriggerClosingAnim();
-
     private void TriggerOpeningAnim() => _animator.SetTrigger(openID);
     private void TriggerClosingAnim() => _animator.SetTrigger(closeID);
 }

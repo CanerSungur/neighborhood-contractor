@@ -12,6 +12,9 @@ public class ValueBar : MonoBehaviour
     private Slider _slider;
     private Image _fill;
 
+    [Header("-- PARTICLE SETUP --")]
+    [SerializeField] private ParticleSystem confettiParticle;
+   
     [Header("-- STATE SETUP --")]
     [SerializeField] private TextMeshProUGUI stateText;
     [SerializeField] private Color stateTextColor;
@@ -74,6 +77,9 @@ public class ValueBar : MonoBehaviour
         UpdateValue();
 
         AssignCurrentState(NeighborhoodManager.ValueSystem.ValueLevel);
+
+        FeedbackEvents.OnGiveFeedback?.Invoke("Value Level UP!", FeedbackUI.Colors.ValueLevelIncrease);
+        confettiParticle.Play();
     }
 
     private IEnumerator SmoothUpdateValueBar()

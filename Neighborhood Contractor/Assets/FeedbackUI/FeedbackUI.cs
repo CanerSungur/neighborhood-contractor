@@ -6,12 +6,14 @@ public class FeedbackUI : MonoBehaviour
     public enum Colors
     {
         NotEnoughPopulation,
-        NotEnoughMoney
+        NotEnoughMoney,
+        ValueLevelIncrease
     }
 
     private TextMeshProUGUI _feedbackText;
     private Color notEnoughPopulationColor = Color.cyan;
     private Color notEnoughMoneyColor = Color.magenta;
+    private Color valueLevelIncrease = Color.green;
 
     private void Awake()
     {
@@ -35,6 +37,8 @@ public class FeedbackUI : MonoBehaviour
             _feedbackText.color = notEnoughPopulationColor;
         else if (color == Colors.NotEnoughMoney)
             _feedbackText.color = notEnoughMoneyColor;
+        else if (color == Colors.ValueLevelIncrease)
+            _feedbackText.color = valueLevelIncrease;
 
         _feedbackText.text = message;
         _feedbackText.transform.parent.gameObject.SetActive(false);

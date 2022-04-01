@@ -682,7 +682,7 @@ GameObject:
   - component: {fileID: 5998722034291581975}
   - component: {fileID: 5998722034291581972}
   - component: {fileID: 5998722034291581973}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Stickman_Neighbor_Woman
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -13,6 +13,8 @@ public class Rentable : MonoBehaviour
     [Header("-- SETUP --")]
     [SerializeField] private int maxBuildingPopulation = 4;
     [SerializeField] private int populationIncreaseCount = 2;
+    [SerializeField] private GameObject rentSign;
+    [SerializeField] private Animation rentSignFullAnimation;
     private int _currentBuildingPopulation, _rentableSpace;
 
     [Header("-- UI --")]
@@ -24,9 +26,11 @@ public class Rentable : MonoBehaviour
     public int CurrentBuildingPopulation => _currentBuildingPopulation;
     public bool BuildingIsFull => _currentBuildingPopulation == maxBuildingPopulation;
     public int RentableSpace => _rentableSpace;
+    public int RentIncreaseCount => populationIncreaseCount;
 
     public void Init()
     {
+        rentSign.SetActive(false);
         rentUI.SetActive(false);
         _currentBuildingPopulation = 0;
         bubbleImg.color = Color.white;
@@ -40,6 +44,7 @@ public class Rentable : MonoBehaviour
         Building.Buildable.OnBuildFinished -= BuildingIsFinished;
         Building.Upgradeable.OnUpgradeHappened -= UpdateProperties;
 
+        rentSign.transform.DOKill();
         rentUI.transform.DOKill();
         bubbleImg.transform.DOKill();
     }
@@ -51,6 +56,8 @@ public class Rentable : MonoBehaviour
             bubbleImg.color = r;
         }).SetEase(Ease.OutBounce);
 
+        rentSignFullAnimation.Rewind();
+        rentSignFullAnimation.Play("RentSign_NotFull_LegacyAnim");
         maxBuildingPopulation += populationIncreaseCount;
         _rentableSpace = populationIncreaseCount;
         populationText.text = $"{_currentBuildingPopulation}/{maxBuildingPopulation}";
@@ -60,6 +67,10 @@ public class Rentable : MonoBehaviour
 
     private void BuildingIsFinished()
     {
+        rentSign.SetActive(true);
+        rentSignFullAnimation.Rewind();
+        rentSignFullAnimation.Play("RentSign_NotFull_LegacyAnim");
+
         rentUI.SetActive(true);
         populationText.text = $"{_currentBuildingPopulation}/{maxBuildingPopulation}";
         _rentableSpace = maxBuildingPopulation;
@@ -81,7 +92,8 @@ public class Rentable : MonoBehaviour
     {
         if (!BuildingIsFull)
         {
-            Bounce();
+            Bounce(rentUI.transform);
+            Bounce(rentSign.transform);
 
             _currentBuildingPopulation++;
             NeighborhoodEvents.OnIncreasePopulation?.Invoke(1);
@@ -94,18 +106,23 @@ public class Rentable : MonoBehaviour
             Building.IncomeSpawner.UpdateIncomeForRent();
 
             if (_currentBuildingPopulation == maxBuildingPopulation)
+            {
                 DOVirtual.Color(bubbleImg.color, maxxedColor, 0.5f, r => {
                     bubbleImg.color = r;
                 }).SetEase(Ease.OutBounce);
+
+                // Do something for Rent Sign.
+                rentSignFullAnimation.Play("RentSign_Full_LegacyAnim");
+            }
         }
     }
 
-    private void Bounce()
+    private void Bounce(Transform transform)
     {
-        rentUI.transform.DORewind();
+        transform.DORewind();
 
         //transform.DOShakePosition(.25f, .25f);
-        rentUI.transform.DOShakeRotation(.25f, .25f);
-        rentUI.transform.DOShakeScale(.25f, .25f);
+        transform.DOShakeRotation(.25f, .5f);
+        transform.DOShakeScale(.25f, .5f);
     }
 }
