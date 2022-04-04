@@ -1,18 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SaveHandler : MonoBehaviour
+public static class SaveHandler
 {
-    // Start is called before the first frame update
-    void Start()
+    // Things that will be saved:
+    // Money that player has on its back.
+    // Money that buildings have on their income areas
+    // Building's build state. 
+    // Building's upgrade state.
+    // Game phase unlock state.
+    // Consumed money of all things.
+    // Value and population.
+
+    public static void SavePlayerData(StatManager statManager)
     {
-        
+        PlayerPrefs.SetInt("TotalMoney", StatManager.TotalMoney);
+        PlayerPrefs.SetInt("CurrentCarry", StatManager.CurrentCarry);
+        PlayerPrefs.SetFloat("SpendTime", StatManager.SpendTime);
+        PlayerPrefs.SetFloat("TakeIncomeTime", StatManager.TakeIncomeTime);
+
+        PlayerPrefs.Save();
     }
 
-    // Update is called once per frame
-    void Update()
+    public static void SaveNeighborhoodData(NeighborhoodManager neighborhoodManager)
     {
-        
+        PlayerPrefs.SetInt("Value", NeighborhoodManager.ValueSystem.CurrentValue);
+        PlayerPrefs.SetInt("ValueLevel", NeighborhoodManager.ValueSystem.ValueLevel);
+        PlayerPrefs.SetInt("Population", NeighborhoodManager.Population);
+
+        PlayerPrefs.Save();
+    }
+
+    public static void DeleteAll()
+    {
+        PlayerPrefs.DeleteAll();
     }
 }

@@ -10,7 +10,6 @@ public class Buildable : MonoBehaviour
 
     [Header("-- PROPERTIES --")]
     [SerializeField] private int buildCost = 1000;
-    private int _consumedMoney;
 
     [Header("-- OBJECT REFERENCES --")]
     [SerializeField] private GameObject buildArea;
@@ -19,7 +18,7 @@ public class Buildable : MonoBehaviour
     [Header("-- TEXT REFERENCES --")]
     [SerializeField] private TextMeshProUGUI requiredMoneyText;
     [SerializeField] private TextMeshProUGUI consumedMoneyText;
- 
+
     [Header("-- BUILD PHASE SETUP --")]
     [SerializeField] private GameObject finishedHouse;
     [SerializeField] private GameObject constructionLevel_1;
@@ -29,7 +28,7 @@ public class Buildable : MonoBehaviour
 
     #region Public Getters
 
-    public int ConsumedMoney => _consumedMoney;
+    public int ConsumedMoney { get; private set; }
     public int BuildCost => buildCost;
     public Transform MoneyPointTransform => moneyPointTransform;
 
@@ -37,7 +36,7 @@ public class Buildable : MonoBehaviour
 
     #region Controls
 
-    public bool Built => _consumedMoney == buildCost;
+    public bool Built => ConsumedMoney == buildCost;
     public bool CanBeBuilt => StatManager.CurrentCarry > 0 && !Built;
 
     #endregion
@@ -47,7 +46,7 @@ public class Buildable : MonoBehaviour
     public void Init(Building building)
     {
         PlayerIsInBuildArea = false;
-        _consumedMoney = 0;
+        //_consumedMoney = 0;
 
         EnableRelevantBuildPhase();
 
@@ -62,13 +61,27 @@ public class Buildable : MonoBehaviour
             Activate();
     }
 
+    public void SkipThisState()
+    {
+        ConsumedMoney = BuildCost;
+        FinishConstruction();
+        buildArea.SetActive(false);
+    }
+
+    public void CheckThisState(int consumedMoney)
+    {
+        ConsumedMoney = consumedMoney;
+        UpdateBuildPhases();
+        Activate();
+    }
+
     public void Activate()
     {
         if (Built) return;
 
         buildArea.SetActive(true);
         requiredMoneyText.text = buildCost.ToString("#,##0") + "$";
-        consumedMoneyText.text = _consumedMoney.ToString("#,##0") + "$";
+        consumedMoneyText.text = ConsumedMoney.ToString("#,##0") + "$";
     }
 
     public void DisableMesh()
@@ -78,13 +91,10 @@ public class Buildable : MonoBehaviour
 
     public void ConsumeMoney(int amount)
     {
-        if (CanBeBuilt)
-        {
-            _consumedMoney += amount;
-            consumedMoneyText.text = _consumedMoney.ToString("#,##0") + "$";
+        ConsumedMoney += amount;
+        consumedMoneyText.text = ConsumedMoney.ToString("#,##0") + "$";
 
-            UpdateBuildPhases();
-        }
+        UpdateBuildPhases();
     }
 
     private void EnableRelevantBuildPhase()
@@ -96,14 +106,14 @@ public class Buildable : MonoBehaviour
 
     private void UpdateBuildPhases()
     {
-        if (_consumedMoney == buildCost)
+        if (ConsumedMoney == buildCost)
         {
             finishedHouse.SetActive(true);
-            
+
             constructionLevel_1.SetActive(false);
             constructionLevel_2.SetActive(false);
         }
-        if (_consumedMoney >= buildCost * 0.5f && _consumedMoney < buildCost)
+        if (ConsumedMoney >= buildCost * 0.5f && ConsumedMoney < buildCost)
         {
             constructionLevel_2.SetActive(true);
 

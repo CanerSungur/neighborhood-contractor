@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
+using ZestGames.Utility;
 
 [RequireComponent(typeof(Building))]
 public class Rentable : MonoBehaviour
@@ -23,6 +24,7 @@ public class Rentable : MonoBehaviour
     [SerializeField] private TextMeshProUGUI populationText;
     [SerializeField] private Color maxxedColor;
 
+    public int MaxBuildingPopulation => maxBuildingPopulation;
     public int CurrentBuildingPopulation => _currentBuildingPopulation;
     public bool BuildingIsFull => _currentBuildingPopulation == maxBuildingPopulation;
     public int RentableSpace => _rentableSpace;
@@ -49,9 +51,10 @@ public class Rentable : MonoBehaviour
         bubbleImg.transform.DOKill();
     }
 
-    private void UpdateProperties()
+    public void UpdateProperties()
     {
-        rentUI.transform.DOLocalMoveY(rentUI.transform.localPosition.y + 1, 0.5f).SetEase(Ease.InOutSine);
+        rentUI.transform.DORewind();
+        Delayer.DoActionAfterDelay(this, 1f, () => rentUI.transform.DOLocalMoveY(rentUI.transform.localPosition.y + 1f, 0.5f).SetEase(Ease.InOutSine));
         DOVirtual.Color(bubbleImg.color, Color.white, 0.5f, r => {
             bubbleImg.color = r;
         }).SetEase(Ease.OutBounce);
@@ -65,7 +68,7 @@ public class Rentable : MonoBehaviour
         //StartCoroutine(StartRenting());
     }
 
-    private void BuildingIsFinished()
+    public void BuildingIsFinished()
     {
         rentSign.SetActive(true);
         rentSignFullAnimation.Rewind();

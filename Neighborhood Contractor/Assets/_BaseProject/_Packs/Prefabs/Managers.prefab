@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 8054539559644026292}
   - component: {fileID: 926412475384298694}
   - component: {fileID: 8911782128219854996}
+  - component: {fileID: 894900998}
+  - component: {fileID: 894900999}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -108,7 +110,8 @@ MonoBehaviour:
   spendValue: 100
   spendTime: 0.1
   takeIncomeTime: 0.1
-  spawnIncomeMultiplier: 1
+  money: {fileID: 3958233169641693184, guid: 642e1702d52eb1a4aaf3d49c4f62e064, type: 3}
+  moneyStack: {fileID: 0}
 --- !u!114 &8054539559644026292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,3 +159,27 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &894900998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054539559921111782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15417831f8f796249930c5c158aca143, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &894900999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8054539559921111782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 584a30b0268bf8a4eb6a45878577266c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

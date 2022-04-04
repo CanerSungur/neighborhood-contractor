@@ -57,12 +57,14 @@ public class PhaseUnlocker : MonoBehaviour
         {
             _textHandler.SetConsumedMoneyText(_consumedMoney);
             _textHandler.SetRequiredMoneyText(cost);
-            _textHandler.MakePopulationTextEmpty();
+            //_textHandler.MakePopulationTextEmpty();
+            _textHandler.DisablePopulationText();
         }
         else
         {
+            _textHandler.SetConsumedMoneyText(_consumedMoney);
+            _textHandler.SetRequiredMoneyText(cost);
             _textHandler.SetPopulationText(RequiredPopulation);
-            //_textHandler.MakeMoneyTextEmpty();
         }
     }
 

@@ -30,4 +30,7 @@ public class ValueSystem
     {
         RequiredValueForNextLevel = ValueLevel * 50;
     }
+
+    public void SetCurrentValue(int currentValue) => CurrentValue = currentValue;
+    public void SetCurrentValueLevel(int valueLevel) => ValueLevel = valueLevel;
 }

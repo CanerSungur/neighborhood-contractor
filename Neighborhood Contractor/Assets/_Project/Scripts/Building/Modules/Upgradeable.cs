@@ -22,6 +22,7 @@ public class Upgradeable : MonoBehaviour
     public bool CanBeUpgraded => _currentLevel < _maxLevel && Building.Built;
     public int UpgradeCost => (int)(cost * upgradeCostIncreaseRate * _currentLevel);
     public int NextLevelNumber => _currentLevel + 1;
+    public int CurrentLevel => _currentLevel;
 
     #endregion
 
@@ -32,6 +33,22 @@ public class Upgradeable : MonoBehaviour
         PlayerIsInArea = false;
         upgradeArea.SetActive(false);
         EnableRelevantPhase();
+    }
+
+    public void CheckThisState(int currentLevel)
+    {
+        _currentLevel = currentLevel;
+        _maxLevel = upgradePhases.Length + 1;
+
+        for (int i = 0; i < upgradePhases.Length; i++)
+            upgradePhases[i].SetActive(false);
+
+        EnableRelevantPhase();
+
+        if (_currentLevel == _maxLevel)
+            upgradeArea.SetActive(false);
+        else
+            upgradeArea.SetActive(true);
     }
 
     public void Activate()

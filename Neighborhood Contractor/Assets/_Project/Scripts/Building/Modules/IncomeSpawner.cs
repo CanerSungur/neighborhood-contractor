@@ -66,6 +66,13 @@ public class IncomeSpawner : MonoBehaviour
         Delayer.DoActionAfterDelay(this, 0.5f, () => ValueBarEvents.OnValueLevelIncrease += CalculateIncomeTime);
     }
 
+    public void CheckThisState()
+    {
+        incomeArea.SetActive(true);
+        incomePerSecondText.text = $"{_incomePerSecond:#,##0}$";
+        CalculateIncomeTime();
+    }
+
     private void OnDisable()
     {
         ValueBarEvents.OnValueLevelIncrease -= CalculateIncomeTime;

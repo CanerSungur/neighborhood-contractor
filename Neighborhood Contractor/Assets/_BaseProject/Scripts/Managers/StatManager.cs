@@ -7,6 +7,8 @@ using UnityEngine;
 [RequireComponent(typeof(GameManager))]
 public class StatManager : MonoBehaviour
 {
+    private SavePlayerData _savePlayerData;
+
     private GameManager gameManager;
     public GameManager GameManager => gameManager == null ? gameManager = GetComponent<GameManager>() : gameManager;
 
@@ -16,39 +18,78 @@ public class StatManager : MonoBehaviour
     [SerializeField] private int spendValue = 100;
     [SerializeField] private float spendTime = 0.1f;
     [SerializeField] private float takeIncomeTime = 0.25f;
-    [SerializeField] private float spawnIncomeMultiplier = 1f;
 
-    public static int CarryCapacity, CurrentCarry, MoneyValue, SpendValue;
-    public static float SpendTime, TakeIncomeTime, SpawnIncomeMultiplier;
+    public static int CarryCapacity, MoneyValue, SpendValue;
     public static List<Money> CollectedMoney;
 
+    public static int CurrentCarry { get; private set; }
     public static int TotalMoney { get; private set; }
+    public static float SpendTime { get; private set; }
+    public static float TakeIncomeTime { get; private set; }
     public int RewardMoney { get; private set; }
     public static int MoneyCapacity => CarryCapacity * MoneyValue;
-    public int CurrentPopulation { get; private set; }
+
+    [Header("-- FOR LOADING --")]
+    [SerializeField] private GameObject money;
+    [SerializeField] private Transform moneyStack;
 
     private void Init()
     {
         // Default Stats
-        CurrentCarry = 0;
+        TotalMoney = CurrentCarry = 0;
         CarryCapacity = carryCapacity;
         MoneyValue = moneyValue;
         SpendValue = spendValue;
-        SpendTime = spendTime;
-        TakeIncomeTime = takeIncomeTime;
-        SpawnIncomeMultiplier = spawnIncomeMultiplier;
 
         CollectedMoney = new List<Money>();
         CollectedMoney.Clear();
-
-        TotalMoney = PlayerPrefs.GetInt("TotalMoney", 0);
         RewardMoney = 0;
+
+        LoadStats();
+        UpdatePlayerStats();
+
+        SpendTime = spendTime;
+        TakeIncomeTime = takeIncomeTime;
+    }
+
+    private void LoadStats()
+    {
+        _savePlayerData = LoadHandler.LoadPlayerData();
+
+        TotalMoney = _savePlayerData.TotalMoney;
+        CurrentCarry = _savePlayerData.CurrentCarry;
+        SpendTime = _savePlayerData.SpendTime;
+        TakeIncomeTime = _savePlayerData.TakeIncomeTime;
+    }
+
+    private void UpdatePlayerStats()
+    {
+        for (int i = 0; i < CurrentCarry; i++)
+        {
+            Money mny = Instantiate(money, Vector3.zero, Quaternion.identity, moneyStack).GetComponent<Money>();
+            mny.transform.localPosition = new Vector3(0f, (i * 0.15f), 0f);
+            mny.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
+            mny.SetMoneyAsCollected(i);
+        }
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        SaveHandler.SavePlayerData(this);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveHandler.SavePlayerData(this);
+
+        //SaveHandler.DeleteAll();
     }
 
     private void Awake()
     {
         Init();
     }
+
 
     private void Start()
     {
@@ -85,11 +126,6 @@ public class StatManager : MonoBehaviour
         TotalMoney += amount;
         //PlayerPrefs.SetInt("TotalCoin", TotalMoney);
         //PlayerPrefs.Save();
-    }
-
-    private void UpdateSpawnIncomeTimeMutl()
-    {
-        SpawnIncomeMultiplier *= NeighborhoodManager.ValueSystem.ValueLevel;
     }
     private void CalculateReward() => RewardMoney = 55;
 }

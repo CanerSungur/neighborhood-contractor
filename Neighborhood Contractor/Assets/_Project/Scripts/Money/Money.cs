@@ -103,6 +103,14 @@ public class Money : MonoBehaviour
     }
 
     private void DisableAnimator() => _animationController.enabled = Animator.enabled = false;
-
     private void EnableAnimator() => _animationController.enabled = Animator.enabled = true;
+    public void SetMoneyAsCollected(int index)
+    {
+        StackRowNumber = index + 1;
+        _collected = true;
+        StatManager.CollectedMoney.Add(this);
+        
+        EnableAnimator();
+        CollectableEvents.OnCalculateMoveWeight?.Invoke();
+    }
 }

@@ -2,6 +2,12 @@ using UnityEngine;
 
 public class Building : MonoBehaviour
 {
+    [SerializeField] private int index;
+    public int Index => index;
+
+    private IncomeSpawner incomeSpawner;
+    public IncomeSpawner IncomeSpawner => incomeSpawner == null ? incomeSpawner = GetComponent<IncomeSpawner>() : incomeSpawner;
+
     [Header("-- REFERENCES --")]
     private Buildable _buildable;
     private Upgradeable _upgradeable;
@@ -17,7 +23,7 @@ public class Building : MonoBehaviour
     public RequirePopulation RequirePopulation => _requirePopulation;
     public ContributionHandler ContributionHandler => _contributionHandler;
     public Rentable Rentable => _rentable;
-    public IncomeSpawner IncomeSpawner => _incomeSpawner;
+    //public IncomeSpawner IncomeSpawner => _incomeSpawner;
     public Upgradeable Upgradeable => _upgradeable;
 
     #endregion
@@ -37,8 +43,74 @@ public class Building : MonoBehaviour
         if (TryGetComponent(out _contributionHandler))
             _contributionHandler.Init(this);
 
-        if (TryGetComponent(out _incomeSpawner))
-            _incomeSpawner.Init();
+        //if (TryGetComponent(out _incomeSpawner))
+        //    _incomeSpawner.Init();
+        if (IncomeSpawner)
+            IncomeSpawner.Init();
+
+        LoadData();
+    }
+
+    private void SaveData()
+    {
+        if (Built)
+        {
+            PlayerPrefs.SetString($"Buildable_{Index}", "Built");
+
+            if (Upgradeable)
+            {
+                PlayerPrefs.SetInt($"CurrentLevel_{Index}", Upgradeable.CurrentLevel);
+            }
+        }
+        else
+        {
+            PlayerPrefs.SetString($"Buildable_{Index}", "NotBuilt");
+            PlayerPrefs.SetInt($"ConsumedMoney_{Index}", Buildable.ConsumedMoney);
+        }
+
+        PlayerPrefs.Save();
+    }
+
+    private void LoadData()
+    {
+        if (PlayerPrefs.GetString($"Buildable_{Index}") == "Built")
+        {
+            // check for upgrade part
+            Buildable.SkipThisState();
+            if (_upgradeable)
+            {
+                if (PlayerPrefs.GetInt($"CurrentLevel_{Index}") > 1)
+                    Buildable.DisableMesh();
+
+                Upgradeable.CheckThisState(PlayerPrefs.GetInt($"CurrentLevel_{Index}"));
+            }
+
+            if (IncomeSpawner)
+            {
+                IncomeSpawner.CheckThisState();
+
+                if (_rentable)
+                {
+                    Rentable.BuildingIsFinished();
+                    if (Upgradeable)
+                    {
+                        for (int i = 1; i < Upgradeable.CurrentLevel; i++)
+                            Rentable.UpdateProperties();
+                    }
+                    IncomeSpawner.WaitForRent();
+                    for (int i = 0; i < Rentable.MaxBuildingPopulation; i++)
+                    {
+                        Rentable.Rented();
+                    }
+                }
+                else
+                    IncomeSpawner.StartSpawningIncome();
+            }
+        }
+        else
+        {
+            Buildable.CheckThisState(PlayerPrefs.GetInt($"ConsumedMoney_{Index}"));
+        }
     }
 
     private void OnEnable()
@@ -54,11 +126,11 @@ public class Building : MonoBehaviour
         if (_requirePopulation)
             _requirePopulation.OnPopulationSufficient += () => _buildable.Activate();
 
-        if (!_rentable && _incomeSpawner)
-            _buildable.OnBuildFinished += () => _incomeSpawner.StartSpawningIncome();
+        if (!_rentable && IncomeSpawner)
+            _buildable.OnBuildFinished += () => IncomeSpawner.StartSpawningIncome();
 
-        if (_rentable && _incomeSpawner)
-            _buildable.OnBuildFinished += () => _incomeSpawner.WaitForRent();
+        if (_rentable && IncomeSpawner)
+            _buildable.OnBuildFinished += () => IncomeSpawner.WaitForRent();
     }
 
     private void OnDisable()
@@ -72,10 +144,14 @@ public class Building : MonoBehaviour
         if (_requirePopulation)
             _requirePopulation.OnPopulationSufficient -= () => _buildable.Activate();
 
-        if (!_rentable && _incomeSpawner)
-            _buildable.OnBuildFinished -= () => _incomeSpawner.StartSpawningIncome();
+        if (!_rentable && IncomeSpawner)
+            _buildable.OnBuildFinished -= () => IncomeSpawner.StartSpawningIncome();
 
-        if (_rentable && _incomeSpawner)
-            _buildable.OnBuildFinished -= () => _incomeSpawner.WaitForRent();
+        if (_rentable && IncomeSpawner)
+            _buildable.OnBuildFinished -= () => IncomeSpawner.WaitForRent();
+
+        SaveData();
+
+        //PlayerPrefs.DeleteAll();
     }
 }
