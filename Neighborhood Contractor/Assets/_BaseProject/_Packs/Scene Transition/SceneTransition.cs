@@ -32,6 +32,6 @@ public class SceneTransition : MonoBehaviour
         yield return new WaitForSeconds(transitionTime);
 
         //load scene
-        SceneManager.LoadScene(levelIndex);
+        SceneManager.LoadSceneAsync(levelIndex);
     }
 }

@@ -40,15 +40,17 @@ public class Money : MonoBehaviour
     private void OnDisable()
     {
         transform.DOKill();
+        ResetMoney();
     }
 
     public void Collect(Vector3 position, Transform parent)
     {
+        transform.DOKill();
         transform.parent = parent;
 
         transform.DOLocalJump(position, _collectMoneyHeight, 1, _animationTime);
-        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime).OnComplete(() =>
-        {
+        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime);
+        Delayer.DoActionAfterDelay(this, _animationTime, () => {
             EnableAnimator();
             CollectableEvents.OnCalculateMoveWeight?.Invoke();
             _animationController.SetFirstState();
@@ -71,11 +73,12 @@ public class Money : MonoBehaviour
 
     public void Spend(Transform parent)
     {
+        transform.DOKill();
         transform.parent = parent;
 
         transform.DOLocalJump(Vector3.zero, _spendMoneyHeight, 1, _animationTime);
-        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime).OnComplete(() =>
-        {
+        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime);
+        Delayer.DoActionAfterDelay(this, _animationTime, () => {
             ResetMoney();
             gameObject.SetActive(false);
         });
@@ -90,6 +93,7 @@ public class Money : MonoBehaviour
 
     private void ResetMoney()
     {
+        transform.DOKill();
         _collected = false;
         _spent = false;
 
