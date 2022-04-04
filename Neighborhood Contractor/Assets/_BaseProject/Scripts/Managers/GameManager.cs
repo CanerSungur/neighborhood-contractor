@@ -7,6 +7,8 @@ using DG.Tweening;
 /// </summary>
 public class GameManager : Singleton<GameManager>
 {
+    public bool DeleteSaveGame = false;
+
     [Header("-- MANAGER REFERENCES --")]
     internal StatManager statManager;
     internal UIManager uiManager;
@@ -49,6 +51,9 @@ public class GameManager : Singleton<GameManager>
         GameEvents.OnGameEnd -= () => ChangeState(GameState.Finished);
         GameEvents.OnLevelSuccess -= LevelSuccess;
         GameEvents.OnLevelFail -= LevelFail;
+
+        if (DeleteSaveGame)
+            PlayerPrefs.DeleteAll();
     }
 
     private void LevelSuccess()

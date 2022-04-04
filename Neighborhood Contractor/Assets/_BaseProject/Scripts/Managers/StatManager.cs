@@ -8,6 +8,7 @@ using UnityEngine;
 public class StatManager : MonoBehaviour
 {
     private SavePlayerData _savePlayerData;
+    private bool _deleteSaveData = false;
 
     private GameManager gameManager;
     public GameManager GameManager => gameManager == null ? gameManager = GetComponent<GameManager>() : gameManager;
@@ -76,13 +77,17 @@ public class StatManager : MonoBehaviour
     private void OnApplicationPause(bool pause)
     {
         SaveHandler.SavePlayerData(this);
+
+        if (_deleteSaveData)
+            PlayerPrefs.DeleteAll();
     }
 
     private void OnApplicationQuit()
     {
         SaveHandler.SavePlayerData(this);
 
-        //SaveHandler.DeleteAll();
+        if (_deleteSaveData)
+            PlayerPrefs.DeleteAll();
     }
 
     private void Awake()
@@ -90,12 +95,13 @@ public class StatManager : MonoBehaviour
         Init();
     }
 
-
     private void Start()
     {
         PlayerEvents.OnCollectedMoney += HandleCollectMoney;
         PlayerEvents.OnSpendMoney += HandleSpendMoney;
         GameEvents.OnCalculateReward += CalculateReward;
+
+        _deleteSaveData = GameManager.Instance.DeleteSaveGame;
     }
 
     private void OnDisable()

@@ -683,6 +683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bca537f753b2be4684920c334b5d8d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  index: 0
 --- !u!114 &7142366986588660872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -753,6 +754,7 @@ MonoBehaviour:
   layerLength: 3
   incomeArea: {fileID: 8994194063339418440}
   incomePerSecondText: {fileID: 4235894343598169968}
+  moneyForLoading: {fileID: 7616312413023413412, guid: 75d702d2b6c94394eb1ca709b42abdcc, type: 3}
 --- !u!1 &1185764804675354232
 GameObject:
   m_ObjectHideFlags: 0

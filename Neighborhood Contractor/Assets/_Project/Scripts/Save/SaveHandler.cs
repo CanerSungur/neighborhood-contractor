@@ -30,6 +30,21 @@ public static class SaveHandler
         PlayerPrefs.Save();
     }
 
+    public static void SavePhaseData(PhaseManager phaseManager)
+    {
+        PlayerPrefs.SetInt("CurrentPhase", PhaseManager.CurrentPhase);
+        PlayerPrefs.SetInt("CurrentlyConsumedMoney", PhaseManager.CurrentlyConsumedMoney);
+
+        PlayerPrefs.Save();
+    }
+
+    public static void SaveIncomeSpawnerData(IncomeSpawner incomeSpawner)
+    {
+        PlayerPrefs.SetInt($"MoneyCount_{incomeSpawner.Building.Index}", incomeSpawner.MoneyCount);
+
+        PlayerPrefs.Save();
+    }
+
     public static void DeleteAll()
     {
         PlayerPrefs.DeleteAll();

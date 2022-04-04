@@ -35,4 +35,30 @@ public static class LoadHandler
 
         return saveData;
     }
+
+    public static SavePhaseData LoadPhaseData()
+    {
+        int currentPhase = PlayerPrefs.GetInt("CurrentPhase", 1);
+        int currentlyConsumedMoney = PlayerPrefs.GetInt("CurrentlyConsumedMoney", 0);
+
+        SavePhaseData saveData = new SavePhaseData()
+        {
+            CurrentPhase = currentPhase,
+            CurrentlyConsumedMoney = currentlyConsumedMoney
+        };
+
+        return saveData;
+    }
+
+    public static SaveIncomeSpawnerData LoadIncomeSpawnerData(IncomeSpawner incomeSpawner)
+    {
+        int moneyCount = PlayerPrefs.GetInt($"MoneyCount_{incomeSpawner.Building.Index}", 0);
+
+        SaveIncomeSpawnerData saveData = new SaveIncomeSpawnerData()
+        {
+            MoneyCount = moneyCount
+        };
+
+        return saveData;
+    }
 }

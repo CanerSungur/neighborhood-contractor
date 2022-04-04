@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PhaseUnlocker : MonoBehaviour
@@ -19,18 +18,29 @@ public class PhaseUnlocker : MonoBehaviour
     public bool EnoughPopulation => NeighborhoodManager.Population >= requiredPopulation;
     public bool CanBeBuilt => StatManager.CurrentCarry > 0 && !Built && EnoughPopulation;
     public bool Built => _consumedMoney == cost;
+    public int PhaseToUnlock => phaseToUnlock;
+    public int ConsumedMoney => _consumedMoney;
 
     private void Init()
     {
         _textHandler = GetComponent<PhaseUnlockerTextHandler>();
-        
 
         PlayerIsInBuildArea = false;
-        _consumedMoney = 0;
+        //_consumedMoney = 0;
+        if (PhaseManager.CurrentPhase + 1 == PhaseToUnlock)
+            _consumedMoney = PhaseManager.CurrentlyConsumedMoney;
+        else
+            _consumedMoney = 0;
 
         CheckForPopulationSufficiency();
         _textHandler.SetConsumedMoneyText(_consumedMoney);
         _textHandler.SetRequiredMoneyText(cost);
+    }
+
+    public void UpdateConsumedMoney()
+    {
+        _consumedMoney = PhaseManager.CurrentlyConsumedMoney;
+        _textHandler.SetConsumedMoneyText(_consumedMoney);
     }
 
     private void OnEnable()
@@ -71,6 +81,7 @@ public class PhaseUnlocker : MonoBehaviour
     public void ConsumeMoney(int amount)
     {
         _consumedMoney += amount;
+        PhaseManager.CurrentlyConsumedMoney = _consumedMoney;
         _textHandler.SetConsumedMoneyText(_consumedMoney);
     }
 

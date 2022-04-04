@@ -801,6 +801,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4346077106319973134}
     m_Modifications:
+    - target: {fileID: 2629310398905133982, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: index
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 3544745337034124236, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
       propertyPath: m_Name
       value: House (7)
@@ -3524,6 +3528,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7048076059009937206}
     m_Modifications:
+    - target: {fileID: 2629310398905133982, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: index
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 3544745337034124236, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
       propertyPath: m_Name
       value: House (5)
@@ -4761,7 +4769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436349763053109092, guid: 8b5b908967067684399bbeb564f0166a, type: 3}
       propertyPath: cost
-      value: 100
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 7436349763053109092, guid: 8b5b908967067684399bbeb564f0166a, type: 3}
       propertyPath: phaseToUnlock
@@ -6490,6 +6498,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 675491621262594236}
     m_Modifications:
+    - target: {fileID: 2629310398905133982, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: index
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3544745337034124236, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
       propertyPath: m_Name
       value: House (3)
@@ -8242,6 +8254,7 @@ MonoBehaviour:
   layerLength: 5
   incomeArea: {fileID: 2110491774}
   incomePerSecondText: {fileID: 1872652748}
+  moneyForLoading: {fileID: 0}
 --- !u!114 &1555222309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8325,6 +8338,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7048076059009937206}
     m_Modifications:
+    - target: {fileID: 2629310398905133982, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: index
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 3544745337034124236, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
       propertyPath: m_Name
       value: House (6)
@@ -9363,6 +9380,7 @@ MonoBehaviour:
   layerLength: 5
   incomeArea: {fileID: 173130767}
   incomePerSecondText: {fileID: 1093170169}
+  moneyForLoading: {fileID: 0}
 --- !u!1001 &1646716223
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9436,7 +9454,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436349763053109092, guid: 8b5b908967067684399bbeb564f0166a, type: 3}
       propertyPath: cost
-      value: 100
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 7436349763053109092, guid: 8b5b908967067684399bbeb564f0166a, type: 3}
       propertyPath: phaseToUnlock
@@ -11534,6 +11552,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4346077106319973134}
     m_Modifications:
+    - target: {fileID: 2629310398905133982, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: index
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 3544745337034124236, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
       propertyPath: m_Name
       value: House (8)
@@ -11941,6 +11963,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 675491621262594236}
     m_Modifications:
+    - target: {fileID: 2629310398905133982, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: index
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 3544745337034124236, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
       propertyPath: m_Name
       value: House (4)
@@ -37170,6 +37196,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: a0f56c7ec60a2cd439b1ddb2d601f21b, type: 2}
+    - target: {fileID: 4648660264946291670, guid: 062e9ae042b428c4f8065c3ce2ed3221, type: 3}
+      propertyPath: index
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 5107478088112733968, guid: 062e9ae042b428c4f8065c3ce2ed3221, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -37285,6 +37315,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7048076059009937206}
     m_Modifications:
+    - target: {fileID: 269717338318014553, guid: f1289ed4bca94294b9a6b7de188a3002, type: 3}
+      propertyPath: index
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 700549331395110768, guid: f1289ed4bca94294b9a6b7de188a3002, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -38041,6 +38075,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 675491621262594236}
     m_Modifications:
+    - target: {fileID: 1309260480909398602, guid: d635c84f12f7bb2409dc524668f033c1, type: 3}
+      propertyPath: index
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4691391323743281067, guid: d635c84f12f7bb2409dc524668f033c1, type: 3}
       propertyPath: m_Name
       value: Bank
@@ -38357,7 +38395,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7436349763053109092, guid: 8b5b908967067684399bbeb564f0166a, type: 3}
       propertyPath: cost
-      value: 100
+      value: 500
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b5b908967067684399bbeb564f0166a, type: 3}
@@ -38497,6 +38535,10 @@ PrefabInstance:
       propertyPath: touchToStart
       value: 
       objectReference: {fileID: 912868140}
+    - target: {fileID: 8054539559921111787, guid: 9e04e5b350854294a84f4dcaaf574857, type: 3}
+      propertyPath: DeleteSaveGame
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8911782128219854996, guid: 9e04e5b350854294a84f4dcaaf574857, type: 3}
       propertyPath: phases.Array.data[0]
       value: 

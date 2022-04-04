@@ -7,6 +7,9 @@ using TMPro;
 [RequireComponent(typeof(Building))]
 public class IncomeSpawner : MonoBehaviour
 {
+    private SaveIncomeSpawnerData _saveIncomeSpawnerData;
+    private bool _deleteSaveData = false;
+
     private Building building;
     public Building Building => building == null ? building = GetComponent<Building>() : building;
 
@@ -37,6 +40,9 @@ public class IncomeSpawner : MonoBehaviour
     [SerializeField] private GameObject incomeArea;
     [SerializeField] private TextMeshProUGUI incomePerSecondText;
 
+    [Header("-- FOR LOADING --")]
+    [SerializeField] private GameObject moneyForLoading;
+
     #region Properties
 
     public bool PlayerIsInArea { get; set; }
@@ -64,13 +70,51 @@ public class IncomeSpawner : MonoBehaviour
         MoneyCount = 0;
 
         Delayer.DoActionAfterDelay(this, 0.5f, () => ValueBarEvents.OnValueLevelIncrease += CalculateIncomeTime);
+
+        _saveIncomeSpawnerData = LoadHandler.LoadIncomeSpawnerData(this);
+        MoneyCount = _saveIncomeSpawnerData.MoneyCount;
+
+        _deleteSaveData = GameManager.Instance.DeleteSaveGame;
+    }
+
+    public void CheckIfThisHasMoney()
+    {
+        for (int i = 0; i < MoneyCount; i++)
+        {
+            RowFinishedCheckForSpawn();
+            ColumnFinishedCheckForSpawn();
+            LayerFinishedCheckForSpawn();
+
+            var spawnPoint = spawnStartTransform.position + new Vector3(_currentFinishedRow * -rowOffset, _currentFinishedLayer * layerOffset, _currentFinishedColumn * -columnOffset);
+            Money mny = Instantiate(moneyForLoading, spawnPoint, Quaternion.Euler(0f, 90f, 0f)).GetComponent<Money>();
+            AddIncomeMoney(mny);
+            _currentFinishedRow++;
+        }
     }
 
     public void CheckThisState()
     {
         incomeArea.SetActive(true);
-        incomePerSecondText.text = $"{_incomePerSecond:#,##0}$";
         CalculateIncomeTime();
+        incomePerSecondText.text = $"{_incomePerSecond:#,##0}$";
+
+        CheckIfThisHasMoney();
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        SaveHandler.SaveIncomeSpawnerData(this);
+
+        if (_deleteSaveData)
+            PlayerPrefs.DeleteAll();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveHandler.SaveIncomeSpawnerData(this);
+
+        if (_deleteSaveData)
+            PlayerPrefs.DeleteAll();
     }
 
     private void OnDisable()
@@ -123,15 +167,13 @@ public class IncomeSpawner : MonoBehaviour
         var spawnPoint = spawnStartTransform.position + new Vector3(_currentFinishedRow * -rowOffset, _currentFinishedLayer * layerOffset, _currentFinishedColumn * -columnOffset);
         Money money = ObjectPooler.Instance.SpawnFromPool("Money_Income", spawnPoint, Quaternion.Euler(0f, 90f, 0f)).GetComponent<Money>();
         AddIncomeMoney(money);
+        NextSpawnPosition();
     }
 
     public void AddIncomeMoney(Money money)
     {
         if (!incomeMoney.Contains(money))
-        {
             incomeMoney.Add(money);
-            NextSpawnPosition();
-        }
     }
 
     public void RemoveIncomeMoney(Money money)

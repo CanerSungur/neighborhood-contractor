@@ -4,9 +4,10 @@ public class Building : MonoBehaviour
 {
     [SerializeField] private int index;
     public int Index => index;
+    private bool _deleteSaveData = false;
 
-    private IncomeSpawner incomeSpawner;
-    public IncomeSpawner IncomeSpawner => incomeSpawner == null ? incomeSpawner = GetComponent<IncomeSpawner>() : incomeSpawner;
+    //private IncomeSpawner incomeSpawner;
+    //public IncomeSpawner IncomeSpawner => incomeSpawner == null ? incomeSpawner = GetComponent<IncomeSpawner>() : incomeSpawner;
 
     [Header("-- REFERENCES --")]
     private Buildable _buildable;
@@ -23,7 +24,7 @@ public class Building : MonoBehaviour
     public RequirePopulation RequirePopulation => _requirePopulation;
     public ContributionHandler ContributionHandler => _contributionHandler;
     public Rentable Rentable => _rentable;
-    //public IncomeSpawner IncomeSpawner => _incomeSpawner;
+    public IncomeSpawner IncomeSpawner => _incomeSpawner;
     public Upgradeable Upgradeable => _upgradeable;
 
     #endregion
@@ -43,10 +44,10 @@ public class Building : MonoBehaviour
         if (TryGetComponent(out _contributionHandler))
             _contributionHandler.Init(this);
 
-        //if (TryGetComponent(out _incomeSpawner))
-        //    _incomeSpawner.Init();
-        if (IncomeSpawner)
-            IncomeSpawner.Init();
+        if (TryGetComponent(out _incomeSpawner))
+            _incomeSpawner.Init();
+        //if (IncomeSpawner)
+        //    IncomeSpawner.Init();
 
         LoadData();
     }
@@ -85,26 +86,32 @@ public class Building : MonoBehaviour
                 Upgradeable.CheckThisState(PlayerPrefs.GetInt($"CurrentLevel_{Index}"));
             }
 
-            if (IncomeSpawner)
+            if (_incomeSpawner)
             {
-                IncomeSpawner.CheckThisState();
-
-                if (_rentable)
-                {
-                    Rentable.BuildingIsFinished();
-                    if (Upgradeable)
-                    {
-                        for (int i = 1; i < Upgradeable.CurrentLevel; i++)
-                            Rentable.UpdateProperties();
-                    }
-                    IncomeSpawner.WaitForRent();
-                    for (int i = 0; i < Rentable.MaxBuildingPopulation; i++)
-                    {
-                        Rentable.Rented();
-                    }
-                }
-                else
-                    IncomeSpawner.StartSpawningIncome();
+                ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => {
+                    _incomeSpawner.CheckThisState();
+                    //_incomeSpawner.CheckIfThisHasMoney();
+                   
+                    ZestGames.Utility.Delayer.DoActionAfterDelay(this, 1f, () => {
+                        if (_rentable)
+                        {
+                            Rentable.BuildingIsFinished();
+                            if (Upgradeable)
+                            {
+                                for (int i = 1; i < Upgradeable.CurrentLevel; i++)
+                                    Rentable.UpdateProperties();
+                            }
+                            _incomeSpawner.WaitForRent();
+                            for (int i = 0; i < Rentable.MaxBuildingPopulation; i++)
+                            {
+                                Rentable.Rented();
+                            }
+                        }
+                        else
+                            _incomeSpawner.StartSpawningIncome();
+                        //ZestGames.Utility.Delayer.DoActionAfterDelay(this, 2f, () => _incomeSpawner.StartSpawningIncome());
+                    });
+                });
             }
         }
         else
@@ -126,11 +133,13 @@ public class Building : MonoBehaviour
         if (_requirePopulation)
             _requirePopulation.OnPopulationSufficient += () => _buildable.Activate();
 
-        if (!_rentable && IncomeSpawner)
-            _buildable.OnBuildFinished += () => IncomeSpawner.StartSpawningIncome();
+        if (!_rentable && _incomeSpawner)
+            _buildable.OnBuildFinished += () => _incomeSpawner.StartSpawningIncome();
 
-        if (_rentable && IncomeSpawner)
-            _buildable.OnBuildFinished += () => IncomeSpawner.WaitForRent();
+        if (_rentable && _incomeSpawner)
+            _buildable.OnBuildFinished += () => _incomeSpawner.WaitForRent();
+
+        ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => _deleteSaveData = GameManager.Instance.DeleteSaveGame);
     }
 
     private void OnDisable()
@@ -144,14 +153,28 @@ public class Building : MonoBehaviour
         if (_requirePopulation)
             _requirePopulation.OnPopulationSufficient -= () => _buildable.Activate();
 
-        if (!_rentable && IncomeSpawner)
-            _buildable.OnBuildFinished -= () => IncomeSpawner.StartSpawningIncome();
+        if (!_rentable && _incomeSpawner)
+            _buildable.OnBuildFinished -= () => _incomeSpawner.StartSpawningIncome();
 
-        if (_rentable && IncomeSpawner)
-            _buildable.OnBuildFinished -= () => IncomeSpawner.WaitForRent();
+        if (_rentable && _incomeSpawner)
+            _buildable.OnBuildFinished -= () => _incomeSpawner.WaitForRent();
 
         SaveData();
+    }
 
-        //PlayerPrefs.DeleteAll();
+    private void OnApplicationPause(bool pause)
+    {
+        SaveData();
+
+        if (_deleteSaveData)
+            PlayerPrefs.DeleteAll();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveData();
+
+        if (_deleteSaveData)
+            PlayerPrefs.DeleteAll();
     }
 }

@@ -2196,6 +2196,7 @@ MonoBehaviour:
   layerLength: 3
   incomeArea: {fileID: 120757545}
   incomePerSecondText: {fileID: 1114582808}
+  moneyForLoading: {fileID: 7616312413023413412, guid: 75d702d2b6c94394eb1ca709b42abdcc, type: 3}
 --- !u!114 &136009674
 MonoBehaviour:
   m_ObjectHideFlags: 0
