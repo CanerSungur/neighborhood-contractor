@@ -24,7 +24,8 @@ public class GameManager : Singleton<GameManager>
     private void Awake()
     {
         this.Reload();
-        DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(7812, 50);
+        //DOTween.Init(true, true, LogBehaviour.Verbose).SetCapacity(19530, 125);
+        //Application.targetFrameRate = 240;
 
         IsSoundOn = IsVibrationOn = true;
 

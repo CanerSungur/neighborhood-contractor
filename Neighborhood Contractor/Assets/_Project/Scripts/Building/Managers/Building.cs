@@ -104,7 +104,7 @@ public class Building : MonoBehaviour
                             _incomeSpawner.WaitForRent();
                             for (int i = 0; i < Rentable.MaxBuildingPopulation; i++)
                             {
-                                Rentable.Rented();
+                                Rentable.RentForLoad();
                             }
                         }
                         else
@@ -116,7 +116,7 @@ public class Building : MonoBehaviour
         }
         else
         {
-            Buildable.CheckThisState(PlayerPrefs.GetInt($"ConsumedMoney_{Index}"));
+            ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => Buildable.CheckThisState(PlayerPrefs.GetInt($"ConsumedMoney_{Index}")));
         }
     }
 

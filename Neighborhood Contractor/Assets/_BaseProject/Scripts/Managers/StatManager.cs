@@ -51,6 +51,9 @@ public class StatManager : MonoBehaviour
 
         SpendTime = spendTime;
         TakeIncomeTime = takeIncomeTime;
+
+        CalculateSpendTime();
+        CalculateIncomeTakeTime();
     }
 
     private void LoadStats()
@@ -100,6 +103,8 @@ public class StatManager : MonoBehaviour
         PlayerEvents.OnCollectedMoney += HandleCollectMoney;
         PlayerEvents.OnSpendMoney += HandleSpendMoney;
         GameEvents.OnCalculateReward += CalculateReward;
+        ValueBarEvents.OnValueLevelIncrease += CalculateSpendTime;
+        ValueBarEvents.OnValueLevelIncrease += CalculateIncomeTakeTime;
 
         _deleteSaveData = GameManager.Instance.DeleteSaveGame;
     }
@@ -109,6 +114,8 @@ public class StatManager : MonoBehaviour
         PlayerEvents.OnCollectedMoney -= HandleCollectMoney;
         PlayerEvents.OnSpendMoney -= HandleSpendMoney;
         GameEvents.OnCalculateReward -= CalculateReward;
+        ValueBarEvents.OnValueLevelIncrease -= CalculateSpendTime;
+        ValueBarEvents.OnValueLevelIncrease -= CalculateIncomeTakeTime;
     }
 
     private void HandleCollectMoney()
@@ -134,4 +141,19 @@ public class StatManager : MonoBehaviour
         //PlayerPrefs.Save();
     }
     private void CalculateReward() => RewardMoney = 55;
+    private void CalculateSpendTime()
+    {
+        SpendTime -= NeighborhoodManager.ValueSystem.ValueLevel * .015f;
+
+        if (SpendTime < 0.03f)
+            SpendTime = 0.03f;
+    }
+
+    private void CalculateIncomeTakeTime()
+    {
+        TakeIncomeTime -= NeighborhoodManager.ValueSystem.ValueLevel * .015f;
+
+        if (TakeIncomeTime < 0.03f)
+            TakeIncomeTime = 0.03f;
+    }
 }

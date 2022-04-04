@@ -254,8 +254,8 @@ public class IncomeSpawner : MonoBehaviour
     private void CalculateIncomeTime()
     {
         _currentIncomeTime -= NeighborhoodManager.ValueSystem.ValueLevel * .1f;
-        if (_currentIncomeTime < 1)
-            _currentIncomeTime = 1;
+        if (_currentIncomeTime < 0.05f)
+            _currentIncomeTime = 0.05f;
 
         _waitForIncomeTime = new WaitForSeconds(_currentIncomeTime);
 

@@ -91,6 +91,35 @@ public class Rentable : MonoBehaviour
         }
     }
 
+    public void RentForLoad()
+    {
+        if (!BuildingIsFull)
+        {
+            Bounce(rentUI.transform);
+            Bounce(rentSign.transform);
+
+            _currentBuildingPopulation++;
+            //NeighborhoodEvents.OnIncreasePopulation?.Invoke(1);
+            NeighborhoodEvents.OnCheckForPopulationSufficiency?.Invoke();
+            populationText.text = $"{_currentBuildingPopulation}/{maxBuildingPopulation}";
+
+            if (_currentBuildingPopulation == 1)
+                Building.IncomeSpawner.StartSpawningIncome();
+
+            Building.IncomeSpawner.UpdateIncomeForRent();
+
+            if (_currentBuildingPopulation == maxBuildingPopulation)
+            {
+                DOVirtual.Color(bubbleImg.color, maxxedColor, 0.5f, r => {
+                    bubbleImg.color = r;
+                }).SetEase(Ease.OutBounce);
+
+                // Do something for Rent Sign.
+                rentSignFullAnimation.Play("RentSign_Full_LegacyAnim");
+            }
+        }
+    }
+
     public void Rented()
     {
         if (!BuildingIsFull)

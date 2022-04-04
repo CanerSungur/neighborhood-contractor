@@ -72,7 +72,21 @@ public class Buildable : MonoBehaviour
     {
         ConsumedMoney = consumedMoney;
         UpdateBuildPhases();
-        Activate();
+        //Activate();
+        DecideAreaActivation();
+    }
+
+    private void DecideAreaActivation()
+    {
+        if (Building.RequirePopulation)
+        {
+            if (Building.RequirePopulation.PopulationIsEnough)
+                Activate();
+            else
+                buildArea.SetActive(false);
+        }
+        else
+            Activate();
     }
 
     public void Activate()
