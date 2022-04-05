@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using ZestGames.Utility;
 
 /// <summary>
 /// Holds all data about this game.
@@ -52,8 +53,8 @@ public class StatManager : MonoBehaviour
         SpendTime = spendTime;
         TakeIncomeTime = takeIncomeTime;
 
-        CalculateSpendTime();
-        CalculateIncomeTakeTime();
+        Delayer.DoActionAfterDelay(this, 1f, CalculateSpendTime);
+        Delayer.DoActionAfterDelay(this, 1f, CalculateIncomeTakeTime);
     }
 
     private void LoadStats()
