@@ -20,10 +20,15 @@ public class StatManager : MonoBehaviour
     [SerializeField] private int spendValue = 100;
     [SerializeField] private float spendTime = 0.1f;
     [SerializeField] private float takeIncomeTime = 0.25f;
+    [SerializeField] private int carryRowLength = 50;
 
     public static int CarryCapacity, MoneyValue, SpendValue;
     public static List<Money> CollectedMoney;
 
+
+    public static int CarryRowLength { get; private set; }
+    public static int CurrentCarryColumn { get; private set; }
+    public static int CurrentCarryRow { get; private set; }
     public static int CurrentCarry { get; private set; }
     public static int TotalMoney { get; private set; }
     public static float SpendTime { get; private set; }
@@ -37,8 +42,9 @@ public class StatManager : MonoBehaviour
 
     private void Init()
     {
+        CarryRowLength = carryRowLength;
         // Default Stats
-        TotalMoney = CurrentCarry = 0;
+        CurrentCarryRow = CurrentCarryColumn = TotalMoney = CurrentCarry = 0;
         CarryCapacity = carryCapacity;
         MoneyValue = moneyValue;
         SpendValue = spendValue;
@@ -65,16 +71,27 @@ public class StatManager : MonoBehaviour
         CurrentCarry = _savePlayerData.CurrentCarry;
         SpendTime = _savePlayerData.SpendTime;
         TakeIncomeTime = _savePlayerData.TakeIncomeTime;
+        CurrentCarryRow = _savePlayerData.CurrentCarryRow;
+        CurrentCarryColumn = _savePlayerData.CurrentCarryColumn;
     }
 
     private void UpdatePlayerStats()
     {
+        int row = 0;
+        int column = 0;
         for (int i = 0; i < CurrentCarry; i++)
         {
             Money mny = Instantiate(money, Vector3.zero, Quaternion.identity, moneyStack).GetComponent<Money>();
-            mny.transform.localPosition = new Vector3(0f, (i * 0.15f), 0f);
+            mny.transform.localPosition = new Vector3(0f, (row * 0.15f), (column * -0.4f));
             mny.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
-            mny.SetMoneyAsCollected(i);
+            mny.SetMoneyAsCollected(row);
+
+            row++;
+            if (row == CarryRowLength)
+            {
+                row = 0;
+                column++;
+            }
         }
     }
 
@@ -122,6 +139,14 @@ public class StatManager : MonoBehaviour
     private void HandleCollectMoney()
     {
         CurrentCarry++;
+        CurrentCarryRow++;
+
+        if (CurrentCarryRow == CarryRowLength)
+        {
+            CurrentCarryRow = 0;
+            CurrentCarryColumn++;
+        }
+
         IncreaseTotalMoney(MoneyValue);
         CollectableEvents.OnIncreaseMoney?.Invoke(MoneyValue);
     }
@@ -129,6 +154,14 @@ public class StatManager : MonoBehaviour
     private void HandleSpendMoney()
     {
         CurrentCarry--;
+        CurrentCarryRow--;
+
+        if (CurrentCarryRow == 0)
+        {
+            CurrentCarryRow = CarryRowLength;
+            CurrentCarryColumn--;
+        }
+
         DecreaseTotalMoney(MoneyValue);
         CollectableEvents.OnDecreaseMoney?.Invoke(MoneyValue);
     }
@@ -138,8 +171,6 @@ public class StatManager : MonoBehaviour
     private void IncreaseTotalMoney(int amount)
     {
         TotalMoney += amount;
-        //PlayerPrefs.SetInt("TotalCoin", TotalMoney);
-        //PlayerPrefs.Save();
     }
     private void CalculateReward() => RewardMoney = 55;
     private void CalculateSpendTime()
@@ -149,7 +180,7 @@ public class StatManager : MonoBehaviour
         if (SpendTime < 0.001f)
             SpendTime = 0.001f;
 
-        Debug.Log("Spend Time: " + SpendTime);
+        //Debug.Log("Spend Time: " + SpendTime);
     }
 
     private void CalculateIncomeTakeTime()
@@ -159,6 +190,6 @@ public class StatManager : MonoBehaviour
         if (TakeIncomeTime < 0.03f)
             TakeIncomeTime = 0.03f;
 
-        Debug.Log("Take Income Time: " + TakeIncomeTime);
+        //Debug.Log("Take Income Time: " + TakeIncomeTime);
     }
 }

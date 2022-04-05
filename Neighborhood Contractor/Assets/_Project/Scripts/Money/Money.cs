@@ -62,7 +62,8 @@ public class Money : MonoBehaviour
             }
         });
 
-        StackRowNumber = StatManager.CurrentCarry + 1;
+        //StackRowNumber = StatManager.CurrentCarry + 1;
+        StackRowNumber = StatManager.CurrentCarryRow + 1;
 
         _collected = true;
         StatManager.CollectedMoney.Add(this);

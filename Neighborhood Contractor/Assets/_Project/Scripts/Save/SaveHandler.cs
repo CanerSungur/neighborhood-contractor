@@ -17,6 +17,8 @@ public static class SaveHandler
         PlayerPrefs.SetInt("CurrentCarry", StatManager.CurrentCarry);
         PlayerPrefs.SetFloat("SpendTime", StatManager.SpendTime);
         PlayerPrefs.SetFloat("TakeIncomeTime", StatManager.TakeIncomeTime);
+        PlayerPrefs.SetInt("CurrentCarryRow", StatManager.CurrentCarryRow);
+        PlayerPrefs.SetInt("CurrentCarryColumn", StatManager.CurrentCarryColumn);
 
         PlayerPrefs.Save();
     }

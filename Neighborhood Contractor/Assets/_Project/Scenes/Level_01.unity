@@ -136,7 +136,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stackTransform: {fileID: 8136640425080102733}
-  moneyOffset: 0.15
+  moneyRowOffset: 0.15
+  moneyColumnOffset: -0.4
   stackHeight: 50
 --- !u!1001 &54279467
 PrefabInstance:
@@ -46644,10 +46645,6 @@ PrefabInstance:
     - target: {fileID: 8874652577359254559, guid: 099874689d7c45e4dbb890e9a6dc8ff2, type: 3}
       propertyPath: m_Name
       value: SingleMoneySpawnPoint
-      objectReference: {fileID: 0}
-    - target: {fileID: 8874652577359254559, guid: 099874689d7c45e4dbb890e9a6dc8ff2, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 099874689d7c45e4dbb890e9a6dc8ff2, type: 3}
