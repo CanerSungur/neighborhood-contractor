@@ -146,8 +146,10 @@ public class StatManager : MonoBehaviour
     {
         SpendTime -= NeighborhoodManager.ValueSystem.ValueLevel * .015f;
 
-        if (SpendTime < 0.03f)
-            SpendTime = 0.03f;
+        if (SpendTime < 0.001f)
+            SpendTime = 0.001f;
+
+        Debug.Log("Spend Time: " + SpendTime);
     }
 
     private void CalculateIncomeTakeTime()
@@ -156,5 +158,7 @@ public class StatManager : MonoBehaviour
 
         if (TakeIncomeTime < 0.03f)
             TakeIncomeTime = 0.03f;
+
+        Debug.Log("Take Income Time: " + TakeIncomeTime);
     }
 }

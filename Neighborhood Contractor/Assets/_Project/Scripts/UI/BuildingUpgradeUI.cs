@@ -4,6 +4,8 @@ using ZestGames.Utility;
 
 public class BuildingUpgradeUI : MonoBehaviour
 {
+    public static bool IsOpen = false;
+
     private Animator _animator;
     private readonly int openID = Animator.StringToHash("Open");
     private readonly int closeID = Animator.StringToHash("Close");
@@ -24,6 +26,7 @@ public class BuildingUpgradeUI : MonoBehaviour
 
     private void Start()
     {
+        IsOpen = false;
         _animator = GetComponent<Animator>();
         
         BuildingUpgradeEvents.OnActivateUpgradeUI += Activate;
@@ -44,7 +47,10 @@ public class BuildingUpgradeUI : MonoBehaviour
         cancelButton.onClick.RemoveListener(CancelAreaClicked);
     }
 
-    private void CancelAreaClicked() => cancelButton.ClickTrigger(TriggerClosingAnim);
+    private void CancelAreaClicked()
+    {
+        cancelButton.ClickTrigger(TriggerClosingAnim);
+    }
     private void ExitButtonClicked() => exitButton.ClickTrigger(TriggerClosingAnim);
     private void UpgradeButtonClicked() => upgradeButton.ClickTrigger(() => {
         upgradeButton.interactable = false;
@@ -70,7 +76,29 @@ public class BuildingUpgradeUI : MonoBehaviour
             upgradeButton.SetNotInteractable();
     }
 
-    private void Close(Upgradeable upgradeable) => TriggerClosingAnim();
-    private void TriggerOpeningAnim() => _animator.SetTrigger(openID);
-    private void TriggerClosingAnim() => _animator.SetTrigger(closeID);
+    private void Close(Upgradeable upgradeable)
+    {
+        TriggerClosingAnim();
+    }
+    private void TriggerOpeningAnim()
+    {
+        _animator.SetTrigger(openID);
+    }
+        
+    private void TriggerClosingAnim()
+    {
+        _animator.SetTrigger(closeID);
+    }
+
+    public void AlertObservers(string message)
+    {
+        if (message.Equals("Opening"))
+        {
+            IsOpen = true;
+        }
+        else if (message.Equals("Closing"))
+        {
+            IsOpen = false;
+        }
+    }
 }

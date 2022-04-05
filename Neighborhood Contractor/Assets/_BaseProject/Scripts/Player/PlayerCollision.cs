@@ -43,9 +43,8 @@ public class PlayerCollision : MonoBehaviour
             GameManager.Instance.collectableManager.StartCollectIncome(incomeSpawner);
         }
         
-        if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && other.transform.parent.TryGetComponent(out Upgradeable upgradeable))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && other.transform.parent.TryGetComponent(out Upgradeable upgradeable) && !BuildingUpgradeUI.IsOpen)
         {
-            //upgradeable.PlayerIsInArea = true;
             BuildingUpgradeEvents.OnActivateUpgradeUI?.Invoke(upgradeable);
         }
 
@@ -115,11 +114,11 @@ public class PlayerCollision : MonoBehaviour
             GameManager.Instance.collectableManager.StopCollectIncome(incomeSpawner);
         }
 
-        //if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && other.transform.parent.TryGetComponent(out Upgradeable upgradeable) && upgradeable.PlayerIsInArea)
-        //{
-        //    upgradeable.PlayerIsInArea = false;
-        //    BuildingUpgradeEvents.OnCloseUpgradeUI?.Invoke(upgradeable);
-        //}
+        if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && other.transform.parent.TryGetComponent(out Upgradeable upgradeable) && BuildingUpgradeUI.IsOpen)
+        {
+            //upgradeable.PlayerIsInArea = false;
+            BuildingUpgradeEvents.OnCloseUpgradeUI?.Invoke(upgradeable);
+        }
 
         if (other.TryGetComponent(out PhaseUnlocker phaseUnlocker) && phaseUnlocker.PlayerIsInBuildArea)
         {

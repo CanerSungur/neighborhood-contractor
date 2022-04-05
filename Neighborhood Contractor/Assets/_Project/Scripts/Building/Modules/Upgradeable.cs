@@ -30,7 +30,6 @@ public class Upgradeable : MonoBehaviour
 
     public void Init()
     {
-        PlayerIsInArea = false;
         upgradeArea.SetActive(false);
         EnableRelevantPhase();
     }
