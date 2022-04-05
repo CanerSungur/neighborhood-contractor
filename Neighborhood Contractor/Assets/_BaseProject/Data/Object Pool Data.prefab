@@ -46,7 +46,7 @@ MonoBehaviour:
   Pools:
   - Tag: Money_Income
     Prefab: {fileID: 7616312413023413412, guid: 75d702d2b6c94394eb1ca709b42abdcc, type: 3}
-    Size: 1000
+    Size: 3000
   - Tag: Money_Collect
     Prefab: {fileID: 3958233169641693184, guid: 642e1702d52eb1a4aaf3d49c4f62e064, type: 3}
     Size: 300

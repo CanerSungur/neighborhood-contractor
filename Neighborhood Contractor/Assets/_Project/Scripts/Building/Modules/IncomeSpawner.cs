@@ -19,7 +19,9 @@ public class IncomeSpawner : MonoBehaviour
     [SerializeField, Tooltip("Delay in seconds for first start of spawning income money. ")] private float startSpawnDelay = 1f;
     private List<Money> incomeMoney = new List<Money>();
     private WaitForSeconds _waitForIncomeTime, _waitForSpawnStartDelay;
-    private float _incomePerSecond, _currentIncomeTime;
+    private float _incomePerSecond, _currentIncomeTime, _defaultIncomeTime;
+    private float _incomeIncreaseRate = 0.5f;
+    private float _incomeIncreaseRateForNotRentable = 0.1f;
 
     [Header("-- SPAWN POSITION SETUP --")]
     [SerializeField, Tooltip("First spawn transform of income money.")] private Transform spawnStartTransform;
@@ -59,6 +61,8 @@ public class IncomeSpawner : MonoBehaviour
             _currentIncomeTime = incomeTimeForRentable;
         else
             _currentIncomeTime = incomeTimeForNotRentable;
+        
+        _defaultIncomeTime = _currentIncomeTime;
 
         PlayerIsInArea = false;
         incomeMoney.Clear();
@@ -138,7 +142,20 @@ public class IncomeSpawner : MonoBehaviour
 
     public void UpdateIncomeForRent()
     {
+        //if (Building.Upgradeable.CurrentLevel == 3)
+        //{
+        //    _currentIncomeTime -= 0.5f;
+        //    _defaultIncomeTime -= 0.5f;
+        //}
+        // else
+        //{
+        //    _currentIncomeTime--;
+        //    _defaultIncomeTime--;
+        //}
+
         _currentIncomeTime--;
+        _defaultIncomeTime--;
+
         CalculateIncomeTime();
     }
 
@@ -253,9 +270,36 @@ public class IncomeSpawner : MonoBehaviour
 
     private void CalculateIncomeTime()
     {
-        _currentIncomeTime -= NeighborhoodManager.ValueSystem.ValueLevel * .1f;
-        if (_currentIncomeTime < 0.05f)
-            _currentIncomeTime = 0.05f;
+        if (Building.Rentable)
+            _currentIncomeTime = _defaultIncomeTime - ((NeighborhoodManager.ValueSystem.ValueLevel * _incomeIncreaseRate)/5f);
+        else
+            _currentIncomeTime = _defaultIncomeTime - ((NeighborhoodManager.ValueSystem.ValueLevel * _incomeIncreaseRateForNotRentable));
+
+        //_currentIncomeTime -= NeighborhoodManager.ValueSystem.ValueLevel * .1f;
+        
+        if (Building.Upgradeable)
+        {
+            if (_currentIncomeTime < 0.3f)
+            {
+                if (Building.Upgradeable.CurrentLevel == 3)
+                    _currentIncomeTime = 0.2f;
+                else
+                    _currentIncomeTime = 0.3f;
+            }
+        }
+        else
+        {
+            if (Building.Rentable)
+            {
+                if (_currentIncomeTime < 0.3f)
+                    _currentIncomeTime = 0.3f;
+            }
+            else
+            {
+                if (_currentIncomeTime < 0.1f)
+                    _currentIncomeTime = 0.1f;
+            }
+        }
 
         _waitForIncomeTime = new WaitForSeconds(_currentIncomeTime);
 

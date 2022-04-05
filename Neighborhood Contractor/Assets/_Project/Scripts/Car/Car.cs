@@ -19,6 +19,10 @@ public class Car : MonoBehaviour
     private int _neighborsToSpawnCount = 0;
     private bool _hasMan, _hasWoman, _hasChild;
 
+    [Header("-- PARTICLES --")]
+    [SerializeField] private ParticleSystem leftTireMudPS;
+    [SerializeField] private ParticleSystem rightTireMudPS;
+
     private Vector3 _targetPosition, _turnPosition;
     private bool _startMoving, _targetReached, _turnReached;
     private float _idlingTime = 2f;
@@ -147,6 +151,9 @@ public class Car : MonoBehaviour
     {
         for (int i = 0; i < _meshes.Length; i++)
             _meshes[i].enabled = true;
+
+        leftTireMudPS.Play();
+        rightTireMudPS.Play();
     }
 
     private void DisableMesh()
@@ -155,5 +162,8 @@ public class Car : MonoBehaviour
 
         for (int i = 0; i < _meshes.Length; i++)
             _meshes[i].enabled = false;
+
+        leftTireMudPS.Stop();
+        rightTireMudPS.Stop();
     }
 }
