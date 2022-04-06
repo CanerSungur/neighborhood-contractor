@@ -59,6 +59,8 @@ public class StatManager : MonoBehaviour
 
         SpendTime = spendTime;
         TakeIncomeTime = takeIncomeTime;
+        _defaultSpendTime = SpendTime;
+        _defaultTakeIncomeTime = TakeIncomeTime;
 
         Delayer.DoActionAfterDelay(this, 1f, CalculateSpendTime);
         Delayer.DoActionAfterDelay(this, 1f, CalculateIncomeTakeTime);
@@ -73,8 +75,8 @@ public class StatManager : MonoBehaviour
 
         TotalMoney = _savePlayerData.TotalMoney;
         CurrentCarry = _savePlayerData.CurrentCarry;
-        SpendTime = _savePlayerData.SpendTime;
-        TakeIncomeTime = _savePlayerData.TakeIncomeTime;
+        //SpendTime = _savePlayerData.SpendTime;
+        //TakeIncomeTime = _savePlayerData.TakeIncomeTime;
         CurrentCarryRow = _savePlayerData.CurrentCarryRow;
         CurrentCarryColumn = _savePlayerData.CurrentCarryColumn;
     }
@@ -90,13 +92,12 @@ public class StatManager : MonoBehaviour
             mny.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
             mny.SetMoneyAsCollected(row);
 
-            
+            row++;
             if (row == CarryRowLength)
             {
                 row = 0;
                 column++;
             }
-            row++;
         }
     }
 
@@ -180,7 +181,8 @@ public class StatManager : MonoBehaviour
     private void CalculateReward() => RewardMoney = 55;
     private void CalculateSpendTime()
     {
-        SpendTime -= NeighborhoodManager.ValueSystem.ValueLevel * .02f;
+        SpendTime = _defaultSpendTime - (NeighborhoodManager.ValueSystem.ValueLevel * 0.02f);
+        //SpendTime -= NeighborhoodManager.ValueSystem.ValueLevel * .02f;
 
         if (SpendTime < 0.001f)
             SpendTime = 0.001f;
@@ -190,7 +192,8 @@ public class StatManager : MonoBehaviour
 
     private void CalculateIncomeTakeTime()
     {
-        TakeIncomeTime -= NeighborhoodManager.ValueSystem.ValueLevel * .015f;
+        TakeIncomeTime = _defaultTakeIncomeTime - (NeighborhoodManager.ValueSystem.ValueLevel * 0.15f);
+        //TakeIncomeTime -= NeighborhoodManager.ValueSystem.ValueLevel * .015f;
 
         if (TakeIncomeTime < 0.03f)
             TakeIncomeTime = 0.03f;

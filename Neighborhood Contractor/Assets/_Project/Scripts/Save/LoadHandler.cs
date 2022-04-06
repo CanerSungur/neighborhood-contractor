@@ -6,8 +6,8 @@ public static class LoadHandler
     {
         int totalMoney = PlayerPrefs.GetInt("TotalMoney", 0);
         int currentCarry = PlayerPrefs.GetInt("CurrentCarry", 0);
-        float spendTime = PlayerPrefs.GetFloat("SpendTime");
-        float takeIncomeTime = PlayerPrefs.GetFloat("TakeIncomeTime");
+        //float spendTime = PlayerPrefs.GetFloat("SpendTime");
+        //float takeIncomeTime = PlayerPrefs.GetFloat("TakeIncomeTime");
         int currentCarryRow = PlayerPrefs.GetInt("CurrentCarryRow", 0);
         int currentCarryColumn = PlayerPrefs.GetInt("CurrentCarryColumn", 0);
 
@@ -15,8 +15,8 @@ public static class LoadHandler
         {
             TotalMoney = totalMoney,
             CurrentCarry = currentCarry,
-            SpendTime = spendTime,
-            TakeIncomeTime = takeIncomeTime,
+            //SpendTime = spendTime,
+            //TakeIncomeTime = takeIncomeTime,
             CurrentCarryRow = currentCarryRow,
             CurrentCarryColumn = currentCarryColumn
         };

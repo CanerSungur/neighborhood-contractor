@@ -5,6 +5,7 @@ public class BuildManager : Singleton<BuildManager>
 {
     private Player _player;
     private WaitForSeconds _waitForSpendTime = new WaitForSeconds(StatManager.SpendTime);
+    private WaitForSeconds _waitForMinimumTime = new WaitForSeconds(0.001f);
 
     private void Awake()
     {
@@ -27,7 +28,10 @@ public class BuildManager : Singleton<BuildManager>
             if (buildable.Built)
                 buildable.FinishBuilding();
 
-            yield return _waitForSpendTime;
+            if (buildable.BuildCost >= 30000)
+                yield return _waitForMinimumTime;
+            else
+                yield return _waitForSpendTime;
         }
     }
 
