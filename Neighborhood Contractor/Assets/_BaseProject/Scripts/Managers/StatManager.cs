@@ -21,6 +21,7 @@ public class StatManager : MonoBehaviour
     [SerializeField] private float spendTime = 0.1f;
     [SerializeField] private float takeIncomeTime = 0.25f;
     [SerializeField] private int carryRowLength = 50;
+    private float _defaultSpendTime, _defaultTakeIncomeTime;
 
     public static int CarryCapacity, MoneyValue, SpendValue;
     public static List<Money> CollectedMoney;
@@ -61,6 +62,9 @@ public class StatManager : MonoBehaviour
 
         Delayer.DoActionAfterDelay(this, 1f, CalculateSpendTime);
         Delayer.DoActionAfterDelay(this, 1f, CalculateIncomeTakeTime);
+
+        //Debug.Log("Row: " + CurrentCarryRow);
+        //Debug.Log("Column: " + CurrentCarryColumn);
     }
 
     private void LoadStats()
@@ -86,12 +90,13 @@ public class StatManager : MonoBehaviour
             mny.transform.localRotation = Quaternion.Euler(0f, 90f, 0f);
             mny.SetMoneyAsCollected(row);
 
-            row++;
+            
             if (row == CarryRowLength)
             {
                 row = 0;
                 column++;
             }
+            row++;
         }
     }
 
@@ -153,14 +158,14 @@ public class StatManager : MonoBehaviour
 
     private void HandleSpendMoney()
     {
-        CurrentCarry--;
-        CurrentCarryRow--;
-
         if (CurrentCarryRow == 0)
         {
             CurrentCarryRow = CarryRowLength;
             CurrentCarryColumn--;
         }
+
+        CurrentCarry--;
+        CurrentCarryRow--;
 
         DecreaseTotalMoney(MoneyValue);
         CollectableEvents.OnDecreaseMoney?.Invoke(MoneyValue);
@@ -175,7 +180,7 @@ public class StatManager : MonoBehaviour
     private void CalculateReward() => RewardMoney = 55;
     private void CalculateSpendTime()
     {
-        SpendTime -= NeighborhoodManager.ValueSystem.ValueLevel * .015f;
+        SpendTime -= NeighborhoodManager.ValueSystem.ValueLevel * .02f;
 
         if (SpendTime < 0.001f)
             SpendTime = 0.001f;

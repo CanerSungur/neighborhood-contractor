@@ -158,8 +158,6 @@ public class Building : MonoBehaviour
 
         if (_rentable && _incomeSpawner)
             _buildable.OnBuildFinished -= () => _incomeSpawner.WaitForRent();
-
-        SaveData();
     }
 
     private void OnApplicationPause(bool pause)

@@ -3,6 +3,8 @@ using System;
 
 public class Player : MonoBehaviour
 {
+    public static bool IsOnLeftSide { get; set; }
+
     [Header("-- COMPONENTS --")]
     internal Animator animator;
     internal Collider coll;
@@ -63,6 +65,8 @@ public class Player : MonoBehaviour
 
     private void Awake()
     {
+        IsOnLeftSide = true;
+
         animator = GetComponent<Animator>();
         coll = GetComponent<Collider>();
         TryGetComponent(out rb); // Maybe it uses character controller, not rigidbody.

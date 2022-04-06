@@ -54,7 +54,7 @@ public class Rentable : MonoBehaviour
     public void UpdateProperties()
     {
         rentUI.transform.DORewind();
-        Delayer.DoActionAfterDelay(this, 1f, () => rentUI.transform.DOLocalMoveY(rentUI.transform.localPosition.y + 1f, 0.5f).SetEase(Ease.InOutSine));
+        Delayer.DoActionAfterDelay(this, 1f, () => rentUI.transform.DOLocalMoveY(rentUI.transform.localPosition.y + 0.75f, 0.5f).SetEase(Ease.InOutSine));
         DOVirtual.Color(bubbleImg.color, Color.white, 0.5f, r => {
             bubbleImg.color = r;
         }).SetEase(Ease.OutBounce);
