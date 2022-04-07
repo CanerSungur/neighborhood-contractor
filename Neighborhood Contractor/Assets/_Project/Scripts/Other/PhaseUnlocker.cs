@@ -89,5 +89,7 @@ public class PhaseUnlocker : MonoBehaviour
     {
         NeighborhoodEvents.OnEnableThisPhase?.Invoke(this, phaseToUnlock);
         ObjectPooler.Instance.SpawnFromPool("Confetti", transform.position, Quaternion.identity);
+
+        AnalyticEvents.OnPhaseUnlocked?.Invoke();
     }
 }

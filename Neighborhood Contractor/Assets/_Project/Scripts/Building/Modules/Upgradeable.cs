@@ -91,5 +91,7 @@ public class Upgradeable : MonoBehaviour
             upgradeArea.SetActive(false);
 
         FeedbackEvents.OnGiveFeedback?.Invoke("BUILDING UPGRADED!", FeedbackUI.Colors.ValueLevelIncrease);
+
+        AnalyticEvents.OnUpgradeFinished?.Invoke();
     }
 }

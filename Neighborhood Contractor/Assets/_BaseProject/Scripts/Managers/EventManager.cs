@@ -40,3 +40,8 @@ public static class ValueBarEvents
 {
     public static Action OnValueLevelIncrease, OnValueIncrease;
 }
+
+public static class AnalyticEvents
+{
+    public static Action OnBuiltFinished, OnUpgradeFinished, OnPhaseUnlocked;
+}
