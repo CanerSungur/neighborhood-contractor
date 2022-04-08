@@ -22,6 +22,19 @@ public class PlayerCollision : MonoBehaviour
 
         #endregion
 
+        if (other.gameObject.layer == LayerMask.NameToLayer("Creative Building") && other.transform.parent && other.transform.parent.TryGetComponent(out CreativeBuild creativeBuilding) && !creativeBuilding.PlayerIsInBuildArea)
+        {
+            creativeBuilding.PlayerIsInBuildArea = true;
+            if (creativeBuilding.CanBeBuilt)
+            {
+                creativeBuilding.StartBuilding();
+            }
+            else
+            {
+                creativeBuilding.StopBuilding();
+            }
+        }
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Build Area") && other.transform.parent && other.transform.parent.TryGetComponent(out Building building) && !building.Buildable.PlayerIsInBuildArea)
         {
             building.Buildable.PlayerIsInBuildArea = true;
@@ -102,6 +115,12 @@ public class PlayerCollision : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        if (other.gameObject.layer == LayerMask.NameToLayer("Creative Building") && other.transform.parent.TryGetComponent(out CreativeBuild creativeBuilding) && creativeBuilding.PlayerIsInBuildArea)
+        {
+            creativeBuilding.PlayerIsInBuildArea = false;
+            creativeBuilding.StopBuilding();
+        }
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Build Area") && other.transform.parent.TryGetComponent(out Building building) && building.Buildable.PlayerIsInBuildArea)
         {
             building.Buildable.PlayerIsInBuildArea = false;
