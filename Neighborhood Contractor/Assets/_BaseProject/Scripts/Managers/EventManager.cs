@@ -44,4 +44,5 @@ public static class ValueBarEvents
 public static class AnalyticEvents
 {
     public static Action OnBuiltFinished, OnUpgradeFinished, OnPhaseUnlocked;
+    public static Action<int> OnPhaseLoaded, OnPhaseFinished, OnPhaseStarted;
 }

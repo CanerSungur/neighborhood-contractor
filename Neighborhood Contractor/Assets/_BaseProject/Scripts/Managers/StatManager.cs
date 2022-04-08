@@ -26,7 +26,6 @@ public class StatManager : MonoBehaviour
     public static int CarryCapacity, MoneyValue, SpendValue;
     public static List<Money> CollectedMoney;
 
-
     public static int CarryRowLength { get; private set; }
     public static int CurrentCarryColumn { get; private set; }
     public static int CurrentCarryRow { get; private set; }

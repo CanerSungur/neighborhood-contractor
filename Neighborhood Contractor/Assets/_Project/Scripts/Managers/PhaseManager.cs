@@ -61,6 +61,9 @@ public class PhaseManager : MonoBehaviour
     private void Start()
     {
         _deleteSaveData = GameManager.Instance.DeleteSaveGame;
+
+        AnalyticEvents.OnPhaseLoaded?.Invoke(CurrentPhase);
+        //AnalyticEvents.OnPhaseStarted?.Invoke(CurrentPhase);
     }
 
     private void OnDisable()
@@ -77,8 +80,10 @@ public class PhaseManager : MonoBehaviour
 
         if (phaseNumberToUnlock <= phaseUnlockers.Count)
             phaseUnlockers[phaseNumberToUnlock - 1].SetActive(true);
-        
+
+        AnalyticEvents.OnPhaseFinished?.Invoke(CurrentPhase);
         CurrentPhase++;
+        AnalyticEvents.OnPhaseStarted?.Invoke(CurrentPhase);
 
         NeighborhoodEvents.OnNewPhaseActivated?.Invoke();
     }
