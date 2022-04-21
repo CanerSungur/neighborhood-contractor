@@ -16,16 +16,22 @@ public class Building : MonoBehaviour
     private ContributionHandler _contributionHandler;
     private Rentable _rentable;
     private IncomeSpawner _incomeSpawner;
+    private Repairable _repairable;
+    private Breakable _breakable;
 
     #region Properties
 
     public bool Built => _buildable.Built;
+    public bool CanBeRepaired => Built && _breakable.Broken;
+    public bool CanBeBroken => Built && !_breakable.Broken;
     public Buildable Buildable => _buildable;
     public RequirePopulation RequirePopulation => _requirePopulation;
     public ContributionHandler ContributionHandler => _contributionHandler;
     public Rentable Rentable => _rentable;
     public IncomeSpawner IncomeSpawner => _incomeSpawner;
     public Upgradeable Upgradeable => _upgradeable;
+    public Repairable Repairable => _repairable;
+    public Breakable Breakable => _breakable;
 
     #endregion
 
@@ -50,6 +56,12 @@ public class Building : MonoBehaviour
         //    IncomeSpawner.Init();
 
         LoadData();
+
+        if (TryGetComponent(out _breakable))
+            _breakable.Init(this);
+
+        if (TryGetComponent(out _repairable))
+            _repairable.Init(this);
     }
 
     private void SaveData()
@@ -139,6 +151,12 @@ public class Building : MonoBehaviour
         if (_rentable && _incomeSpawner)
             _buildable.OnBuildFinished += () => _incomeSpawner.WaitForRent();
 
+        if (_breakable && _repairable)
+        {
+            _repairable.OnBuildingRepaired += () => _breakable.Repaired();
+            _breakable.OnBuildingIsBroken += () => _repairable.Broken();
+        }
+
         ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => _deleteSaveData = GameManager.Instance.DeleteSaveGame);
     }
 
@@ -158,11 +176,12 @@ public class Building : MonoBehaviour
 
         if (_rentable && _incomeSpawner)
             _buildable.OnBuildFinished -= () => _incomeSpawner.WaitForRent();
-    }
 
-    private void Start()
-    {
-           
+        if (_breakable && _repairable)
+        {
+            _repairable.OnBuildingRepaired -= () => _breakable.Repaired();
+            _breakable.OnBuildingIsBroken -= () => _repairable.Broken();
+        }
     }
 
     private void OnApplicationPause(bool pause)

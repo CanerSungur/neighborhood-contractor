@@ -61,6 +61,13 @@ public class PlayerCollision : MonoBehaviour
             BuildingUpgradeEvents.OnActivateUpgradeUI?.Invoke(upgradeable);
         }
 
+        if (other.gameObject.layer == LayerMask.NameToLayer("Repair Area") && other.transform.parent.TryGetComponent(out Repairable repairable) && repairable.Building.CanBeRepaired)
+        {
+            Debug.Log("start repairing");
+            repairable.StartRepairing();
+        }
+
+
         if (other.TryGetComponent(out PhaseUnlocker phaseUnlocker) && !phaseUnlocker.PlayerIsInBuildArea)
         {
             phaseUnlocker.PlayerIsInBuildArea = true;
@@ -137,6 +144,12 @@ public class PlayerCollision : MonoBehaviour
         {
             //upgradeable.PlayerIsInArea = false;
             BuildingUpgradeEvents.OnCloseUpgradeUI?.Invoke(upgradeable);
+        }
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Repair Area") && other.transform.parent.TryGetComponent(out Repairable repairable) && repairable.Building.CanBeRepaired)
+        {
+            Debug.Log("stop repairing");
+            repairable.StopRepairing();
         }
 
         if (other.TryGetComponent(out PhaseUnlocker phaseUnlocker) && phaseUnlocker.PlayerIsInBuildArea)
