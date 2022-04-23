@@ -62,3 +62,6 @@ MonoBehaviour:
   - Tag: Neighbor_Child
     Prefab: {fileID: 9212532263445933812, guid: 477cb945b0af9754084ff84ece1ef8f1, type: 3}
     Size: 10
+  - Tag: Complaining_Neighbor_Man
+    Prefab: {fileID: 7708131169526154848, guid: 02d10f95a1a99cb4db6dc8f7b41009e0, type: 3}
+    Size: 10

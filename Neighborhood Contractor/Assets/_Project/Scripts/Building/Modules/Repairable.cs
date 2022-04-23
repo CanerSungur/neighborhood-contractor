@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
 using System.Collections;
-using TMPro;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Building))]
@@ -13,10 +12,8 @@ public class Repairable : MonoBehaviour
     [Header("-- SETUP --")]
     [SerializeField] private float repairTime = 3f;
     [SerializeField] private GameObject repairArea;
-    //[SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private Image repairFillImage;
    
-    private WaitForSeconds _waitForRepair;
     private IEnumerator _repairCoroutine;
     private float _timer;
 
@@ -25,7 +22,6 @@ public class Repairable : MonoBehaviour
     public void Init(Building building)
     {
         _building = building;
-        _waitForRepair = new WaitForSeconds(repairTime);
         _repairCoroutine = Repair();
         _timer = repairTime;
 
@@ -48,9 +44,7 @@ public class Repairable : MonoBehaviour
     public void StopRepairing()
     {
         StopCoroutine(_repairCoroutine);
-        //_repairCoroutine.Reset();
-        _timer = repairTime;
-        repairFillImage.fillAmount = 0f;
+        ResetRepairCoroutine();
     }
 
     private IEnumerator Repair()
@@ -59,36 +53,25 @@ public class Repairable : MonoBehaviour
         while (_timer > 0f)
         {
             _timer -= Time.deltaTime;
-            //timerText.text = _timer.ToString("#0.00");
             repairFillImage.fillAmount = 1f - (_timer / repairTime);
             yield return null;
         }
 
         Debug.Log("Repaired!");
         OnBuildingRepaired?.Invoke();
+        NeighborhoodEvents.OnBuildingRepaired?.Invoke(_building);
         repairArea.SetActive(false);
-
-        //while (_building.CanBeRepaired)
-        //{
-        //    _timer -= Time.deltaTime;
-        //    timerText.text = _timer.ToString("#0.00");
-        //    if (_timer <= 0f)
-        //    {
-        //        _timer = repairTime;
-
-        //        Debug.Log("Repaired!");
-        //        OnBuildingRepaired?.Invoke();
-        //        repairArea.SetActive(false);
-        //    }
-        //}
-
-        //yield return null;
     }
 
     public void Broken()
     {
         repairArea.SetActive(true);
-        //timerText.text = _timer.ToString("#0.00");
+        ResetRepairCoroutine();
+    }
+
+    private void ResetRepairCoroutine()
+    {
+        _repairCoroutine = Repair();
         _timer = repairTime;
         repairFillImage.fillAmount = 0f;
     }

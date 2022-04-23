@@ -111,28 +111,28 @@ public class Car : MonoBehaviour
         if (!_hasMan)
         {
             neighbor = ObjectPooler.Instance.SpawnFromPool("Neighbor_Man", spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].position, Quaternion.identity).GetComponent<Neighbor>();
-            neighbor.OnSpawned?.Invoke(_activatorHouse.transform.position);
+            neighbor.OnSetTargetPos?.Invoke(_activatorHouse.transform.position);
 
             _hasMan = true;
         }
         else if (!_hasWoman)
         {
             neighbor = ObjectPooler.Instance.SpawnFromPool("Neighbor_Woman", spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].position, Quaternion.identity).GetComponent<Neighbor>();
-            neighbor.OnSpawned?.Invoke(_activatorHouse.transform.position);
+            neighbor.OnSetTargetPos?.Invoke(_activatorHouse.transform.position);
 
             _hasWoman = true;
         }
         else if (!_hasChild)
         {
             neighbor = ObjectPooler.Instance.SpawnFromPool("Neighbor_Child", spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].position, Quaternion.identity).GetComponent<Neighbor>();
-            neighbor.OnSpawned?.Invoke(_activatorHouse.transform.position);
+            neighbor.OnSetTargetPos?.Invoke(_activatorHouse.transform.position);
 
             _hasChild = true;
         }
         else if (_hasChild)
         {
             neighbor = ObjectPooler.Instance.SpawnFromPool("Neighbor_Child", spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].position, Quaternion.identity).GetComponent<Neighbor>();
-            neighbor.OnSpawned?.Invoke(_activatorHouse.transform.position);
+            neighbor.OnSetTargetPos?.Invoke(_activatorHouse.transform.position);
 
             _hasMan = _hasWoman = _hasChild = false;
         }

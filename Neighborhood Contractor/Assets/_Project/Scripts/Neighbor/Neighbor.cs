@@ -5,10 +5,14 @@ using DG.Tweening;
 
 public class Neighbor : MonoBehaviour
 {
+    public enum Type { Happy, Complaining }
+    [SerializeField] private Type currentType;
+
     [Header("-- REFERENCES --")]
     private NeighborMovement _movementHandler;
     private NeighborCollision _collisionHandler;
     private NeighborAnimationController _animationHandler;
+    private NeighborComplain _complain;
 
     [Header("-- SETUP --")]
     private float waitAfterSpawn = 3f;
@@ -24,9 +28,11 @@ public class Neighbor : MonoBehaviour
     public Vector3 TargetPosition => _targetPosition;
     public float Speed => speed;
     public bool CanMove { get; private set; }
+    public Type CurrentType => currentType;
+    public Building RelatedBuilding { get; set; }
 
-    public Action OnStartMoving;
-    public Action<Vector3> OnSpawned;
+    public Action OnStartMoving, OnStartComplaining, OnStopComplaining;
+    public Action<Vector3> OnSetTargetPos;
 
     private void Init()
     {
@@ -35,15 +41,31 @@ public class Neighbor : MonoBehaviour
         Rigidbody = GetComponent<Rigidbody>();
 
         _movementHandler = GetComponent<NeighborMovement>();
+        _movementHandler.Init(this);
+
         _collisionHandler = GetComponent<NeighborCollision>();
+        _collisionHandler.Init(this);
         
         _animationHandler = GetComponent<NeighborAnimationController>();
-        _animationHandler.Init();
+        _animationHandler.Init(this);
 
-        CanMove = false;
-        Delayer.DoActionAfterDelay(this, waitAfterSpawn, () => CanMove = true);
-        Delayer.DoActionAfterDelay(this, waitAfterSpawn, () => OnStartMoving?.Invoke());
-        OnSpawned += SetTargetPosition;
+        if (TryGetComponent(out _complain))
+            _complain.Init(this);
+
+        if (currentType == Type.Happy)
+        {
+            CanMove = false;
+            Delayer.DoActionAfterDelay(this, waitAfterSpawn, () => CanMove = true);
+            Delayer.DoActionAfterDelay(this, waitAfterSpawn, () => OnStartMoving?.Invoke());
+        }
+        else if (currentType == Type.Complaining)
+        {
+            CanMove = true;
+            OnStartMoving?.Invoke();
+            //RelatedBuilding.Repairable.OnBuildingRepaired += GoBackToTheHouse;
+            NeighborhoodEvents.OnBuildingRepaired += GoBackToTheHouse;
+        }
+        OnSetTargetPos += SetTargetPosition;
     }
 
     private void OnEnable()
@@ -54,7 +76,11 @@ public class Neighbor : MonoBehaviour
 
     private void OnDisable()
     {
-        OnSpawned -= SetTargetPosition;
+        NeighborhoodEvents.OnBuildingRepaired += GoBackToTheHouse;
+        //if (currentType == Type.Complaining && RelatedBuilding)
+        //    RelatedBuilding.Repairable.OnBuildingRepaired -= GoBackToTheHouse;
+
+        OnSetTargetPos -= SetTargetPosition;
     }
 
     private void SetTargetPosition(Vector3 targetPos) => _targetPosition = targetPos;
@@ -66,5 +92,17 @@ public class Neighbor : MonoBehaviour
         //transform.DOShakePosition(.25f, .25f);
         transform.DOShakeRotation(.25f, .5f);
         transform.DOShakeScale(.25f, .5f);
+    }
+
+    private void GoBackToTheHouse(Building building)
+    {
+        //OnSetTargetPos?.Invoke(RelatedBuilding.transform.position);
+        //Delayer.DoActionAfterDelay(this, 2f, () => OnSetTargetPos?.Invoke(building.transform.position));
+        //Delayer.DoActionAfterDelay(this, 2f, () => OnStartMoving?.Invoke());
+        //Delayer.DoActionAfterDelay(this, 2f, () => OnStopComplaining?.Invoke());
+
+        OnSetTargetPos?.Invoke(building.transform.position);
+        OnStartMoving?.Invoke();
+        OnStopComplaining?.Invoke();
     }
 }

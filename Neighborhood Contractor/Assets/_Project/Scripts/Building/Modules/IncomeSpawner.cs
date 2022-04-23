@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using ZestGames.Utility;
 using TMPro;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(Building))]
 public class IncomeSpawner : MonoBehaviour
@@ -17,7 +18,7 @@ public class IncomeSpawner : MonoBehaviour
     [SerializeField, Tooltip("Delay in seconds for rentable buildings.")] private float incomeTimeForRentable = 11f;
     [SerializeField, Tooltip("Delay in seconds for not rentable buildings.")] private float incomeTimeForNotRentable = 3f;
     [SerializeField, Tooltip("Delay in seconds for first start of spawning income money. ")] private float startSpawnDelay = 1f;
-    private List<Money> incomeMoney = new List<Money>();
+    private List<Money> _incomeMoney = new List<Money>();
     private WaitForSeconds _waitForIncomeTime, _waitForSpawnStartDelay;
     private float _incomePerSecond, _currentIncomeTime, _defaultIncomeTime;
     private float _incomeIncreaseRate = 0.5f;
@@ -25,9 +26,9 @@ public class IncomeSpawner : MonoBehaviour
 
     [Header("-- SPAWN POSITION SETUP --")]
     [SerializeField, Tooltip("First spawn transform of income money.")] private Transform spawnStartTransform;
-    private float layerOffset = 0.15f;
-    private float rowOffset = 0.72f;
-    private float columnOffset = 0.38f;
+    private float _layerOffset = 0.15f;
+    private float _rowOffset = 0.72f;
+    private float _columnOffset = 0.38f;
 
     [Header("-- SPAWN LIMITS SETUP --")]
     [SerializeField, Tooltip("Spawn position will move on to the next column if this number is reached.")] private int rowLength = 4;
@@ -37,6 +38,10 @@ public class IncomeSpawner : MonoBehaviour
     private int _currentFinishedColumn = 0;
     private int _currentFinishedLayer = 0;
     private bool _canSpawn;
+
+    [Header("-- COMPLAINT SETUP --")]
+    [SerializeField] private GameObject incomeDenied;
+    [SerializeField] private Image incomeImage;
 
     [Header("-- REFERENCES --")]
     [SerializeField] private GameObject incomeArea;
@@ -49,9 +54,9 @@ public class IncomeSpawner : MonoBehaviour
 
     public bool PlayerIsInArea { get; set; }
     public int MoneyCount { get; private set; }
-    public List<Money> IncomeMoney => incomeMoney;
+    public List<Money> IncomeMoney => _incomeMoney;
     public float IncomePerSecond => _incomePerSecond;
-    public bool CanCollectIncome => incomeMoney.Count != 0 && MoneyCount > 0 && StatManager.CurrentCarry < StatManager.CarryCapacity;
+    public bool CanCollectIncome => _incomeMoney.Count != 0 && MoneyCount > 0 && StatManager.CurrentCarry < StatManager.CarryCapacity;
 
     #endregion
 
@@ -65,11 +70,13 @@ public class IncomeSpawner : MonoBehaviour
         _defaultIncomeTime = _currentIncomeTime;
 
         PlayerIsInArea = false;
-        incomeMoney.Clear();
+        _incomeMoney.Clear();
         Delayer.DoActionAfterDelay(this, 0.4f, CalculateIncomeTime);
         _waitForSpawnStartDelay = new WaitForSeconds(startSpawnDelay);
         _canSpawn = true;
         incomeArea.SetActive(false);
+        incomeImage.color = Color.white;
+        incomeDenied.SetActive(false);
 
         MoneyCount = 0;
 
@@ -89,7 +96,7 @@ public class IncomeSpawner : MonoBehaviour
             ColumnFinishedCheckForSpawn();
             LayerFinishedCheckForSpawn();
 
-            var spawnPoint = spawnStartTransform.position + new Vector3(_currentFinishedRow * -rowOffset, _currentFinishedLayer * layerOffset, _currentFinishedColumn * -columnOffset);
+            var spawnPoint = spawnStartTransform.position + new Vector3(_currentFinishedRow * -_rowOffset, _currentFinishedLayer * _layerOffset, _currentFinishedColumn * -_columnOffset);
             Money mny = Instantiate(moneyForLoading, spawnPoint, Quaternion.Euler(0f, 90f, 0f)).GetComponent<Money>();
             AddIncomeMoney(mny);
             _currentFinishedRow++;
@@ -142,22 +149,46 @@ public class IncomeSpawner : MonoBehaviour
 
     public void UpdateIncomeForRent()
     {
-        //if (Building.Upgradeable.CurrentLevel == 3)
-        //{
-        //    _currentIncomeTime -= 0.5f;
-        //    _defaultIncomeTime -= 0.5f;
-        //}
-        // else
-        //{
-        //    _currentIncomeTime--;
-        //    _defaultIncomeTime--;
-        //}
-
         _currentIncomeTime--;
         _defaultIncomeTime--;
 
         CalculateIncomeTime();
     }
+
+    #region Complaint Functions
+
+    public void UpdateIncomeForStartingComplaint()
+    {
+        _currentIncomeTime++;
+        _defaultIncomeTime++;
+        CalculateIncomeTime();
+    }
+
+    public void UpdateIncomeForStopingComplaint()
+    {
+        _canSpawn = false;
+
+        _currentIncomeTime--;
+        _defaultIncomeTime--;
+        CalculateIncomeTime();
+    }
+
+    public void StartIncome()
+    {
+        incomeImage.color = Color.white;
+        incomeDenied.SetActive(false);
+    }
+
+    public void StopIncome()
+    {
+        _canSpawn = false;
+        incomePerSecondText.text = $"{0:#,##0}$";
+
+        incomeImage.color = Color.gray;
+        incomeDenied.SetActive(true);
+    }
+
+    #endregion
 
     private IEnumerator SpawnIncomeMoney()
     {
@@ -181,7 +212,7 @@ public class IncomeSpawner : MonoBehaviour
 
     private void Spawn()
     {
-        var spawnPoint = spawnStartTransform.position + new Vector3(_currentFinishedRow * -rowOffset, _currentFinishedLayer * layerOffset, _currentFinishedColumn * -columnOffset);
+        var spawnPoint = spawnStartTransform.position + new Vector3(_currentFinishedRow * -_rowOffset, _currentFinishedLayer * _layerOffset, _currentFinishedColumn * -_columnOffset);
         Money money = ObjectPooler.Instance.SpawnFromPool("Money_Income", spawnPoint, Quaternion.Euler(0f, 90f, 0f)).GetComponent<Money>();
         AddIncomeMoney(money);
         NextSpawnPosition();
@@ -189,15 +220,15 @@ public class IncomeSpawner : MonoBehaviour
 
     public void AddIncomeMoney(Money money)
     {
-        if (!incomeMoney.Contains(money))
-            incomeMoney.Add(money);
+        if (!_incomeMoney.Contains(money))
+            _incomeMoney.Add(money);
     }
 
     public void RemoveIncomeMoney(Money money)
     {
-        if (incomeMoney.Contains(money))
+        if (_incomeMoney.Contains(money))
         {
-            incomeMoney.Remove(money);
+            _incomeMoney.Remove(money);
             PreviousSpawnPosition();
         }
     }

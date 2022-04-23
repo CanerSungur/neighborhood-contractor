@@ -7,12 +7,13 @@ using ZestGames.Utility;
 public class Breakable : MonoBehaviour
 {
     private Building _building;
-    public Building Building => _building;
 
     [Header("-- SETUP --")]
     [SerializeField] private float brokenTimeBeforeDemolish = 60f;
     [SerializeField] private float breakRandomizerDelay = 5f;
+    [SerializeField] private Transform complainArea;
 
+    private int _buildingPopulation;
     private WaitForSeconds _waitForBreakRandomizer;
 
     public bool Broken { get; private set; }
@@ -21,19 +22,19 @@ public class Breakable : MonoBehaviour
     public void Init(Building building)
     {
         _building = building;
+
+        _buildingPopulation = building.Rentable.MaxBuildingPopulation;
         _waitForBreakRandomizer = new WaitForSeconds(breakRandomizerDelay);
         Broken = false;
 
         CheckForActivation();
 
         OnBuildingIsBroken += Break;
-        //_building.Repairable.OnBuildingRepaired += Repaired;
     }
 
     private void OnDisable()
     {
         OnBuildingIsBroken -= Break;
-        //_building.Repairable.OnBuildingRepaired -= Repaired;
     }
 
     private void CheckForActivation()
@@ -51,6 +52,7 @@ public class Breakable : MonoBehaviour
             if (RNG.RollDice(100))
             {
                 OnBuildingIsBroken?.Invoke();
+                StartCoroutine(SpawnComplainingNeighbors(_buildingPopulation));
                 Debug.Log("BROKEN!");
             }
             else
@@ -69,5 +71,22 @@ public class Breakable : MonoBehaviour
         Broken = false;
         if (_building.CanBeBroken)
             StartCoroutine(BreakRandomizer());
+    }
+
+    private IEnumerator SpawnComplainingNeighbors(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            Neighbor neighbor = ObjectPooler.Instance.SpawnFromPool("Complaining_Neighbor_Man", transform.position, Quaternion.identity).GetComponent<Neighbor>();
+
+            Vector3 offset = new Vector3(-1.5f, 0f, 0f) * i + Vector3.forward * UnityEngine.Random.Range(0f, -1f);
+            neighbor.OnSetTargetPos?.Invoke(complainArea.transform.position + offset);
+
+            neighbor.RelatedBuilding = _building;
+            //neighbor.RelatedBuilding.Repairable.OnBuildingRepaired += neighbor.GoBackToTheHouse;
+            neighbor.RelatedBuilding.Rentable.OnStartComplaint?.Invoke();
+
+            yield return new WaitForSeconds(UnityEngine.Random.Range(0.2f, 1f));
+        }
     }
 }

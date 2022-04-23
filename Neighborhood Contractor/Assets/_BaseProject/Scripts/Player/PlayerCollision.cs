@@ -63,7 +63,6 @@ public class PlayerCollision : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Repair Area") && other.transform.parent.TryGetComponent(out Repairable repairable) && repairable.Building.CanBeRepaired)
         {
-            Debug.Log("start repairing");
             repairable.StartRepairing();
         }
 
@@ -148,7 +147,6 @@ public class PlayerCollision : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Repair Area") && other.transform.parent.TryGetComponent(out Repairable repairable) && repairable.Building.CanBeRepaired)
         {
-            Debug.Log("stop repairing");
             repairable.StopRepairing();
         }
 

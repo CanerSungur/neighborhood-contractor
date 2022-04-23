@@ -4,6 +4,7 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.UI;
 using ZestGames.Utility;
+using System;
 
 [RequireComponent(typeof(Building))]
 public class Rentable : MonoBehaviour
@@ -30,6 +31,8 @@ public class Rentable : MonoBehaviour
     public int RentableSpace => _rentableSpace;
     public int RentIncreaseCount => populationIncreaseCount;
 
+    public Action OnStartComplaint, OnStopComplaint;
+
     public void Init()
     {
         rentSign.SetActive(false);
@@ -37,12 +40,16 @@ public class Rentable : MonoBehaviour
         _currentBuildingPopulation = 0;
         bubbleImg.color = Color.white;
 
+        OnStartComplaint += StartComplaint;
+        OnStopComplaint += StopComplaint;
         Building.Buildable.OnBuildFinished += BuildingIsFinished;
         Building.Upgradeable.OnUpgradeHappened += UpdateProperties;
     }
 
     private void OnDisable()
     {
+        OnStartComplaint -= StartComplaint;
+        OnStopComplaint -= StopComplaint;
         Building.Buildable.OnBuildFinished -= BuildingIsFinished;
         Building.Upgradeable.OnUpgradeHappened -= UpdateProperties;
 
@@ -147,6 +154,52 @@ public class Rentable : MonoBehaviour
                 rentSignFullAnimation.Play("RentSign_Full_LegacyAnim");
             }
         }
+    }
+
+    private void StartComplaint()
+    {
+        Bounce(rentUI.transform);
+        Bounce(rentSign.transform);
+
+        _currentBuildingPopulation--;
+        populationText.text = $"{_currentBuildingPopulation}/{MaxBuildingPopulation}";
+
+        Building.IncomeSpawner.UpdateIncomeForStartingComplaint();
+
+        if (_currentBuildingPopulation == maxBuildingPopulation - 1)
+        {
+            DOVirtual.Color(bubbleImg.color, Color.white, 0.5f, r => {
+                bubbleImg.color = r;
+            }).SetEase(Ease.OutBounce);
+
+            rentSignFullAnimation.Play("RentSign_NotFull_LegacyAnim");
+        }
+        else if (_currentBuildingPopulation == 0)
+        {
+            Building.IncomeSpawner.StopIncome();
+        }
+    }
+
+    private void StopComplaint()
+    {
+        Bounce(rentUI.transform);
+        Bounce(rentSign.transform);
+
+        _currentBuildingPopulation++;
+        populationText.text = $"{_currentBuildingPopulation}/{MaxBuildingPopulation}";
+
+        Building.IncomeSpawner.UpdateIncomeForStopingComplaint();
+
+        if (_currentBuildingPopulation == maxBuildingPopulation)
+        {
+            DOVirtual.Color(bubbleImg.color, maxxedColor, 0.5f, r => {
+                bubbleImg.color = r;
+            }).SetEase(Ease.OutBounce);
+
+            rentSignFullAnimation.Play("RentSign_Full_LegacyAnim");
+        }
+        else if (_currentBuildingPopulation == 1)
+            Building.IncomeSpawner.StartIncome();
     }
 
     private void Bounce(Transform transform)

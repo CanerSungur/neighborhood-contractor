@@ -6,9 +6,6 @@ public class Building : MonoBehaviour
     public int Index => index;
     private bool _deleteSaveData = false;
 
-    //private IncomeSpawner incomeSpawner;
-    //public IncomeSpawner IncomeSpawner => incomeSpawner == null ? incomeSpawner = GetComponent<IncomeSpawner>() : incomeSpawner;
-
     [Header("-- REFERENCES --")]
     private Buildable _buildable;
     private Upgradeable _upgradeable;
