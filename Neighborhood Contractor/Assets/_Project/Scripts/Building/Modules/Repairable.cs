@@ -63,8 +63,10 @@ public class Repairable : MonoBehaviour
         repairArea.SetActive(false);
     }
 
-    public void Broken()
+    public void Broken(Building building)
     {
+        if (building != _building) return;
+
         repairArea.SetActive(true);
         ResetRepairCoroutine();
     }

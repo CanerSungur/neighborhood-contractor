@@ -24,7 +24,7 @@ public static class NeighborhoodEvents
     public static Action OnCheckForPopulationSufficiency, OnNewPhaseActivated;
     public static Action<int> OnIncreaseValue, OnIncreasePopulation;
     public static Action<PhaseUnlocker, int> OnEnableThisPhase;
-    public static Action<Building> OnBuildingRepaired;
+    public static Action<Building> OnBuildingRepaired, OnBuildingFinished, OnBuildingUpgraded, OnAccidentHappened;
 }
 
 public static class FeedbackEvents
@@ -46,4 +46,9 @@ public static class AnalyticEvents
 {
     public static Action OnBuiltFinished, OnUpgradeFinished, OnPhaseUnlocked;
     public static Action<int> OnPhaseLoaded, OnPhaseFinished, OnPhaseStarted;
+}
+
+public static class AccidentEvents
+{
+    public static Action<Building> OnFireStarted, OnFloodStarted;
 }

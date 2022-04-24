@@ -162,6 +162,7 @@ public class Buildable : MonoBehaviour
         NeighborhoodEvents.OnCheckForPopulationSufficiency?.Invoke();
 
         OnBuildFinished?.Invoke();
+        NeighborhoodEvents.OnBuildingFinished?.Invoke(Building);
         FinishConstruction();
 
         FeedbackEvents.OnGiveFeedback?.Invoke("BUILDING FINISHED!", FeedbackUI.Colors.ValueLevelIncrease);

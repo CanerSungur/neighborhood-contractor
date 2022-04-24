@@ -101,6 +101,8 @@ public class Neighbor : MonoBehaviour
         //Delayer.DoActionAfterDelay(this, 2f, () => OnStartMoving?.Invoke());
         //Delayer.DoActionAfterDelay(this, 2f, () => OnStopComplaining?.Invoke());
 
+        if (building != RelatedBuilding) return;
+
         OnSetTargetPos?.Invoke(building.transform.position);
         OnStartMoving?.Invoke();
         OnStopComplaining?.Invoke();

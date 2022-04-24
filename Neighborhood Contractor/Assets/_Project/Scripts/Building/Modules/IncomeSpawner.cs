@@ -66,7 +66,7 @@ public class IncomeSpawner : MonoBehaviour
             _currentIncomeTime = incomeTimeForRentable;
         else
             _currentIncomeTime = incomeTimeForNotRentable;
-        
+
         _defaultIncomeTime = _currentIncomeTime;
 
         PlayerIsInArea = false;
@@ -140,7 +140,7 @@ public class IncomeSpawner : MonoBehaviour
 
         StartCoroutine(SpawnIncomeMoney());
     }
-        
+
     public void WaitForRent()
     {
         incomeArea.SetActive(true);
@@ -157,6 +157,16 @@ public class IncomeSpawner : MonoBehaviour
 
     #region Complaint Functions
 
+    private void DeleteAllIncome()
+    {
+        _canSpawn = false;
+
+        foreach (Money money in _incomeMoney)
+            money.gameObject.SetActive(false);
+        _incomeMoney.Clear();
+        MoneyCount = _currentFinishedRow = _currentFinishedColumn = _currentFinishedLayer = 0;
+    }
+
     public void UpdateIncomeForStartingComplaint()
     {
         _currentIncomeTime++;
@@ -166,8 +176,6 @@ public class IncomeSpawner : MonoBehaviour
 
     public void UpdateIncomeForStopingComplaint()
     {
-        _canSpawn = false;
-
         _currentIncomeTime--;
         _defaultIncomeTime--;
         CalculateIncomeTime();
@@ -175,17 +183,20 @@ public class IncomeSpawner : MonoBehaviour
 
     public void StartIncome()
     {
+        _canSpawn = true;
+
         incomeImage.color = Color.white;
         incomeDenied.SetActive(false);
     }
 
     public void StopIncome()
     {
-        _canSpawn = false;
         incomePerSecondText.text = $"{0:#,##0}$";
 
         incomeImage.color = Color.gray;
         incomeDenied.SetActive(true);
+
+        DeleteAllIncome();
     }
 
     #endregion
@@ -302,12 +313,12 @@ public class IncomeSpawner : MonoBehaviour
     private void CalculateIncomeTime()
     {
         if (Building.Rentable)
-            _currentIncomeTime = _defaultIncomeTime - ((NeighborhoodManager.ValueSystem.ValueLevel * _incomeIncreaseRate)/5f);
+            _currentIncomeTime = _defaultIncomeTime - ((NeighborhoodManager.ValueSystem.ValueLevel * _incomeIncreaseRate) / 5f);
         else
             _currentIncomeTime = _defaultIncomeTime - ((NeighborhoodManager.ValueSystem.ValueLevel * _incomeIncreaseRateForNotRentable));
 
         //_currentIncomeTime -= NeighborhoodManager.ValueSystem.ValueLevel * .1f;
-        
+
         if (Building.Upgradeable)
         {
             if (_currentIncomeTime < 0.3f)

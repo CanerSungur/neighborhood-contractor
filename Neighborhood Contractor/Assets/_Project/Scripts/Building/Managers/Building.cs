@@ -14,13 +14,14 @@ public class Building : MonoBehaviour
     private Rentable _rentable;
     private IncomeSpawner _incomeSpawner;
     private Repairable _repairable;
-    private Breakable _breakable;
+    private AccidentCauser _breakable;
 
     #region Properties
 
+    public int CurrentLevel { get; set; }
     public bool Built => _buildable.Built;
-    public bool CanBeRepaired => Built && _breakable.Broken;
-    public bool CanBeBroken => Built && !_breakable.Broken;
+    public bool CanBeRepaired => Built && _breakable.AccidentHappened;
+    public bool CanAccidentHappen => Built && !_breakable.AccidentHappened;
     public Buildable Buildable => _buildable;
     public RequirePopulation RequirePopulation => _requirePopulation;
     public ContributionHandler ContributionHandler => _contributionHandler;
@@ -28,12 +29,14 @@ public class Building : MonoBehaviour
     public IncomeSpawner IncomeSpawner => _incomeSpawner;
     public Upgradeable Upgradeable => _upgradeable;
     public Repairable Repairable => _repairable;
-    public Breakable Breakable => _breakable;
+    public AccidentCauser Breakable => _breakable;
 
     #endregion
 
     private void Init() 
     {
+        CurrentLevel = 0;
+
         if (TryGetComponent(out _requirePopulation))
             _requirePopulation.Init();
 
@@ -59,6 +62,12 @@ public class Building : MonoBehaviour
 
         if (TryGetComponent(out _repairable))
             _repairable.Init(this);
+
+        if (Built)
+            CurrentLevel = 1;
+
+        if (Upgradeable)
+            CurrentLevel = Upgradeable.CurrentLevel;
     }
 
     private void SaveData()
@@ -151,7 +160,7 @@ public class Building : MonoBehaviour
         if (_breakable && _repairable)
         {
             _repairable.OnBuildingRepaired += () => _breakable.Repaired();
-            _breakable.OnBuildingIsBroken += () => _repairable.Broken();
+            _breakable.OnAccidentHappened += (Building building) => _repairable.Broken(building);
         }
 
         ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => _deleteSaveData = GameManager.Instance.DeleteSaveGame);
@@ -177,7 +186,7 @@ public class Building : MonoBehaviour
         if (_breakable && _repairable)
         {
             _repairable.OnBuildingRepaired -= () => _breakable.Repaired();
-            _breakable.OnBuildingIsBroken -= () => _repairable.Broken();
+            _breakable.OnAccidentHappened -= (Building building) => _repairable.Broken(building);
         }
     }
 

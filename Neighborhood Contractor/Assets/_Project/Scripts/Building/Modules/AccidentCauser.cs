@@ -4,72 +4,101 @@ using System;
 using ZestGames.Utility;
 
 [RequireComponent(typeof(Building))]
-public class Breakable : MonoBehaviour
+public class AccidentCauser : MonoBehaviour
 {
     private Building _building;
+    public Building Building => _building;
+    private AccidentHandler _accidentHandler;
+    private IndicatorTarget _indicatorTarget;
 
     [Header("-- SETUP --")]
     [SerializeField] private float brokenTimeBeforeDemolish = 60f;
     [SerializeField] private float breakRandomizerDelay = 5f;
+    [SerializeField] private float breakChance = 30f;
     [SerializeField] private Transform complainArea;
 
     private int _buildingPopulation;
     private WaitForSeconds _waitForBreakRandomizer;
+    private bool _breakRandomizerIsRunning;
 
-    public bool Broken { get; private set; }
-    public Action OnBuildingIsBroken;
+    private readonly float breakChanceDecreaseRate = 5f;
+
+    public bool AccidentHappened { get; private set; }
+    public AccidentHandler AccidentHandler => _accidentHandler;
+    public Action<Building> OnAccidentHappened;
 
     public void Init(Building building)
     {
         _building = building;
+        _accidentHandler = GetComponentInChildren<AccidentHandler>();
+        _accidentHandler.Init(this);
 
         _buildingPopulation = building.Rentable.MaxBuildingPopulation;
         _waitForBreakRandomizer = new WaitForSeconds(breakRandomizerDelay);
-        Broken = false;
+        AccidentHappened = _breakRandomizerIsRunning = false;
 
-        CheckForActivation();
+        CheckForActivation(_building);
 
-        OnBuildingIsBroken += Break;
+        OnAccidentHappened += Accident;
+        NeighborhoodEvents.OnBuildingFinished += CheckForActivation;
+        NeighborhoodEvents.OnBuildingUpgraded += CheckForActivation;
+
+        _indicatorTarget = GetComponentInChildren<IndicatorTarget>();
+        _indicatorTarget.Init(this);
     }
 
     private void OnDisable()
     {
-        OnBuildingIsBroken -= Break;
+        OnAccidentHappened -= Accident;
+        NeighborhoodEvents.OnBuildingFinished -= CheckForActivation;
+        NeighborhoodEvents.OnBuildingUpgraded -= CheckForActivation;
     }
 
-    private void CheckForActivation()
+    private void CheckForActivation(Building building)
     {
-        if (_building.CanBeBroken)
+        if (_building.CanAccidentHappen && building == _building)
+        {
+            if (_breakRandomizerIsRunning)
+                StopCoroutine(BreakRandomizer());
+
             StartCoroutine(BreakRandomizer());
+        }
     }
 
     private IEnumerator BreakRandomizer()
     {
-        while (_building.CanBeBroken)
+        _breakRandomizerIsRunning = true;
+
+        while (_building.CanAccidentHappen)
         {
             yield return _waitForBreakRandomizer;
 
-            if (RNG.RollDice(100))
+            if (RNG.RollDice((int)breakChance))
             {
-                OnBuildingIsBroken?.Invoke();
+                OnAccidentHappened?.Invoke(_building);
+                NeighborhoodEvents.OnAccidentHappened?.Invoke(_building);
                 StartCoroutine(SpawnComplainingNeighbors(_buildingPopulation));
                 Debug.Log("BROKEN!");
             }
             else
                 Debug.Log("NOT BROKEN!");
         }
+
+        _breakRandomizerIsRunning = false;
     }
 
-    private void Break()
+    private void Accident(Building building)
     {
-        Broken = true;
+        if (building != _building) return;
+
+        AccidentHappened = true;
         StopCoroutine(BreakRandomizer());
     }
 
     public void Repaired()
     {
-        Broken = false;
-        if (_building.CanBeBroken)
+        AccidentHappened = false;
+        if (_building.CanAccidentHappen)
             StartCoroutine(BreakRandomizer());
     }
 
@@ -83,7 +112,6 @@ public class Breakable : MonoBehaviour
             neighbor.OnSetTargetPos?.Invoke(complainArea.transform.position + offset);
 
             neighbor.RelatedBuilding = _building;
-            //neighbor.RelatedBuilding.Repairable.OnBuildingRepaired += neighbor.GoBackToTheHouse;
             neighbor.RelatedBuilding.Rentable.OnStartComplaint?.Invoke();
 
             yield return new WaitForSeconds(UnityEngine.Random.Range(0.2f, 1f));

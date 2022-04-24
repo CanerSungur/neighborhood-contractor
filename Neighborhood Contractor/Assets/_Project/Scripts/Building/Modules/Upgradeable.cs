@@ -79,8 +79,10 @@ public class Upgradeable : MonoBehaviour
     public void UpgradeBuilding()
     {
         OnUpgradeHappened?.Invoke();
+        NeighborhoodEvents.OnBuildingUpgraded?.Invoke(Building);
 
         _currentLevel++;
+        Building.CurrentLevel++;
         if (Building.ContributionHandler)
             Building.ContributionHandler.TriggerContribution();
         NeighborhoodEvents.OnCheckForPopulationSufficiency?.Invoke();
