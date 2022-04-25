@@ -65,10 +65,10 @@ public class OffScreenIndicator : MonoBehaviour
             }
             if(indicator)
             {
-                indicator.SetImageColor(target.TargetColor);// Sets the image color of the indicator.
-                indicator.SetDistanceText(distanceFromCamera); //Set the distance text for the indicator.
+                //indicator.SetImageColor(target.TargetColor);// Sets the image color of the indicator.
+                //indicator.SetDistanceText(distanceFromCamera); //Set the distance text for the indicator.
                 indicator.transform.position = screenPosition; //Sets the position of the indicator on the screen.
-                indicator.SetTextRotation(Quaternion.identity); // Sets the rotation of the distance text of the indicator.
+                //indicator.SetTextRotation(Quaternion.identity); // Sets the rotation of the distance text of the indicator.
                 indicator.AccidentHandler = target.AccidentHandler;
             }
         }

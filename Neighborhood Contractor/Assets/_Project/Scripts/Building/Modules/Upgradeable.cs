@@ -15,6 +15,11 @@ public class Upgradeable : MonoBehaviour
     [SerializeField] private Transform moneyPointTransform;
     private int _maxLevel, _currentLevel;
 
+    [Header("-- COMPLAINT SETUP --")]
+    [SerializeField] private GameObject upgradeDenied;
+    [SerializeField] private Animation upgradeDeniedAnim;
+    [SerializeField] private Collider coll;
+
     #region Properties
 
     public bool PlayerIsInArea { get; set; }
@@ -31,6 +36,10 @@ public class Upgradeable : MonoBehaviour
     public void Init()
     {
         upgradeArea.SetActive(false);
+        //upgradeDenied.SetActive(false);
+        upgradeDeniedAnim.Rewind();
+        upgradeDeniedAnim.Play("Income_Accepted_LegacyAnim");
+        coll.enabled = true;
         EnableRelevantPhase();
     }
 
@@ -93,7 +102,29 @@ public class Upgradeable : MonoBehaviour
             upgradeArea.SetActive(false);
 
         FeedbackEvents.OnGiveFeedback?.Invoke("BUILDING UPGRADED!", FeedbackUI.Colors.ValueLevelIncrease);
-
+        AudioHandler.PlayAudio(AudioHandler.AudioType.BuildingFinished);
+        Player.Upgrading = false;
         AnalyticEvents.OnUpgradeFinished?.Invoke();
     }
+
+    #region Complaint Functions
+
+    public void StopUpgrade()
+    {
+        //upgradeDenied.SetActive(true);
+        upgradeDeniedAnim.Rewind();
+        upgradeDeniedAnim.Play("Income_Denied_LegacyAnim");
+        coll.enabled = false;
+
+    }
+
+    public void StartUpgrade()
+    {
+        //upgradeDenied.SetActive(false);
+        upgradeDeniedAnim.Rewind();
+        upgradeDeniedAnim.Play("Income_Accepted_LegacyAnim");
+        coll.enabled = true;
+    }
+
+    #endregion
 }

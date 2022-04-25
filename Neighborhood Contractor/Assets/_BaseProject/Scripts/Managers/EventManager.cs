@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public static class EventManager { }
 
@@ -24,7 +23,7 @@ public static class NeighborhoodEvents
     public static Action OnCheckForPopulationSufficiency, OnNewPhaseActivated;
     public static Action<int> OnIncreaseValue, OnIncreasePopulation;
     public static Action<PhaseUnlocker, int> OnEnableThisPhase;
-    public static Action<Building> OnBuildingRepaired, OnBuildingFinished, OnBuildingUpgraded, OnAccidentHappened;
+    public static Action<Building> OnBuildingRepaired, OnBuildingFinished, OnBuildingUpgraded, OnAccidentHappened, OnBuildingMaxxedOut;
 }
 
 public static class FeedbackEvents
@@ -51,4 +50,9 @@ public static class AnalyticEvents
 public static class AccidentEvents
 {
     public static Action<Building> OnFireStarted, OnFloodStarted;
+}
+
+public static class AudioEvents
+{
+    public static Action OnPlayCollectMoney, OnPlaySpendMoney;
 }

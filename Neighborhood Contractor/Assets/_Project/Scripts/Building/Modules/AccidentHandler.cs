@@ -76,7 +76,7 @@ public class AccidentHandler : MonoBehaviour
 
     private void GetRandomAccident()
     {
-        if (RNG.RollDice(5))
+        if (RNG.RollDice(50))
             _currentAccident = Accident.Fire;
         else
             _currentAccident = Accident.Flood;

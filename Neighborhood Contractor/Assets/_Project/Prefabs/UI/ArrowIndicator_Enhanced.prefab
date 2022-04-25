@@ -90,9 +90,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f1a3a3418f8e24c8c5d09ec36f94e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AccidentHandler: {fileID: 0}
   indicatorType: 1
   fireImg: {fileID: 987670670887243127}
   floodImg: {fileID: 2741674582831959571}
+  fireColor: {r: 1, g: 0.7843138, b: 0.23137257, a: 1}
+  floodColor: {r: 0.27058825, g: 0.90588236, b: 1, a: 1}
+  arrowImg: {fileID: 11403194}
+  outlineImg: {fileID: 7795864831486648661}
 --- !u!1 &1086876969492358
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,7 +195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &310932966763529192
 RectTransform:
   m_ObjectHideFlags: 0
@@ -278,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2519952248708268629
 RectTransform:
   m_ObjectHideFlags: 0
@@ -296,7 +301,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 105, y: 105}
+  m_SizeDelta: {x: 140, y: 140}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5650172383628653584
 CanvasRenderer:

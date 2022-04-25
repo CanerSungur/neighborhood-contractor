@@ -14,14 +14,14 @@ public class Building : MonoBehaviour
     private Rentable _rentable;
     private IncomeSpawner _incomeSpawner;
     private Repairable _repairable;
-    private AccidentCauser _breakable;
+    private AccidentCauser _accidentCauser;
 
     #region Properties
 
     public int CurrentLevel { get; set; }
     public bool Built => _buildable.Built;
-    public bool CanBeRepaired => Built && _breakable.AccidentHappened;
-    public bool CanAccidentHappen => Built && !_breakable.AccidentHappened;
+    public bool CanBeRepaired => Built && _accidentCauser.AccidentHappened && _repairable.CanBeRepaired;
+    public bool CanAccidentHappen => Built && !_accidentCauser.AccidentHappened && _rentable.BuildingIsFull && !BuildingUpgradeUI.IsOpen && StatManager.CurrentAccidentCount < StatManager.MaxAccidentCount;
     public Buildable Buildable => _buildable;
     public RequirePopulation RequirePopulation => _requirePopulation;
     public ContributionHandler ContributionHandler => _contributionHandler;
@@ -29,7 +29,7 @@ public class Building : MonoBehaviour
     public IncomeSpawner IncomeSpawner => _incomeSpawner;
     public Upgradeable Upgradeable => _upgradeable;
     public Repairable Repairable => _repairable;
-    public AccidentCauser Breakable => _breakable;
+    public AccidentCauser AccidentCauser => _accidentCauser;
 
     #endregion
 
@@ -57,17 +57,17 @@ public class Building : MonoBehaviour
 
         LoadData();
 
-        if (TryGetComponent(out _breakable))
-            _breakable.Init(this);
-
-        if (TryGetComponent(out _repairable))
-            _repairable.Init(this);
-
         if (Built)
             CurrentLevel = 1;
 
         if (Upgradeable)
             CurrentLevel = Upgradeable.CurrentLevel;
+
+        if (TryGetComponent(out _accidentCauser))
+            _accidentCauser.Init(this);
+
+        if (TryGetComponent(out _repairable))
+            _repairable.Init(this);
     }
 
     private void SaveData()
@@ -157,10 +157,10 @@ public class Building : MonoBehaviour
         if (_rentable && _incomeSpawner)
             _buildable.OnBuildFinished += () => _incomeSpawner.WaitForRent();
 
-        if (_breakable && _repairable)
+        if (_accidentCauser && _repairable)
         {
-            _repairable.OnBuildingRepaired += () => _breakable.Repaired();
-            _breakable.OnAccidentHappened += (Building building) => _repairable.Broken(building);
+            _repairable.OnBuildingRepaired += () => _accidentCauser.Repaired();
+            _accidentCauser.OnAccidentHappened += (Building building) => _repairable.Broken(building);
         }
 
         ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => _deleteSaveData = GameManager.Instance.DeleteSaveGame);
@@ -183,10 +183,10 @@ public class Building : MonoBehaviour
         if (_rentable && _incomeSpawner)
             _buildable.OnBuildFinished -= () => _incomeSpawner.WaitForRent();
 
-        if (_breakable && _repairable)
+        if (_accidentCauser && _repairable)
         {
-            _repairable.OnBuildingRepaired -= () => _breakable.Repaired();
-            _breakable.OnAccidentHappened -= (Building building) => _repairable.Broken(building);
+            _repairable.OnBuildingRepaired -= () => _accidentCauser.Repaired();
+            _accidentCauser.OnAccidentHappened -= (Building building) => _repairable.Broken(building);
         }
     }
 

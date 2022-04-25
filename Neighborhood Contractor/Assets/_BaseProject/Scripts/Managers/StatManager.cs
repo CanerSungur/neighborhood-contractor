@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using ZestGames.Utility;
@@ -23,6 +24,9 @@ public class StatManager : MonoBehaviour
     [SerializeField] private int carryRowLength = 50;
     private float _defaultSpendTime, _defaultTakeIncomeTime;
 
+    [Header("-- ACCIDENT SETUP --")]
+    [SerializeField] private int maxAccidentCount = 7;
+
     public static int CarryCapacity, MoneyValue, SpendValue;
     public static List<Money> CollectedMoney;
 
@@ -35,6 +39,8 @@ public class StatManager : MonoBehaviour
     public static float TakeIncomeTime { get; private set; }
     public int RewardMoney { get; private set; }
     public static int MoneyCapacity => CarryCapacity * MoneyValue;
+    public static int MaxAccidentCount { get; private set; }
+    public static int CurrentAccidentCount { get; private set; }
 
     [Header("-- FOR LOADING --")]
     [SerializeField] private GameObject money;
@@ -66,7 +72,11 @@ public class StatManager : MonoBehaviour
 
         //Debug.Log("Row: " + CurrentCarryRow);
         //Debug.Log("Column: " + CurrentCarryColumn);
+        MaxAccidentCount = maxAccidentCount;
+        CurrentAccidentCount = 0;
     }
+
+    
 
     private void LoadStats()
     {
@@ -130,6 +140,9 @@ public class StatManager : MonoBehaviour
         ValueBarEvents.OnValueLevelIncrease += CalculateIncomeTakeTime;
 
         _deleteSaveData = GameManager.Instance.DeleteSaveGame;
+
+        NeighborhoodEvents.OnAccidentHappened += AccidentHappened;
+        NeighborhoodEvents.OnBuildingRepaired += RepairHappened;
     }
 
     private void OnDisable()
@@ -139,7 +152,28 @@ public class StatManager : MonoBehaviour
         GameEvents.OnCalculateReward -= CalculateReward;
         ValueBarEvents.OnValueLevelIncrease -= CalculateSpendTime;
         ValueBarEvents.OnValueLevelIncrease -= CalculateIncomeTakeTime;
+
+        NeighborhoodEvents.OnAccidentHappened -= AccidentHappened;
+        NeighborhoodEvents.OnBuildingRepaired -= RepairHappened;
     }
+
+    #region Accident Functions
+
+    private void AccidentHappened(Building ignoreThis)
+    {
+        CurrentAccidentCount++;
+        if (CurrentAccidentCount >= MaxAccidentCount)
+            CurrentAccidentCount = MaxAccidentCount;
+    }
+
+    private void RepairHappened(Building ignoreThis)
+    {
+        CurrentAccidentCount--;
+        if (CurrentAccidentCount <= 0)
+            CurrentAccidentCount = 0;
+    }
+
+    #endregion
 
     private void HandleCollectMoney()
     {

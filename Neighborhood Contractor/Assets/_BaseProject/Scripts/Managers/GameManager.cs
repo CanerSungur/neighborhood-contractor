@@ -60,13 +60,13 @@ public class GameManager : Singleton<GameManager>
     private void LevelSuccess()
     {
         GameEnd = GameEnd.Win;
-        AudioHandler.PlayAudio(AudioHandler.AudioType.Game_Win);
+        //AudioHandler.PlayAudio(AudioHandler.AudioType.Game_Win);
     }
 
     private void LevelFail()
     {
         GameEnd = GameEnd.Fail;
-        AudioHandler.PlayAudio(AudioHandler.AudioType.Game_Fail);
+        //AudioHandler.PlayAudio(AudioHandler.AudioType.Game_Fail);
     }
 
     private void ChangeState(GameState newState)

@@ -39,7 +39,10 @@ public class MoneyAnimationController : MonoBehaviour
     private void StopMoving() => _money.Animator.SetBool(movingID, false);
     private void HandleMoveWeight()
     {
-        _weight = weightCurve.Evaluate((1f / StatManager.CarryRowLength) * _money.StackRowNumber);
+        if ( StatManager.CurrentCarryColumn == 0)
+            _weight = weightCurve.Evaluate((1f / StatManager.CurrentCarryRow) * _money.StackRowNumber);
+        else
+            _weight = weightCurve.Evaluate((1f / StatManager.CarryRowLength) * _money.StackRowNumber);
         _money.Animator.SetLayerWeight(moveLayerID, _weight);
     }
 

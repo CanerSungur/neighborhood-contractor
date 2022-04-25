@@ -112,10 +112,11 @@ public class Money : MonoBehaviour
     public void SetMoneyAsCollected(int index)
     {
         StackRowNumber = index + 1;
+        EnableAnimator();
+
+        CollectableEvents.OnCalculateMoveWeight?.Invoke();
         _collected = true;
         StatManager.CollectedMoney.Add(this);
         
-        EnableAnimator();
-        CollectableEvents.OnCalculateMoveWeight?.Invoke();
     }
 }

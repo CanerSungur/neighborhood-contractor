@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     internal PlayerAnimMovement playerAnimMovement;
     internal SwerveMovement swerveMovement;
     internal PlayerMoneyStackHandler moneyStackHandler;
+    internal PlayerAudio audioHandler;
 
     [Header("-- MOVEMENT SETUP --")]
     [SerializeField] private bool useAcceleration = false;
@@ -56,6 +57,7 @@ public class Player : MonoBehaviour
     public bool CanJump => IsControllable && IsGrounded();
     public bool IsDead { get; private set; }
     public bool IsLanded { get; private set; }
+    public static bool Upgrading { get; set; }
 
     #endregion
 
@@ -74,6 +76,7 @@ public class Player : MonoBehaviour
         joystickInput = GetComponent<JoystickInput>();
         playerCollision = GetComponent<PlayerCollision>();
         moneyStackHandler = GetComponent<PlayerMoneyStackHandler>();
+        audioHandler = GetComponent<PlayerAudio>();
 
         // Input Components
         TryGetComponent(out swerveInput);
@@ -163,16 +166,14 @@ public class Player : MonoBehaviour
     {
         PlayerEvents.OnCollectedMoney?.Invoke();
         CollectableEvents.OnIncreaseMoney?.Invoke(amount);
+        AudioEvents.OnPlayCollectMoney?.Invoke();
     }
 
     public void SpendMoney(int amount)
     {
         PlayerEvents.OnSpendMoney?.Invoke();
         CollectableEvents.OnDecreaseMoney?.Invoke(amount);
-    }
-
-    public void SpendMoneyForUpgrade(int amount)
-    {
-
+        if (!Upgrading)
+            AudioEvents.OnPlaySpendMoney?.Invoke();
     }
 }

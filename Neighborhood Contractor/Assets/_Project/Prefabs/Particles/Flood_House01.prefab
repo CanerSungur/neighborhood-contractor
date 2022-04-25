@@ -9505,7 +9505,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6110788215892568768
 Transform:
   m_ObjectHideFlags: 0
@@ -9693,8 +9693,8 @@ ParticleSystem:
     startColor:
       serializedVersion: 2
       minMaxState: 2
-      minColor: {r: 0.18792273, g: 0.42909166, b: 0.9716981, a: 1}
-      maxColor: {r: 0.5707547, g: 1, b: 1, a: 1}
+      minColor: {r: 0.5330188, g: 0.675448, b: 1, a: 1}
+      maxColor: {r: 0.8443396, g: 1, b: 1, a: 1}
       maxGradient:
         serializedVersion: 2
         key0: {r: 1, g: 1, b: 1, a: 1}

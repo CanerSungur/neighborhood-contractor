@@ -17,6 +17,8 @@ public class Repairable : MonoBehaviour
     private IEnumerator _repairCoroutine;
     private float _timer;
 
+    public bool CanBeRepaired { get; private set; }
+
     public Action OnBuildingRepaired;
 
     public void Init(Building building)
@@ -24,6 +26,7 @@ public class Repairable : MonoBehaviour
         _building = building;
         _repairCoroutine = Repair();
         _timer = repairTime;
+        CanBeRepaired = false;
 
         CheckForActivation();
     }
@@ -57,9 +60,11 @@ public class Repairable : MonoBehaviour
             yield return null;
         }
 
-        Debug.Log("Repaired!");
+        //Debug.Log("Repaired!");
         OnBuildingRepaired?.Invoke();
         NeighborhoodEvents.OnBuildingRepaired?.Invoke(_building);
+        ObjectPooler.Instance.SpawnFromPool("Confetti", repairArea.transform.position, Quaternion.identity);
+        AudioHandler.PlayAudio(AudioHandler.AudioType.BuildingFinished);
         repairArea.SetActive(false);
     }
 
@@ -69,6 +74,9 @@ public class Repairable : MonoBehaviour
 
         repairArea.SetActive(true);
         ResetRepairCoroutine();
+
+        CanBeRepaired = false;
+        ZestGames.Utility.Delayer.DoActionAfterDelay(this, 5f, () => CanBeRepaired = true);
     }
 
     private void ResetRepairCoroutine()

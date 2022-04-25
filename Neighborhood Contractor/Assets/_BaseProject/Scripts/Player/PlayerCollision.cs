@@ -58,6 +58,7 @@ public class PlayerCollision : MonoBehaviour
         
         if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && other.transform.parent.TryGetComponent(out Upgradeable upgradeable) && !BuildingUpgradeUI.IsOpen)
         {
+            Player.Upgrading = true;
             BuildingUpgradeEvents.OnActivateUpgradeUI?.Invoke(upgradeable);
         }
 
@@ -142,6 +143,7 @@ public class PlayerCollision : MonoBehaviour
         if (other.gameObject.layer == LayerMask.NameToLayer("Upgrade Area") && other.transform.parent.TryGetComponent(out Upgradeable upgradeable) && BuildingUpgradeUI.IsOpen)
         {
             //upgradeable.PlayerIsInArea = false;
+            Player.Upgrading = false;
             BuildingUpgradeEvents.OnCloseUpgradeUI?.Invoke(upgradeable);
         }
 

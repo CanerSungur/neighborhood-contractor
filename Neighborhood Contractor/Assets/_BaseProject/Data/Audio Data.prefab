@@ -57,4 +57,12 @@ MonoBehaviour:
   - type: 5
     clip: {fileID: 8300000, guid: 6a562ecbbe355bb41ae18da998037860, type: 3}
   - type: 6
+    clip: {fileID: 8300000, guid: 0e198c83a4f7fdb42b24e91e168957a2, type: 3}
+  - type: 8
+    clip: {fileID: 8300000, guid: c2a6ed20dc78d494380ee3cc87d6b216, type: 3}
+  - type: 9
     clip: {fileID: 8300000, guid: 10983917f84ac5a44bc00022b2027af4, type: 3}
+  - type: 10
+    clip: {fileID: 8300000, guid: 8057751193d518c4cb7689a5a36b4505, type: 3}
+  - type: 11
+    clip: {fileID: 8300000, guid: cb369375c5a3c7246a7e634c064e4d60, type: 3}

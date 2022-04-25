@@ -153,6 +153,7 @@ public class Buildable : MonoBehaviour
     public void FinishBuilding()
     {
         buildArea.SetActive(false);
+        Building.CurrentLevel = 1;
 
         //_currentLevel++;
         //OnStartSpawningIncome?.Invoke();
@@ -166,6 +167,7 @@ public class Buildable : MonoBehaviour
         FinishConstruction();
 
         FeedbackEvents.OnGiveFeedback?.Invoke("BUILDING FINISHED!", FeedbackUI.Colors.ValueLevelIncrease);
+        AudioHandler.PlayAudio(AudioHandler.AudioType.BuildingFinished);
 
         //// we set income text on first enable of income area.
         //Building.TextHandler.SetIncomePerSecondText(incomeHandler.IncomePerSecond);

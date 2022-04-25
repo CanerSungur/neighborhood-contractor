@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /// </summary>
 public class Indicator : MonoBehaviour
 {
-    public AccidentHandler AccidentHandler;
+    [HideInInspector] public AccidentHandler AccidentHandler;
     [SerializeField] private IndicatorType indicatorType;
     private Image indicatorImage;
     private Text distanceText;
@@ -14,6 +14,10 @@ public class Indicator : MonoBehaviour
     [Header("-- SETUP --")]
     [SerializeField] private GameObject fireImg;
     [SerializeField] private GameObject floodImg;
+    [SerializeField] private Color fireColor;
+    [SerializeField] private Color floodColor;
+    [SerializeField] private Image arrowImg;
+    [SerializeField] private Image outlineImg;
 
     /// <summary>
     /// Gets if the game object is active in hierarchy.
@@ -88,14 +92,18 @@ public class Indicator : MonoBehaviour
     {
         fireImg.SetActive(true);
         floodImg.SetActive(false);
-        Debug.Log("Fire Indicator");
+
+        arrowImg.color = fireColor;
+        outlineImg.color = fireColor;
     }
 
     public void SetAccidentFlood()
     {
         fireImg.SetActive(false);
         floodImg.SetActive(true);
-        Debug.Log("Flood Indicator");
+
+        arrowImg.color = floodColor;
+        outlineImg.color = floodColor;
     }
 
 

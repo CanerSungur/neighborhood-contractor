@@ -16,7 +16,6 @@ public class SettingsBasicUI : MonoBehaviour
     [SerializeField] private Sprite vibrationOnSprite;
     [SerializeField] private Sprite vibrationOffSprite;
 
-
     private Color _enabledColor = Color.white;
     private Color _disabledColor = Color.gray;
     private bool menuIsOpen = false;

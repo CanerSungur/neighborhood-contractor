@@ -52,7 +52,7 @@ MonoBehaviour:
     Size: 1000
   - Tag: Confetti
     Prefab: {fileID: 1724890150685576, guid: 504bc11969e143249975cacca01d426a, type: 3}
-    Size: 1
+    Size: 3
   - Tag: Neighbor_Man
     Prefab: {fileID: 4348138997228289767, guid: 74028dd4a60419a48aaaef2d909a5ba0, type: 3}
     Size: 10
@@ -64,4 +64,10 @@ MonoBehaviour:
     Size: 10
   - Tag: Complaining_Neighbor_Man
     Prefab: {fileID: 7708131169526154848, guid: 02d10f95a1a99cb4db6dc8f7b41009e0, type: 3}
-    Size: 10
+    Size: 30
+  - Tag: Complaining_Neighbor_Woman
+    Prefab: {fileID: 5998722034291581978, guid: c8fe12e06377c934a9e9c13f61a23908, type: 3}
+    Size: 30
+  - Tag: Complaining_Neighbor_Child
+    Prefab: {fileID: 9212532263445933812, guid: 797bb5c80bced994e83ac4b68df31ee2, type: 3}
+    Size: 30

@@ -20,6 +20,7 @@ public class BuildingUpgradeUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI levelToText;
     [SerializeField] private TextMeshProUGUI valueIncreaseText;
     [SerializeField] private TextMeshProUGUI rentSpaceText;
+    [SerializeField] private TextMeshProUGUI accidentChanceText;
     [SerializeField] private TextMeshProUGUI requiredMoneyText;
 
     private Upgradeable _activatedUpgradeable = null;
@@ -69,6 +70,7 @@ public class BuildingUpgradeUI : MonoBehaviour
         levelToText.text = "Lvl " + _activatedUpgradeable.NextLevelNumber.ToString();
         valueIncreaseText.text = "+" + _activatedUpgradeable.Building.ContributionHandler.ValueContribution;
         rentSpaceText.text = "+" + _activatedUpgradeable.Building.Rentable.RentIncreaseCount;
+        accidentChanceText.text = "% -" + _activatedUpgradeable.Building.AccidentCauser.AccidentChanceDecreaseRate;
 
         if (StatManager.TotalMoney >= _activatedUpgradeable.UpgradeCost)
             upgradeButton.SetInteractable();
@@ -83,11 +85,13 @@ public class BuildingUpgradeUI : MonoBehaviour
     private void TriggerOpeningAnim()
     {
         _animator.SetTrigger(openID);
+        AudioHandler.PlayAudio(AudioHandler.AudioType.UpgradeOpened);
     }
         
     private void TriggerClosingAnim()
     {
         _animator.SetTrigger(closeID);
+        Player.Upgrading = false;
     }
 
     public void AlertObservers(string message)

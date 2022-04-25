@@ -12,12 +12,23 @@ public class AudioHandler
         Pickup_Coin,
         Pickup_Trap,
         Button_Click,
-        Testing_PlayerMove
+        Testing_PlayerMove,
+        BuildingFinished,
+        SpendMoney,
+        PhaseUnlocked,
+        UpgradeOpened
     }
 
     private static Dictionary<AudioType, float> audioTimerDictionary;
     private static GameObject oneShotGameObject;
     private static AudioSource oneShotAudioSource;
+
+    private static float pitchDecreaseRate = 0.01f;
+    private static float cooldown = 1f;
+    private static float timer;
+
+    private static float targetPitch = 10f;
+    private static float pitchIncrement = 0.1f;
 
     // we initialized dictionary for delayed sound.
     // Initalize this in Awake which script you want to use delayed sound.
@@ -29,7 +40,7 @@ public class AudioHandler
 
     public static void PlayAudio(AudioType audioType, Vector3 position)
     {
-        if (!SettingsUI.IsSoundOn) return;
+        if (!GameManager.IsSoundOn) return;
 
         if (CanPlayAudio(audioType))
         {
@@ -46,8 +57,7 @@ public class AudioHandler
 
     public static void PlayAudio(AudioType audioType, float volume = 1f, float pitch = 1f)
     {
-        if (!SettingsUI.IsSoundOn) return;
-
+        if (!GameManager.IsSoundOn) return;
         if (CanPlayAudio(audioType))
         {
             if (oneShotGameObject == null)

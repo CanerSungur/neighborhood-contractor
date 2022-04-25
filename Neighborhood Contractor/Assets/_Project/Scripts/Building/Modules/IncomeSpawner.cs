@@ -42,6 +42,7 @@ public class IncomeSpawner : MonoBehaviour
     [Header("-- COMPLAINT SETUP --")]
     [SerializeField] private GameObject incomeDenied;
     [SerializeField] private Image incomeImage;
+    [SerializeField] private Animation incomeDeniedAnim;
 
     [Header("-- REFERENCES --")]
     [SerializeField] private GameObject incomeArea;
@@ -74,9 +75,16 @@ public class IncomeSpawner : MonoBehaviour
         Delayer.DoActionAfterDelay(this, 0.4f, CalculateIncomeTime);
         _waitForSpawnStartDelay = new WaitForSeconds(startSpawnDelay);
         _canSpawn = true;
+        
         incomeArea.SetActive(false);
-        incomeImage.color = Color.white;
-        incomeDenied.SetActive(false);
+
+        if (incomeImage)
+        {
+            incomeImage.color = Color.white;
+            //incomeDenied.SetActive(false);
+            incomeDeniedAnim.Rewind();
+            incomeDeniedAnim.Play("Income_Accepted_LegacyAnim");
+        }
 
         MoneyCount = 0;
 
@@ -186,7 +194,9 @@ public class IncomeSpawner : MonoBehaviour
         _canSpawn = true;
 
         incomeImage.color = Color.white;
-        incomeDenied.SetActive(false);
+        //incomeDenied.SetActive(false);
+        incomeDeniedAnim.Rewind();
+        incomeDeniedAnim.Play("Income_Accepted_LegacyAnim");
     }
 
     public void StopIncome()
@@ -194,7 +204,9 @@ public class IncomeSpawner : MonoBehaviour
         incomePerSecondText.text = $"{0:#,##0}$";
 
         incomeImage.color = Color.gray;
-        incomeDenied.SetActive(true);
+        //incomeDenied.SetActive(true);
+        incomeDeniedAnim.Rewind();
+        incomeDeniedAnim.Play("Income_Denied_LegacyAnim");
 
         DeleteAllIncome();
     }

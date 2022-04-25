@@ -123,6 +123,8 @@ public class Rentable : MonoBehaviour
 
                 // Do something for Rent Sign.
                 rentSignFullAnimation.Play("RentSign_Full_LegacyAnim");
+
+                NeighborhoodEvents.OnBuildingMaxxedOut?.Invoke(Building);
             }
         }
     }
@@ -173,6 +175,8 @@ public class Rentable : MonoBehaviour
             }).SetEase(Ease.OutBounce);
 
             rentSignFullAnimation.Play("RentSign_NotFull_LegacyAnim");
+
+            Building.Upgradeable.StopUpgrade();
         }
         else if (_currentBuildingPopulation == 0)
         {
@@ -197,6 +201,8 @@ public class Rentable : MonoBehaviour
             }).SetEase(Ease.OutBounce);
 
             rentSignFullAnimation.Play("RentSign_Full_LegacyAnim");
+
+            Building.Upgradeable.StartUpgrade();
         }
         else if (_currentBuildingPopulation == 1)
             Building.IncomeSpawner.StartIncome();
