@@ -3004,7 +3004,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 434175
+    m_Bits: 958463
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -8818,6 +8818,10 @@ PrefabInstance:
       propertyPath: cost
       value: 3000
       objectReference: {fileID: 0}
+    - target: {fileID: 1735232063635723996, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2629310398905133982, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
       propertyPath: index
       value: 3
@@ -8890,6 +8894,14 @@ PrefabInstance:
       propertyPath: buildCost
       value: 3000
       objectReference: {fileID: 0}
+    - target: {fileID: 8298201387048572083, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8298201387048572083, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: b2dabf03d92a654479362dfcb07ba939, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
 --- !u!1001 &1064766663
@@ -44814,6 +44826,10 @@ PrefabInstance:
     - target: {fileID: 6057846470647606000, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
       propertyPath: buildCost
       value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6302302867113439143, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}
+      propertyPath: repairCost
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fc3d6dd1d9fa40a49a8d7c29dc5a8b58, type: 3}

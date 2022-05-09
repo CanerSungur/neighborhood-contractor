@@ -79,10 +79,29 @@ public class Money : MonoBehaviour
 
         transform.DOLocalJump(Vector3.zero, _spendMoneyHeight, 1, _animationTime);
         transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime);
-        Delayer.DoActionAfterDelay(this, _animationTime, () => {
+        Delayer.DoActionAfterDelay(this, _animationTime, () =>
+        {
             ResetMoney();
             gameObject.SetActive(false);
         });
+
+        StackRowNumber = 0;
+        CollectableEvents.OnCalculateMoveWeight?.Invoke();
+        DisableAnimator();
+
+        _spent = true;
+        StatManager.CollectedMoney.Remove(this);
+    }
+
+    public void SpendForRepair(Transform parent)
+    {
+        transform.DOKill();
+        transform.parent = parent;
+        //transform.DOLocalJump(Vector3.zero, )
+        transform.DOJump(parent.position, 5f, 1, _animationTime);
+        //transform.DOLocalJump(Vector3.zero, 2f, 1, _animationTime);
+        transform.DOLocalRotate(new Vector3(0f, 90f, 0f), _animationTime);
+        Delayer.DoActionAfterDelay(this, _animationTime, ResetMoney);
 
         StackRowNumber = 0;
         CollectableEvents.OnCalculateMoveWeight?.Invoke();
@@ -100,6 +119,7 @@ public class Money : MonoBehaviour
 
         DisableAnimator();
         StackRowNumber = 0;
+        gameObject.SetActive(false);
     }
 
     private Money GetPreviousMoney()

@@ -62,9 +62,21 @@ public class PlayerCollision : MonoBehaviour
             BuildingUpgradeEvents.OnActivateUpgradeUI?.Invoke(upgradeable);
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Repair Area") && other.transform.parent.TryGetComponent(out Repairable repairable) && repairable.Building.CanBeRepaired)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Repair Area") && other.transform.parent.TryGetComponent(out Repairable repairable) && !repairable.PlayerIsInRepairArea)
         {
-            repairable.StartRepairing();
+            repairable.PlayerIsInRepairArea = true;
+            //repairable.ResetConsumedMoney();
+            if (repairable.Building.CanBeRepaired)
+            {
+                BuildManager.Instance.StartRepairing(repairable);
+                //repairable.StartRepairingUi();
+            }
+            else
+            {
+                BuildManager.Instance.StopRepairing(repairable);
+                //repairable.StopRepairingUi();
+                FeedbackEvents.OnGiveFeedback?.Invoke("Not Enough MONEY", FeedbackUI.Colors.NotEnoughMoney);
+            }
         }
 
 
@@ -147,9 +159,13 @@ public class PlayerCollision : MonoBehaviour
             BuildingUpgradeEvents.OnCloseUpgradeUI?.Invoke(upgradeable);
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Repair Area") && other.transform.parent.TryGetComponent(out Repairable repairable) && repairable.Building.CanBeRepaired)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Repair Area") && other.transform.parent.TryGetComponent(out Repairable repairable) && repairable.PlayerIsInRepairArea/* && repairable.Building.CanBeRepaired*/)
         {
-            repairable.StopRepairing();
+            repairable.PlayerIsInRepairArea = false;
+            //repairable.ResetConsumedMoney();
+            BuildManager.Instance.StopRepairing(repairable);
+            //repairable.StopRepairingUi();
+            //repairable.ResetRepairUi();
         }
 
         if (other.TryGetComponent(out PhaseUnlocker phaseUnlocker) && phaseUnlocker.PlayerIsInBuildArea)

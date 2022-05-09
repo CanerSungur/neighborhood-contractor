@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -6,11 +7,36 @@ public class BuildManager : Singleton<BuildManager>
     private Player _player;
     private WaitForSeconds _waitForSpendTime = new WaitForSeconds(StatManager.SpendTime);
     private WaitForSeconds _waitForMinimumTime = new WaitForSeconds(0.001f);
+    
+    private WaitForSeconds _waitForRepairTime = new WaitForSeconds(0.5f);
+    private readonly float _totalRepairTime = 5f;
+
+    public int BuildingCount { get; set; }
 
     private void Awake()
     {
         this.Reload();
         _player = FindObjectOfType<Player>();
+    }
+
+    private void Start()
+    {
+        NeighborhoodEvents.OnBuildingFinished += IncreaseBuildingCount;
+    }
+
+    private void OnDisable()
+    {
+        NeighborhoodEvents.OnBuildingFinished -= IncreaseBuildingCount;
+    }
+
+    private void IncreaseBuildingCount(Building ignoreThis)
+    {
+        BuildingCount++;
+        if (BuildingCount >= 2 && SingleMoneySpawnPointManager.FreeSpawnActive)
+        {
+            SingleMoneySpawnPointManager.FreeSpawnActive = false;
+            NeighborhoodEvents.OnDisableFreeMoneySpawn?.Invoke();
+        }
     }
 
     #region Buildable
@@ -70,6 +96,41 @@ public class BuildManager : Singleton<BuildManager>
                 phaseUnlocker.EnableNextPhase();
 
             yield return _waitForSpendTime;
+        }
+    }
+
+    #endregion
+
+    #region Repair
+
+    public void StartRepairing(Repairable repairable)
+    {
+        UpdateWaitRepairTime(repairable);
+        StartCoroutine(Repair(repairable));
+    }
+    public void StopRepairing(Repairable repairable) => StopCoroutine(Repair(repairable));
+    private void UpdateWaitRepairTime(Repairable repairable)
+    {
+        // Calculate wait time according to Repair Cost
+        int moneyCount = (int)(repairable.RepairCost / StatManager.SpendValue);
+        _waitForRepairTime = new WaitForSeconds(_totalRepairTime / moneyCount);
+    }
+
+    private IEnumerator Repair(Repairable repairable)
+    {
+        while (repairable.PlayerIsInRepairArea && repairable.CanBeRepaired)
+        {
+            StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].SpendForRepair(repairable.MoneyPointTransform);
+            _player.SpendMoney(StatManager.SpendValue);
+            repairable.ConsumeMoney(StatManager.SpendValue);
+            
+
+            if (repairable.Repaired)
+                repairable.RepairSuccessful();
+            else
+                ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => repairable.UpdateRepairUi());
+
+            yield return _waitForRepairTime;
         }
     }
 

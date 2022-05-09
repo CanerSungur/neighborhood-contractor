@@ -56,6 +56,10 @@ public class Building : MonoBehaviour
         //    IncomeSpawner.Init();
 
         LoadData();
+        if (BuildManager.Instance.BuildingCount >= 2 && SingleMoneySpawnPointManager.FreeSpawnActive)
+            NeighborhoodEvents.OnDisableFreeMoneySpawn?.Invoke();
+        else
+            SingleMoneySpawnPointManager.FreeSpawnActive = true;
 
         if (Built)
             CurrentLevel = 1;

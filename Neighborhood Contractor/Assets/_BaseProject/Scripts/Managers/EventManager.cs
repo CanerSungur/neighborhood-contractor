@@ -20,7 +20,7 @@ public static class PlayerEvents
 
 public static class NeighborhoodEvents
 {
-    public static Action OnCheckForPopulationSufficiency, OnNewPhaseActivated;
+    public static Action OnCheckForPopulationSufficiency, OnNewPhaseActivated, OnDisableFreeMoneySpawn;
     public static Action<int> OnIncreaseValue, OnIncreasePopulation;
     public static Action<PhaseUnlocker, int> OnEnableThisPhase;
     public static Action<Building> OnBuildingRepaired, OnBuildingFinished, OnBuildingUpgraded, OnAccidentHappened, OnBuildingMaxxedOut;

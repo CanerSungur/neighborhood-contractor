@@ -1657,7 +1657,7 @@ GameObject:
   - component: {fileID: 8298201387048572083}
   - component: {fileID: 5959985169670126876}
   - component: {fileID: 7303326422352842412}
-  m_Layer: 0
+  m_Layer: 19
   m_Name: House_Construction_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1672,7 +1672,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 513951221021900087}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.056, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3544745337034124237}
@@ -1706,6 +1706,7 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: e3805068bcbf82c4183e243d6a4f7808, type: 2}
+  - {fileID: 2100000, guid: b2dabf03d92a654479362dfcb07ba939, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2240,7 +2241,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8251688651895270134
 Transform:
   m_ObjectHideFlags: 0
@@ -3271,6 +3272,8 @@ MonoBehaviour:
   repairTime: 3
   repairArea: {fileID: 623968047}
   repairFillImage: {fileID: 1702235250864790494}
+  moneyPointTransform: {fileID: 1392794999}
+  repairCost: 1000
 --- !u!114 &4897390946662397597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3285,7 +3288,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accidentTimeBeforeDemolish: 60
   accidentRandomizerDelay: 15
-  accidentChance: 30
+  accidentChance: 50
   complainArea: {fileID: 4722500994625071073}
 --- !u!1 &4110113814925046889
 GameObject:
@@ -3701,7 +3704,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8085326604339749221
 Transform:
   m_ObjectHideFlags: 0

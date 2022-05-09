@@ -66,6 +66,7 @@ public class Buildable : MonoBehaviour
         ConsumedMoney = BuildCost;
         FinishConstruction();
         buildArea.SetActive(false);
+        BuildManager.Instance.BuildingCount++;
     }
 
     public void CheckThisState(int consumedMoney)
@@ -154,6 +155,7 @@ public class Buildable : MonoBehaviour
     {
         buildArea.SetActive(false);
         Building.CurrentLevel = 1;
+        BuildManager.Instance.BuildingCount++;
 
         //_currentLevel++;
         //OnStartSpawningIncome?.Invoke();
