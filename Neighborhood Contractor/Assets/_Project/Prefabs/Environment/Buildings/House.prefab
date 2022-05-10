@@ -3338,7 +3338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accidentTimeBeforeDemolish: 60
-  accidentRandomizerDelay: 15
+  accidentRandomizerDelay: 30
   accidentChance: 15
   complainArea: {fileID: 4722500994625071073}
 --- !u!1 &4110113814925046889

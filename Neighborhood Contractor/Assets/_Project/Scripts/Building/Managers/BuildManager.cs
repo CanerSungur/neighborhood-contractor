@@ -124,12 +124,12 @@ public class BuildManager : Singleton<BuildManager>
             StatManager.CollectedMoney[StatManager.CollectedMoney.Count - 1].SpendForRepair(repairable.MoneyPointTransform);
             _player.SpendMoney(StatManager.SpendValue);
             repairable.ConsumeMoney(StatManager.SpendValue);
-            
+            repairable.UpdateRepairUi();
 
             if (repairable.Repaired)
                 repairable.RepairSuccessful();
-            else
-                ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => repairable.UpdateRepairUi());
+            //else
+            //    ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => repairable.UpdateRepairUi());
 
             yield return _waitForRepairTime;
         }

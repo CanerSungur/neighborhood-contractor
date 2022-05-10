@@ -62,11 +62,17 @@ public class Repairable : MonoBehaviour
     public void UpdateRepairUi()
     {
         //transform.DORewind();
-        float currentVal = repairFillImage.fillAmount;
-        float targetVal = _consumedMoney / repairCost;
-        DOVirtual.Float(currentVal, targetVal, 0.3f, r => {
-            repairFillImage.fillAmount = r;
-            currentVal = r;
+
+        ZestGames.Utility.Delayer.DoActionAfterDelay(this, 0.5f, () => {
+            if (repairArea.activeSelf)
+            {
+                float currentVal = repairFillImage.fillAmount;
+                float targetVal = _consumedMoney / repairCost;
+                DOVirtual.Float(currentVal, targetVal, 0.3f, r => {
+                    repairFillImage.fillAmount = r;
+                    currentVal = r;
+                });
+            }
         });
     }
 
