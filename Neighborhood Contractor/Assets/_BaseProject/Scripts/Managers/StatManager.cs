@@ -61,7 +61,7 @@ public class StatManager : MonoBehaviour
 
         LoadStats();
         UpdatePlayerStats();
-
+        
         SpendTime = spendTime;
         TakeIncomeTime = takeIncomeTime;
         _defaultSpendTime = SpendTime;
@@ -70,13 +70,11 @@ public class StatManager : MonoBehaviour
         Delayer.DoActionAfterDelay(this, 1f, CalculateSpendTime);
         Delayer.DoActionAfterDelay(this, 1f, CalculateIncomeTakeTime);
 
-        //Debug.Log("Row: " + CurrentCarryRow);
-        //Debug.Log("Column: " + CurrentCarryColumn);
-        MaxAccidentCount = maxAccidentCount;
+        MaxAccidentCount = 0;
+        Delayer.DoActionAfterDelay(this, 1f, SetMaxAccidentCount);
+        //MaxAccidentCount = maxAccidentCount;
         CurrentAccidentCount = 0;
     }
-
-    
 
     private void LoadStats()
     {
@@ -141,6 +139,8 @@ public class StatManager : MonoBehaviour
 
         _deleteSaveData = GameManager.Instance.DeleteSaveGame;
 
+        NeighborhoodEvents.OnNewPhaseActivated += SetMaxAccidentCount;
+        NeighborhoodEvents.OnBuildingFinished += SetMaxAccidentCount;
         NeighborhoodEvents.OnAccidentHappened += AccidentHappened;
         NeighborhoodEvents.OnBuildingRepaired += RepairHappened;
     }
@@ -153,6 +153,8 @@ public class StatManager : MonoBehaviour
         ValueBarEvents.OnValueLevelIncrease -= CalculateSpendTime;
         ValueBarEvents.OnValueLevelIncrease -= CalculateIncomeTakeTime;
 
+        NeighborhoodEvents.OnNewPhaseActivated -= SetMaxAccidentCount;
+        NeighborhoodEvents.OnBuildingFinished -= SetMaxAccidentCount;
         NeighborhoodEvents.OnAccidentHappened -= AccidentHappened;
         NeighborhoodEvents.OnBuildingRepaired -= RepairHappened;
     }
@@ -232,5 +234,49 @@ public class StatManager : MonoBehaviour
             TakeIncomeTime = 0.03f;
 
         //Debug.Log("Take Income Time: " + TakeIncomeTime);
+    }
+
+    private void SetMaxAccidentCount()
+    {
+        if (PhaseManager.CurrentPhase == 1)
+        {
+            if (BuildManager.Instance.BuildingCount - 1 <= 0)
+            {
+                MaxAccidentCount = 0;
+                return;
+            }
+            else MaxAccidentCount = 1;
+        }
+        else
+            MaxAccidentCount = PhaseManager.CurrentPhase;
+
+        //MaxAccidentCount = PhaseManager.CurrentPhase;
+        //if (BuildManager.Instance.BuildingCount - 1 <= 0)
+        //{
+        //    MaxAccidentCount = 0;
+        //    return;
+        //}
+
+        //MaxAccidentCount = BuildManager.Instance.BuildingCount - 1;
+        //if (MaxAccidentCount >= maxAccidentCount)
+        //    MaxAccidentCount = maxAccidentCount;
+
+        //Debug.Log("Max Accident: " + MaxAccidentCount);
+    }
+    private void SetMaxAccidentCount(Building ignoreThis)
+    {
+        if (PhaseManager.CurrentPhase == 1)
+        {
+            if (BuildManager.Instance.BuildingCount - 1 <= 0)
+            {
+                MaxAccidentCount = 0;
+                return;
+            }
+            else MaxAccidentCount = 1;
+        }
+        else
+            MaxAccidentCount = PhaseManager.CurrentPhase;
+
+        //Debug.Log("Max Accident: " + MaxAccidentCount);
     }
 }

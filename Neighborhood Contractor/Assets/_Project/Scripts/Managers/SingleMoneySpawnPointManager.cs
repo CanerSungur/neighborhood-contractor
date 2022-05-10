@@ -1,12 +1,13 @@
 using UnityEngine;
 
-public class SingleMoneySpawnPointManager : MonoBehaviour
+public class SingleMoneySpawnPointManager : Singleton<SingleMoneySpawnPointManager>
 {
     private SingleMoneySpawnPoint[] moneyPoints;
     public static bool FreeSpawnActive;
 
     private void Awake()
     {
+        this.Reload();
         //FreeSpawnActive = true;
         //if (PhaseManager.CurrentPhase > 1)
         //    DisableFreeMoneySpawn();
@@ -25,9 +26,10 @@ public class SingleMoneySpawnPointManager : MonoBehaviour
         NeighborhoodEvents.OnDisableFreeMoneySpawn -= DisableFreeMoneySpawn;
     }
 
-    private void DisableFreeMoneySpawn()
+    public void DisableFreeMoneySpawn()
     {
-        FreeSpawnActive = false;
+        //if (!FreeSpawnActive) return;
+        //FreeSpawnActive = false;
 
         moneyPoints = GetComponentsInChildren<SingleMoneySpawnPoint>();
         foreach (SingleMoneySpawnPoint moneyPoint in moneyPoints)

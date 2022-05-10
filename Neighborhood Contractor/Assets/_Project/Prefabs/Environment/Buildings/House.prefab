@@ -1657,6 +1657,7 @@ GameObject:
   - component: {fileID: 8298201387048572083}
   - component: {fileID: 5959985169670126876}
   - component: {fileID: 7303326422352842412}
+  - component: {fileID: 2020103315185961441}
   m_Layer: 19
   m_Name: House_Construction_1
   m_TagString: Untagged
@@ -1753,6 +1754,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.4805794, y: 1.9867011, z: 2.2441328}
   m_Center: {x: -0.21564293, y: 0.9982632, z: 0.0031533241}
+--- !u!208 &2020103315185961441
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 513951221021900087}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.7400001, y: 0.99300003, z: 1.1220001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.216, y: 0.998, z: 0.003}
+  m_TimeToStationary: 0.5
 --- !u!1 &1105613565716000493
 GameObject:
   m_ObjectHideFlags: 0
@@ -1993,6 +2010,7 @@ GameObject:
   - component: {fileID: 8624182037133132371}
   - component: {fileID: 2252539898398864837}
   - component: {fileID: 6094846789276118873}
+  - component: {fileID: 5754347504220471664}
   m_Layer: 0
   m_Name: House_Construction_2
   m_TagString: Untagged
@@ -2088,6 +2106,22 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.9853535, y: 2.0875263, z: 2.6268024}
   m_Center: {x: -0.46802998, y: 1.0486758, z: 0.03412646}
+--- !u!208 &5754347504220471664
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1735232063635723996}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.9930001, y: 1.044, z: 1.3130001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.46800002, y: 1.049, z: 0.034}
+  m_TimeToStationary: 0.5
 --- !u!1 &1763535487426226052
 GameObject:
   m_ObjectHideFlags: 0
@@ -2235,6 +2269,7 @@ GameObject:
   - component: {fileID: 6515538045891893218}
   - component: {fileID: 2105488555577352706}
   - component: {fileID: 8307759242461159410}
+  - component: {fileID: 520682136218292082}
   m_Layer: 0
   m_Name: House_Level_3
   m_TagString: Untagged
@@ -2330,6 +2365,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bc8a5eeaed9eb419818f711b01dd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &520682136218292082
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2105488555577352705}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.9720001, y: 2.183, z: 2.19}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.109000005, y: 2.1520002, z: -0.133}
+  m_TimeToStationary: 0.5
 --- !u!1 &2455056630056987590
 GameObject:
   m_ObjectHideFlags: 0
@@ -3288,7 +3339,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   accidentTimeBeforeDemolish: 60
   accidentRandomizerDelay: 15
-  accidentChance: 50
+  accidentChance: 15
   complainArea: {fileID: 4722500994625071073}
 --- !u!1 &4110113814925046889
 GameObject:
@@ -3698,6 +3749,7 @@ GameObject:
   - component: {fileID: 7584321757307743414}
   - component: {fileID: 5470999441428275930}
   - component: {fileID: 312541138618360649}
+  - component: {fileID: 7867652295720986833}
   m_Layer: 0
   m_Name: House_Level_1
   m_TagString: Untagged
@@ -3793,6 +3845,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bc8a5eeaed9eb419818f711b01dd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &7867652295720986833
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5470999441428275929}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 2.318, y: 1.044, z: 1.3130001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.143, y: 1.049, z: 0.034}
+  m_TimeToStationary: 0.5
 --- !u!1 &5550047072358990669
 GameObject:
   m_ObjectHideFlags: 0
@@ -4589,6 +4657,7 @@ GameObject:
   - component: {fileID: 8885428157117558048}
   - component: {fileID: 7112710393012935848}
   - component: {fileID: 597119429712027614}
+  - component: {fileID: 2094405358056893504}
   m_Layer: 0
   m_Name: House_Level_2
   m_TagString: Untagged
@@ -4684,6 +4753,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06bc8a5eeaed9eb419818f711b01dd29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!208 &2094405358056893504
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7112710393012935847}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.355, y: 1.674, z: 1.6800001}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: -0.026, y: 1.6290001, z: -0.102000006}
+  m_TimeToStationary: 0.5
 --- !u!1 &7236606972577574254
 GameObject:
   m_ObjectHideFlags: 0
@@ -5681,14 +5766,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ec7670b9db64d714bb8e429dcc63a7a8, type: 3}
---- !u!198 &2147084162188073383 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3919391449494941282, guid: ec7670b9db64d714bb8e429dcc63a7a8, type: 3}
-  m_PrefabInstance: {fileID: 3147875859940980677}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2147084162207472871 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3919391449513290530, guid: ec7670b9db64d714bb8e429dcc63a7a8, type: 3}
+  m_PrefabInstance: {fileID: 3147875859940980677}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2147084162188073383 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3919391449494941282, guid: ec7670b9db64d714bb8e429dcc63a7a8, type: 3}
   m_PrefabInstance: {fileID: 3147875859940980677}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5282203226191731152
@@ -5894,6 +5979,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+--- !u!1 &2421623211737420353 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6249861096827988640, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
+  m_PrefabInstance: {fileID: 8584040071383234785}
+  m_PrefabAsset: {fileID: 0}
 --- !u!111 &2730590542291814359 stripped
 Animation:
   m_CorrespondingSourceObject: {fileID: 5964352877674397494, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
@@ -5902,10 +5992,5 @@ Animation:
 --- !u!4 &3085112905524529403 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6768953264525766682, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
-  m_PrefabInstance: {fileID: 8584040071383234785}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &2421623211737420353 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6249861096827988640, guid: e24d94fe3d83348499f12392b4ea41dc, type: 3}
   m_PrefabInstance: {fileID: 8584040071383234785}
   m_PrefabAsset: {fileID: 0}

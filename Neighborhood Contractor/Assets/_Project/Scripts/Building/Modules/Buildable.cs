@@ -155,7 +155,6 @@ public class Buildable : MonoBehaviour
     {
         buildArea.SetActive(false);
         Building.CurrentLevel = 1;
-        BuildManager.Instance.BuildingCount++;
 
         //_currentLevel++;
         //OnStartSpawningIncome?.Invoke();

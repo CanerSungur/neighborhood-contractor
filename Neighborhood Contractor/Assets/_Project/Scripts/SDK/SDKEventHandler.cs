@@ -27,19 +27,19 @@ public class SDKEventHandler : MonoBehaviour
     private void PhaseLoaded(int phase)
     {
 
-        Debug.Log("Loaded " + phase + " phase");
+        //Debug.Log("Loaded " + phase + " phase");
         Debug.Log("Loaded CurrentPhase: " + PhaseManager.CurrentPhase);
     }
 
     private void PhaseFinished(int phase)
     {
-        Debug.Log("Finished " + phase + " phase");
+        //Debug.Log("Finished " + phase + " phase");
         Debug.Log("Finished CurrentPhase: " + PhaseManager.CurrentPhase);
     }
 
     private void PhaseStarted(int phase)
     {
-        Debug.Log("Started " + phase + " phase");
+        //Debug.Log("Started " + phase + " phase");
         Debug.Log("Started CurrentPhase: " + PhaseManager.CurrentPhase);
     }
 
@@ -57,6 +57,6 @@ public class SDKEventHandler : MonoBehaviour
 
     private void PhaseUnlocked()
     {
-        Debug.Log("Phase Unlock Event Triggered!");
+        //Debug.Log("Phase Unlock Event Triggered!");
     }
 }

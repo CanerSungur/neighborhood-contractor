@@ -32,11 +32,12 @@ public class BuildManager : Singleton<BuildManager>
     private void IncreaseBuildingCount(Building ignoreThis)
     {
         BuildingCount++;
-        if (BuildingCount >= 2 && SingleMoneySpawnPointManager.FreeSpawnActive)
+        if (BuildingCount >= 2)
         {
-            SingleMoneySpawnPointManager.FreeSpawnActive = false;
-            NeighborhoodEvents.OnDisableFreeMoneySpawn?.Invoke();
+            //NeighborhoodEvents.OnDisableFreeMoneySpawn?.Invoke();
+            SingleMoneySpawnPointManager.Instance.DisableFreeMoneySpawn();
         }
+        //Debug.Log(BuildingCount);
     }
 
     #region Buildable

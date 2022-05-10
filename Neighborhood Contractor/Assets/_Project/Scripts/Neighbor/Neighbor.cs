@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class Neighbor : MonoBehaviour
 {
-    public enum Type { Happy, Complaining }
+    public enum Type { Happy, Complaining, Idle }
     [SerializeField] private Type currentType;
 
     [Header("-- REFERENCES --")]
@@ -65,6 +65,11 @@ public class Neighbor : MonoBehaviour
             //RelatedBuilding.Repairable.OnBuildingRepaired += GoBackToTheHouse;
             NeighborhoodEvents.OnBuildingRepaired += GoBackToTheHouse;
         }
+        else if (currentType == Type.Idle)
+        {
+            CanMove = true;
+            StartIdling();
+        }
         OnSetTargetPos += SetTargetPosition;
     }
 
@@ -106,5 +111,10 @@ public class Neighbor : MonoBehaviour
         OnSetTargetPos?.Invoke(building.transform.position);
         OnStartMoving?.Invoke();
         OnStopComplaining?.Invoke();
+    }
+
+    private void StartIdling()
+    {
+        Debug.Log("Start Idling");
     }
 }
