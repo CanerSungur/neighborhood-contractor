@@ -16,14 +16,22 @@ public class IdleNeighborAnimController : MonoBehaviour
         _idleNeighbor.Animator.SetBool(movingID, false);
         _idleNeighbor.Animator.SetBool(actionID, false);
 
+        _idleNeighbor.OnStartIdling += StartIdling;
         _idleNeighbor.OnStartWandering += StartMoving;
         _idleNeighbor.OnStartRandomAction += StartRandomAction;
     }
 
     private void OnDisable()
     {
+        _idleNeighbor.OnStartIdling -= StartIdling;
         _idleNeighbor.OnStartWandering -= StartMoving;
         _idleNeighbor.OnStartRandomAction -= StartRandomAction;
+    }
+
+    private void StartIdling()
+    {
+        _idleNeighbor.Animator.SetBool(movingID, false);
+        _idleNeighbor.Animator.SetBool(actionID, false);
     }
 
     private void StartMoving()
