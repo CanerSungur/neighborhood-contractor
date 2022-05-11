@@ -23,7 +23,7 @@ public static class NeighborhoodEvents
     public static Action OnCheckForPopulationSufficiency, OnNewPhaseActivated, OnDisableFreeMoneySpawn;
     public static Action<int> OnIncreaseValue, OnIncreasePopulation;
     public static Action<PhaseUnlocker, int> OnEnableThisPhase;
-    public static Action<Building> OnBuildingRepaired, OnBuildingFinished, OnBuildingUpgraded, OnAccidentHappened, OnBuildingMaxxedOut;
+    public static Action<Building> OnBuildingRepaired, OnBuildingFinished, OnBuildingUpgraded, OnAccidentHappened, OnBuildingMaxxedOut, OnRequestIdleNeighborActivation, OnActivateIdleNeighbor, OnDeactivateIdleNeighbor;
 }
 
 public static class FeedbackEvents

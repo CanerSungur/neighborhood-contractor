@@ -15,6 +15,7 @@ public class Building : MonoBehaviour
     private IncomeSpawner _incomeSpawner;
     private Repairable _repairable;
     private AccidentCauser _accidentCauser;
+    private IdleNeighborHandler _idleNeighborhoodHandler;
 
     #region Properties
 
@@ -72,6 +73,9 @@ public class Building : MonoBehaviour
 
         if (TryGetComponent(out _repairable))
             _repairable.Init(this);
+
+        if (TryGetComponent(out _idleNeighborhoodHandler))
+            _idleNeighborhoodHandler.Init(this);
     }
 
     private void SaveData()
