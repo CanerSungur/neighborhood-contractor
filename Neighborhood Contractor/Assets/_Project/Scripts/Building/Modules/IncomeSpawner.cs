@@ -80,7 +80,7 @@ public class IncomeSpawner : MonoBehaviour
 
         if (incomeImage)
         {
-            incomeImage.color = Color.white;
+            //incomeImage.color = Color.white;
             //incomeDenied.SetActive(false);
             incomeDeniedAnim.Rewind();
             incomeDeniedAnim.Play("Income_Accepted_LegacyAnim");
@@ -193,7 +193,7 @@ public class IncomeSpawner : MonoBehaviour
     {
         _canSpawn = true;
 
-        incomeImage.color = Color.white;
+        //incomeImage.color = Color.white;
         //incomeDenied.SetActive(false);
         incomeDeniedAnim.Rewind();
         incomeDeniedAnim.Play("Income_Accepted_LegacyAnim");
@@ -203,7 +203,7 @@ public class IncomeSpawner : MonoBehaviour
     {
         incomePerSecondText.text = $"{0:#,##0}$";
 
-        incomeImage.color = Color.gray;
+        //incomeImage.color = Color.gray;
         //incomeDenied.SetActive(true);
         incomeDeniedAnim.Rewind();
         incomeDeniedAnim.Play("Income_Denied_LegacyAnim");

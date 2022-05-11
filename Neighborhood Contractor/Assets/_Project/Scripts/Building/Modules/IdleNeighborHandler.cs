@@ -35,7 +35,6 @@ public class IdleNeighborHandler : MonoBehaviour
 
     private IEnumerator RequestActivation()
     {
-        Debug.Log("Request");
         while (GameManager.GameState != GameState.Finished)
         {
             if (_activated)
