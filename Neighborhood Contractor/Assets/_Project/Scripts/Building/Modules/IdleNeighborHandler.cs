@@ -13,7 +13,7 @@ public class IdleNeighborHandler : MonoBehaviour
     private bool _activated;
     private int _randomIndex;
 
-    public bool CanActivateIdleNeighbors => _building.Built && NeighborhoodManager.CanActivateIdleNeighbors && !_building.AccidentCauser.AccidentHappened;
+    public bool CanActivateIdleNeighbors => _building.Built && NeighborhoodManager.CanActivateIdleNeighbors && !_building.AccidentCauser.AccidentHappened && _building.Rentable.BuildingIsFull;
 
     public void Init(Building building)
     {
