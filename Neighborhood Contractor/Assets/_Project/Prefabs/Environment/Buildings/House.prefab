@@ -147300,6 +147300,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Flood_House02
       objectReference: {fileID: 0}
+    - target: {fileID: 123226956717246058, guid: 59127458ca2657346a41ce8a43afb828, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4406521630412108745, guid: 59127458ca2657346a41ce8a43afb828, type: 3}
       propertyPath: m_RootOrder
       value: 8

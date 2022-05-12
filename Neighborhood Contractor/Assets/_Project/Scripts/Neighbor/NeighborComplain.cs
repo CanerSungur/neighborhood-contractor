@@ -44,7 +44,7 @@ public class NeighborComplain : MonoBehaviour
 
     private void CloseDialog(Building building)
     {
-        if (building == _neighbor.RelatedBuilding)
+        if (building == _neighbor.RelatedBuilding && _dialogAnimator != null)
             _dialogAnimator.SetBool("Close", true);
     }
 }
