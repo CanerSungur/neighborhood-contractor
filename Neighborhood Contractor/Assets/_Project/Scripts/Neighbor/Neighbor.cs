@@ -16,7 +16,7 @@ public class Neighbor : MonoBehaviour
 
     [Header("-- SETUP --")]
     private float waitAfterSpawn = 3f;
-    private float speed = 2f;
+    private float speed = 3f;
     private Vector3 _targetPosition;
 
     public Animator Animator { get; private set; }

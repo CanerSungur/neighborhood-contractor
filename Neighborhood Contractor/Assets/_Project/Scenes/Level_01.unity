@@ -150,6 +150,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirePlug
       objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -996,6 +1000,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirePlug (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -1605,6 +1613,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirePlug
       objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2118,6 +2130,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -3899,6 +3915,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -6206,6 +6226,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirePlug (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
       value: 5
@@ -6488,6 +6512,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -7173,6 +7201,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -8613,6 +8645,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -10591,6 +10627,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirePlug (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -10892,6 +10932,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -11298,6 +11342,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -14670,6 +14718,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -18436,6 +18488,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: FirePlug (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -18570,6 +18626,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -19308,6 +19368,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder
@@ -46453,6 +46517,10 @@ PrefabInstance:
     - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_Name
       value: FirePlug
+      objectReference: {fileID: 0}
+    - target: {fileID: 8315403661688321129, guid: c05a9d13206ac7748bb700019c194785, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8315403661688321134, guid: c05a9d13206ac7748bb700019c194785, type: 3}
       propertyPath: m_RootOrder

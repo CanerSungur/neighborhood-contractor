@@ -616,6 +616,7 @@ GameObject:
   - component: {fileID: 7638025430989004231}
   - component: {fileID: 5512373855765329486}
   - component: {fileID: 6792841203571447571}
+  - component: {fileID: 8140198671710465037}
   m_Layer: 5
   m_Name: Dialog Canvas
   m_TagString: Untagged
@@ -735,6 +736,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcef706606ab43b42a9cd8e1cb47a001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!225 &8140198671710465037
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6307888485877195173}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &7197631294661477182
 GameObject:
   m_ObjectHideFlags: 0
@@ -1526,7 +1539,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5f9fdbd934655754899841e40d2dbb1b, type: 2}
+  - {fileID: 2100000, guid: 66e0a26ec83bcb04fa4cb7a1950350f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
