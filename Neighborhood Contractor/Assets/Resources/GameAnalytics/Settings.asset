@@ -30,7 +30,7 @@ MonoBehaviour:
   secretKey:
   - ea6f42b33ad3ebb57d80c68a0f6f47f5feabd983
   Build:
-  - 1.6
+  - 1.0
   SelectedPlatformOrganization:
   - Udo-Zest
   SelectedPlatformStudio:
