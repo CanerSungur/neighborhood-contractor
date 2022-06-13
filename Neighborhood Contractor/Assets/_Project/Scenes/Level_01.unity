@@ -761,7 +761,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 153638827}
-  m_LocalRotation: {x: 0.29167512, y: -0.11678805, z: 0.03590685, w: 0.94868165}
+  m_LocalRotation: {x: 0.29167515, y: -0.116788045, z: 0.035906848, w: 0.94868165}
   m_LocalPosition: {x: 0.25, y: 10.2, z: -14.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -830,9 +830,9 @@ MonoBehaviour:
   m_CameraRadius: 0.1
   m_Strategy: 1
   m_MaximumEffort: 4
-  m_SmoothingTime: 0
-  m_Damping: 0
-  m_DampingWhenOccluded: 0
+  m_SmoothingTime: 0.8
+  m_Damping: 3.2
+  m_DampingWhenOccluded: 3.3
   m_OptimalTargetDistance: 0
 --- !u!1001 &154603390
 PrefabInstance:
@@ -1905,7 +1905,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &275719162
 MonoBehaviour:
   m_ObjectHideFlags: 0

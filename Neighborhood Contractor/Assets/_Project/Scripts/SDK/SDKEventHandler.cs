@@ -4,9 +4,9 @@ public class SDKEventHandler : MonoBehaviour
 {
     private void Start()
     {
-        AnalyticEvents.OnBuiltFinished += BuiltFinished;
-        AnalyticEvents.OnUpgradeFinished += HouseUpgraded;
-        AnalyticEvents.OnPhaseUnlocked += PhaseUnlocked;
+        //AnalyticEvents.OnBuiltFinished += BuiltFinished;
+        //AnalyticEvents.OnUpgradeFinished += HouseUpgraded;
+        //AnalyticEvents.OnPhaseUnlocked += PhaseUnlocked;
 
         AnalyticEvents.OnPhaseStarted += PhaseStarted;
         AnalyticEvents.OnPhaseFinished += PhaseFinished;
@@ -15,48 +15,47 @@ public class SDKEventHandler : MonoBehaviour
 
     private void OnDisable()
     {
-        AnalyticEvents.OnBuiltFinished -= BuiltFinished;
-        AnalyticEvents.OnUpgradeFinished -= HouseUpgraded;
-        AnalyticEvents.OnPhaseUnlocked -= PhaseUnlocked;
+        //AnalyticEvents.OnBuiltFinished -= BuiltFinished;
+        //AnalyticEvents.OnUpgradeFinished -= HouseUpgraded;
+        //AnalyticEvents.OnPhaseUnlocked -= PhaseUnlocked;
 
         AnalyticEvents.OnPhaseStarted -= PhaseStarted;
         AnalyticEvents.OnPhaseFinished -= PhaseFinished;
         AnalyticEvents.OnPhaseLoaded -= PhaseLoaded;
     }
 
+    // There is no level fail.
     private void PhaseLoaded(int phase)
     {
+        // TODO: Phase or Level is loaded
 
-        //Debug.Log("Loaded " + phase + " phase");
+
+#if UNITY_EDITOR
         Debug.Log("Loaded CurrentPhase: " + PhaseManager.CurrentPhase);
+#endif
     }
 
     private void PhaseFinished(int phase)
     {
-        //Debug.Log("Finished " + phase + " phase");
+        // TODO: Phase or Level is finished successfully.
+
+
+#if UNITY_EDITOR
         Debug.Log("Finished CurrentPhase: " + PhaseManager.CurrentPhase);
+#endif
     }
 
     private void PhaseStarted(int phase)
     {
-        //Debug.Log("Started " + phase + " phase");
+        // TODO: Phase or Level is started.
+
+
+#if UNITY_EDITOR
         Debug.Log("Started CurrentPhase: " + PhaseManager.CurrentPhase);
+#endif
     }
 
-
-
-    private void BuiltFinished()
-    {
-
-    }
-
-    private void HouseUpgraded()
-    {
-
-    }
-
-    private void PhaseUnlocked()
-    {
-        //Debug.Log("Phase Unlock Event Triggered!");
-    }
+    //private void BuiltFinished() { }
+    //private void HouseUpgraded() { }
+    //private void PhaseUnlocked() { }
 }
